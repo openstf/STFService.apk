@@ -191,10 +191,11 @@ public class InputAgent {
                     time,
                     KeyEvent.ACTION_DOWN,
                     keyCode,
-                    1,
+                    0,
                     metaState,
                     VIRTUAL_KEYBOARD,
                     0,
+                    KeyEvent.FLAG_FROM_SYSTEM,
                     InputDevice.SOURCE_KEYBOARD
             ));
         }
@@ -206,10 +207,11 @@ public class InputAgent {
                     time,
                     KeyEvent.ACTION_UP,
                     keyCode,
-                    1,
+                    0,
                     metaState,
                     VIRTUAL_KEYBOARD,
                     0,
+                    KeyEvent.FLAG_FROM_SYSTEM,
                     InputDevice.SOURCE_KEYBOARD
             ));
         }
