@@ -4,6 +4,7 @@ enum InputAction {
   KEYDOWN = 0;
   KEYUP = 1;
   KEYPRESS = 2;
+  TYPE = 3;
 }
 
 message InputEvent {
@@ -18,4 +19,5 @@ message InputEvent {
   optional bool capsLockKey = 9;
   optional bool scrollLockKey = 10;
   optional bool numLockKey = 11;
+  optional string text = 12;
 }

@@ -21,6 +21,7 @@ public class InputAgent {
     private EventInjector injector;
     private ServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
+    private KeyCharacterMap keyCharacterMap;
 
     public static void main(String[] args) {
         new InputAgent().run();
@@ -28,6 +29,7 @@ public class InputAgent {
 
     private void run() {
         selectDevice();
+        loadKeyCharacterMap();
         loadInjector();
         startServer();
         waitForClients();
@@ -46,6 +48,10 @@ public class InputAgent {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    private void loadKeyCharacterMap() {
+        keyCharacterMap = KeyCharacterMap.load(deviceId);
     }
 
     private void loadInjector() {
@@ -190,6 +196,11 @@ public class InputAgent {
                         case KEYPRESS:
                             keyPress(inEvent.getKeyCode(), meta);
                             break;
+                        case TYPE:
+                            if (inEvent.getKeyCode() == 0 && inEvent.hasText()) {
+                                type(inEvent.getText());
+                            }
+                            break;
                     }
                 }
             }
@@ -237,6 +248,15 @@ public class InputAgent {
             keyUp(keyCode, metaState);
         }
 
+        private void type(String text) {
+            KeyEvent[] events = keyCharacterMap.getEvents(text.toCharArray());
+
+            if (events != null) {
+                for (KeyEvent event : events) {
+                    injector.injectKeyEvent(event);
+                }
+            }
+        }
     }
 
     private interface EventInjector {

@@ -25,6 +25,10 @@ public final class InputAgentProtocol {
      * <code>KEYPRESS = 2;</code>
      */
     KEYPRESS(2, 2),
+    /**
+     * <code>TYPE = 3;</code>
+     */
+    TYPE(3, 3),
     ;
 
     /**
@@ -39,6 +43,10 @@ public final class InputAgentProtocol {
      * <code>KEYPRESS = 2;</code>
      */
     public static final int KEYPRESS_VALUE = 2;
+    /**
+     * <code>TYPE = 3;</code>
+     */
+    public static final int TYPE_VALUE = 3;
 
 
     public final int getNumber() { return value; }
@@ -48,6 +56,7 @@ public final class InputAgentProtocol {
         case 0: return KEYDOWN;
         case 1: return KEYUP;
         case 2: return KEYPRESS;
+        case 3: return TYPE;
         default: return null;
       }
     }
@@ -211,6 +220,21 @@ public final class InputAgentProtocol {
      * <code>optional bool numLockKey = 11;</code>
      */
     boolean getNumLockKey();
+
+    // optional string text = 12;
+    /**
+     * <code>optional string text = 12;</code>
+     */
+    boolean hasText();
+    /**
+     * <code>optional string text = 12;</code>
+     */
+    java.lang.String getText();
+    /**
+     * <code>optional string text = 12;</code>
+     */
+    com.google.protobuf.ByteString
+        getTextBytes();
   }
   /**
    * Protobuf type {@code jp.co.cyberagent.stf.input.agent.InputEvent}
@@ -322,6 +346,11 @@ public final class InputAgentProtocol {
             case 88: {
               bitField0_ |= 0x00000400;
               numLockKey_ = input.readBool();
+              break;
+            }
+            case 98: {
+              bitField0_ |= 0x00000800;
+              text_ = input.readBytes();
               break;
             }
           }
@@ -540,6 +569,49 @@ public final class InputAgentProtocol {
       return numLockKey_;
     }
 
+    // optional string text = 12;
+    public static final int TEXT_FIELD_NUMBER = 12;
+    private java.lang.Object text_;
+    /**
+     * <code>optional string text = 12;</code>
+     */
+    public boolean hasText() {
+      return ((bitField0_ & 0x00000800) == 0x00000800);
+    }
+    /**
+     * <code>optional string text = 12;</code>
+     */
+    public java.lang.String getText() {
+      java.lang.Object ref = text_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          text_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string text = 12;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTextBytes() {
+      java.lang.Object ref = text_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        text_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       action_ = jp.co.cyberagent.stf.input.agent.InputAgentProtocol.InputAction.KEYDOWN;
       keyCode_ = 0;
@@ -552,6 +624,7 @@ public final class InputAgentProtocol {
       capsLockKey_ = false;
       scrollLockKey_ = false;
       numLockKey_ = false;
+      text_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -606,6 +679,9 @@ public final class InputAgentProtocol {
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         output.writeBool(11, numLockKey_);
       }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        output.writeBytes(12, getTextBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -658,6 +734,10 @@ public final class InputAgentProtocol {
       if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(11, numLockKey_);
+      }
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(12, getTextBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -797,6 +877,8 @@ public final class InputAgentProtocol {
         bitField0_ = (bitField0_ & ~0x00000200);
         numLockKey_ = false;
         bitField0_ = (bitField0_ & ~0x00000400);
+        text_ = "";
+        bitField0_ = (bitField0_ & ~0x00000800);
         return this;
       }
 
@@ -869,6 +951,10 @@ public final class InputAgentProtocol {
           to_bitField0_ |= 0x00000400;
         }
         result.numLockKey_ = numLockKey_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
+          to_bitField0_ |= 0x00000800;
+        }
+        result.text_ = text_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -917,6 +1003,11 @@ public final class InputAgentProtocol {
         }
         if (other.hasNumLockKey()) {
           setNumLockKey(other.getNumLockKey());
+        }
+        if (other.hasText()) {
+          bitField0_ |= 0x00000800;
+          text_ = other.text_;
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1319,6 +1410,80 @@ public final class InputAgentProtocol {
         return this;
       }
 
+      // optional string text = 12;
+      private java.lang.Object text_ = "";
+      /**
+       * <code>optional string text = 12;</code>
+       */
+      public boolean hasText() {
+        return ((bitField0_ & 0x00000800) == 0x00000800);
+      }
+      /**
+       * <code>optional string text = 12;</code>
+       */
+      public java.lang.String getText() {
+        java.lang.Object ref = text_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          text_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string text = 12;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTextBytes() {
+        java.lang.Object ref = text_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          text_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string text = 12;</code>
+       */
+      public Builder setText(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        text_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string text = 12;</code>
+       */
+      public Builder clearText() {
+        bitField0_ = (bitField0_ & ~0x00000800);
+        text_ = getDefaultInstance().getText();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string text = 12;</code>
+       */
+      public Builder setTextBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000800;
+        text_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.input.agent.InputEvent)
     }
 
@@ -1345,15 +1510,16 @@ public final class InputAgentProtocol {
   static {
     java.lang.String[] descriptorData = {
       "\n\030inputAgentProtocol.proto\022 jp.co.cybera" +
-      "gent.stf.input.agent\"\205\002\n\nInputEvent\022=\n\006a" +
+      "gent.stf.input.agent\"\223\002\n\nInputEvent\022=\n\006a" +
       "ction\030\001 \002(\0162-.jp.co.cyberagent.stf.input" +
       ".agent.InputAction\022\017\n\007keyCode\030\002 \002(\005\022\020\n\010s" +
       "hiftKey\030\003 \001(\010\022\017\n\007ctrlKey\030\004 \001(\010\022\016\n\006altKey" +
       "\030\005 \001(\010\022\017\n\007metaKey\030\006 \001(\010\022\016\n\006symKey\030\007 \001(\010\022" +
       "\023\n\013functionKey\030\010 \001(\010\022\023\n\013capsLockKey\030\t \001(" +
       "\010\022\025\n\rscrollLockKey\030\n \001(\010\022\022\n\nnumLockKey\030\013" +
-      " \001(\010*3\n\013InputAction\022\013\n\007KEYDOWN\020\000\022\t\n\005KEYU" +
-      "P\020\001\022\014\n\010KEYPRESS\020\002"
+      " \001(\010\022\014\n\004text\030\014 \001(\t*=\n\013InputAction\022\013\n\007KEY" +
+      "DOWN\020\000\022\t\n\005KEYUP\020\001\022\014\n\010KEYPRESS\020\002\022\010\n\004TYPE\020",
+      "\003"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1365,7 +1531,7 @@ public final class InputAgentProtocol {
           internal_static_jp_co_cyberagent_stf_input_agent_InputEvent_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_input_agent_InputEvent_descriptor,
-              new java.lang.String[] { "Action", "KeyCode", "ShiftKey", "CtrlKey", "AltKey", "MetaKey", "SymKey", "FunctionKey", "CapsLockKey", "ScrollLockKey", "NumLockKey", });
+              new java.lang.String[] { "Action", "KeyCode", "ShiftKey", "CtrlKey", "AltKey", "MetaKey", "SymKey", "FunctionKey", "CapsLockKey", "ScrollLockKey", "NumLockKey", "Text", });
           return null;
         }
       };
