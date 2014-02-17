@@ -4,6 +4,7 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.view.InputDevice;
 import android.view.InputEvent;
+import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
 import java.io.IOException;
@@ -15,21 +16,36 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class InputAgent {
-    // Mimics KeyCharacterMap.VIRTUAL_KEYBOARD, which is not available on lower SDK levels
-    public static final int VIRTUAL_KEYBOARD = -1;
     public static final int PORT = 1090;
 
     private EventInjector injector;
     private ServerSocket serverSocket;
+    private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
 
     public static void main(String[] args) {
         new InputAgent().run();
     }
 
     private void run() {
+        selectDevice();
         loadInjector();
         startServer();
         waitForClients();
+    }
+
+    private void selectDevice() {
+        try {
+            deviceId = KeyCharacterMap.class.getDeclaredField("VIRTUAL_KEYBOARD")
+                    .getInt(KeyCharacterMap.class);
+        }
+        catch (NoSuchFieldException e) {
+            System.err.println("Falling back to KeyCharacterMap.BUILT_IN_KEYBOARD");
+            deviceId = 0;
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     private void loadInjector() {
@@ -193,7 +209,7 @@ public class InputAgent {
                     keyCode,
                     0,
                     metaState,
-                    VIRTUAL_KEYBOARD,
+                    deviceId,
                     0,
                     KeyEvent.FLAG_FROM_SYSTEM,
                     InputDevice.SOURCE_KEYBOARD
@@ -209,7 +225,7 @@ public class InputAgent {
                     keyCode,
                     0,
                     metaState,
-                    VIRTUAL_KEYBOARD,
+                    deviceId,
                     0,
                     KeyEvent.FLAG_FROM_SYSTEM,
                     InputDevice.SOURCE_KEYBOARD
