@@ -29,6 +29,10 @@ public final class InputAgentProtocol {
      * <code>TYPE = 3;</code>
      */
     TYPE(3, 3),
+    /**
+     * <code>WAKE = 4;</code>
+     */
+    WAKE(4, 4),
     ;
 
     /**
@@ -47,6 +51,10 @@ public final class InputAgentProtocol {
      * <code>TYPE = 3;</code>
      */
     public static final int TYPE_VALUE = 3;
+    /**
+     * <code>WAKE = 4;</code>
+     */
+    public static final int WAKE_VALUE = 4;
 
 
     public final int getNumber() { return value; }
@@ -57,6 +65,7 @@ public final class InputAgentProtocol {
         case 1: return KEYUP;
         case 2: return KEYPRESS;
         case 3: return TYPE;
+        case 4: return WAKE;
         default: return null;
       }
     }
@@ -121,13 +130,13 @@ public final class InputAgentProtocol {
      */
     jp.co.cyberagent.stf.input.agent.InputAgentProtocol.InputAction getAction();
 
-    // required int32 keyCode = 2;
+    // optional int32 keyCode = 2;
     /**
-     * <code>required int32 keyCode = 2;</code>
+     * <code>optional int32 keyCode = 2;</code>
      */
     boolean hasKeyCode();
     /**
-     * <code>required int32 keyCode = 2;</code>
+     * <code>optional int32 keyCode = 2;</code>
      */
     int getKeyCode();
 
@@ -409,17 +418,17 @@ public final class InputAgentProtocol {
       return action_;
     }
 
-    // required int32 keyCode = 2;
+    // optional int32 keyCode = 2;
     public static final int KEYCODE_FIELD_NUMBER = 2;
     private int keyCode_;
     /**
-     * <code>required int32 keyCode = 2;</code>
+     * <code>optional int32 keyCode = 2;</code>
      */
     public boolean hasKeyCode() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 keyCode = 2;</code>
+     * <code>optional int32 keyCode = 2;</code>
      */
     public int getKeyCode() {
       return keyCode_;
@@ -632,10 +641,6 @@ public final class InputAgentProtocol {
       if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAction()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasKeyCode()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -1018,10 +1023,6 @@ public final class InputAgentProtocol {
           
           return false;
         }
-        if (!hasKeyCode()) {
-          
-          return false;
-        }
         return true;
       }
 
@@ -1080,22 +1081,22 @@ public final class InputAgentProtocol {
         return this;
       }
 
-      // required int32 keyCode = 2;
+      // optional int32 keyCode = 2;
       private int keyCode_ ;
       /**
-       * <code>required int32 keyCode = 2;</code>
+       * <code>optional int32 keyCode = 2;</code>
        */
       public boolean hasKeyCode() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 keyCode = 2;</code>
+       * <code>optional int32 keyCode = 2;</code>
        */
       public int getKeyCode() {
         return keyCode_;
       }
       /**
-       * <code>required int32 keyCode = 2;</code>
+       * <code>optional int32 keyCode = 2;</code>
        */
       public Builder setKeyCode(int value) {
         bitField0_ |= 0x00000002;
@@ -1104,7 +1105,7 @@ public final class InputAgentProtocol {
         return this;
       }
       /**
-       * <code>required int32 keyCode = 2;</code>
+       * <code>optional int32 keyCode = 2;</code>
        */
       public Builder clearKeyCode() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1512,14 +1513,14 @@ public final class InputAgentProtocol {
       "\n\030inputAgentProtocol.proto\022 jp.co.cybera" +
       "gent.stf.input.agent\"\223\002\n\nInputEvent\022=\n\006a" +
       "ction\030\001 \002(\0162-.jp.co.cyberagent.stf.input" +
-      ".agent.InputAction\022\017\n\007keyCode\030\002 \002(\005\022\020\n\010s" +
+      ".agent.InputAction\022\017\n\007keyCode\030\002 \001(\005\022\020\n\010s" +
       "hiftKey\030\003 \001(\010\022\017\n\007ctrlKey\030\004 \001(\010\022\016\n\006altKey" +
       "\030\005 \001(\010\022\017\n\007metaKey\030\006 \001(\010\022\016\n\006symKey\030\007 \001(\010\022" +
       "\023\n\013functionKey\030\010 \001(\010\022\023\n\013capsLockKey\030\t \001(" +
       "\010\022\025\n\rscrollLockKey\030\n \001(\010\022\022\n\nnumLockKey\030\013" +
-      " \001(\010\022\014\n\004text\030\014 \001(\t*=\n\013InputAction\022\013\n\007KEY" +
+      " \001(\010\022\014\n\004text\030\014 \001(\t*G\n\013InputAction\022\013\n\007KEY" +
       "DOWN\020\000\022\t\n\005KEYUP\020\001\022\014\n\010KEYPRESS\020\002\022\010\n\004TYPE\020",
-      "\003"
+      "\003\022\010\n\004WAKE\020\004"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {

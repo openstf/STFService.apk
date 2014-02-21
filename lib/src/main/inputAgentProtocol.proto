@@ -5,11 +5,12 @@ enum InputAction {
   KEYUP = 1;
   KEYPRESS = 2;
   TYPE = 3;
+  WAKE = 4;
 }
 
 message InputEvent {
   required InputAction action = 1;
-  required int32 keyCode = 2;
+  optional int32 keyCode = 2;
   optional bool shiftKey = 3;
   optional bool ctrlKey = 4;
   optional bool altKey = 5;
