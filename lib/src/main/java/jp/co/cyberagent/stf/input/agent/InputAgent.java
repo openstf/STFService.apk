@@ -407,7 +407,7 @@ public class InputAgent {
 
         public boolean wake() {
             try {
-                injector.invoke(powerManager, SystemClock.uptimeMillis(), true, true);
+                injector.invoke(powerManager, SystemClock.uptimeMillis(), false, true);
                 return true;
             }
             catch (IllegalAccessException e) {
