@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class InputAgent {
+    public static final int VERSION = 1;
     public static final int PORT = 1090;
 
     private EventInjector eventInjector;
@@ -25,6 +26,13 @@ public class InputAgent {
     private KeyCharacterMap keyCharacterMap;
 
     public static void main(String[] args) {
+        for (String arg : args) {
+            if (arg.equals("--version")) {
+                System.out.println(VERSION);
+                return;
+            }
+        }
+
         new InputAgent().run();
     }
 
