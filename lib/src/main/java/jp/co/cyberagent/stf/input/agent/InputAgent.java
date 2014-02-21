@@ -273,9 +273,7 @@ public class InputAgent {
         public InputManagerEventInjector() {
             try {
                 // The InputManager class is public, but only since SDK 16
-                Class<?> inputManagerClass = this.getClass()
-                        .getClassLoader()
-                        .loadClass("android.hardware.input.InputManager");
+                Class<?> inputManagerClass = Class.forName("android.hardware.input.InputManager");
 
                 // getInstance() is @hidden
                 Method getInstanceMethod = inputManagerClass.getMethod("getInstance");
@@ -327,9 +325,7 @@ public class InputAgent {
         public WindowManagerEventInjector() {
             try {
                 // The ServiceManager class is @hidden in newer SDKs
-                Class<?> serviceManagerClass = this.getClass()
-                        .getClassLoader()
-                        .loadClass("android.os.ServiceManager");
+                Class<?> serviceManagerClass = Class.forName("android.os.ServiceManager");
 
                 Method getServiceMethod = serviceManagerClass.getMethod("getService", String.class);
 
@@ -337,9 +333,7 @@ public class InputAgent {
 
                 // We need to call IWindowManager.Stub.asInterface(IBinder obj) to get an instance
                 // of IWindowManager
-                Class<?> stubClass = this.getClass()
-                        .getClassLoader()
-                        .loadClass("android.view.IWindowManager$Stub");
+                Class<?> stubClass = Class.forName("android.view.IWindowManager$Stub");
 
                 Method asInterfaceMethod = stubClass.getMethod("asInterface", IBinder.class);
 
