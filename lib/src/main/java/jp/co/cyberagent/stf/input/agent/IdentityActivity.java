@@ -79,12 +79,12 @@ public class IdentityActivity extends Activity {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        
+
+        unlock();
+
         WindowManager.LayoutParams params = window.getAttributes();
         params.screenBrightness = 1.0f;
         window.setAttributes(params);
-
-        unlock();
     }
 
     private String getProperty(String name, String defaultValue) {
