@@ -78,10 +78,10 @@ public class InputAgent {
 
         for (String service : services) {
             if (getService(service) == null) {
-                System.out.printf("OK: %s\n", service);
+                System.out.printf("FAIL: %s\n", service);
             }
             else {
-                System.out.printf("FAIL: %s\n", service);
+                System.out.printf("OK: %s\n", service);
             }
         }
     }
