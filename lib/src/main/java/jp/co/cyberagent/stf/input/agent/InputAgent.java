@@ -31,9 +31,84 @@ public class InputAgent {
                 System.out.println(VERSION);
                 return;
             }
+            if (arg.equals("--debug-info")) {
+                printServiceDebugInfo();
+                return;
+            }
         }
 
         new InputAgent().run();
+    }
+
+    private static void printServiceDebugInfo() {
+        String[] services = {
+                "accessibility",
+                "account",
+                "activity",
+                "alarm",
+                "audio",
+                "bluetooth",
+                "clipboard",
+                "connectivity",
+                "device_policy",
+                "display",
+                "download",
+                "input_method",
+                "input",
+                "keyguard",
+                "layout_inflater",
+                "location",
+                "media_router",
+                "notification",
+                "servicediscovery",
+                "power",
+                "search",
+                "sensor",
+                "storage",
+                "phone",
+                "textservices",
+                "uimode",
+                "user",
+                "vibrator",
+                "wallpaper",
+                "wifip2p",
+                "wifi",
+                "window",
+        };
+
+        for (String service : services) {
+            if (getService(service) == null) {
+                System.out.printf("OK: %s\n", service);
+            }
+            else {
+                System.out.printf("FAIL: %s\n", service);
+            }
+        }
+    }
+
+    private static Object getService(String name) {
+        try {
+            // The ServiceManager class is @hidden in newer SDKs
+            Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
+            Method getService = ServiceManager.getMethod("getService", String.class);
+            return getService.invoke(null, name);
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            return null;
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void run() {
@@ -294,31 +369,6 @@ public class InputAgent {
 
         private void wake() {
             wakeInjector.wake();
-        }
-    }
-
-    private Object getService(String name) {
-        try {
-            // The ServiceManager class is @hidden in newer SDKs
-            Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
-            Method getService = ServiceManager.getMethod("getService", String.class);
-            return getService.invoke(null, name);
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
