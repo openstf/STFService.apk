@@ -15,15 +15,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import jp.co.cyberagent.stf.input.agent.compat.PowerManager;
-import jp.co.cyberagent.stf.input.agent.compat.ServiceManager;
+import jp.co.cyberagent.stf.input.agent.compat.PowerManagerWrapper;
+import jp.co.cyberagent.stf.input.agent.compat.ServiceManagerWrapper;
 
 public class InputAgent {
     public static final int VERSION = 1;
     public static final int PORT = 1090;
 
     private EventInjector eventInjector;
-    private PowerManager powerManager;
+    private PowerManagerWrapper powerManager;
     private ServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
     private KeyCharacterMap keyCharacterMap;
@@ -80,7 +80,7 @@ public class InputAgent {
         };
 
         for (String service : services) {
-            if (ServiceManager.getService(service) == null) {
+            if (ServiceManagerWrapper.getService(service) == null) {
                 System.out.printf("FAIL: %s\n", service);
             }
             else {
@@ -90,7 +90,7 @@ public class InputAgent {
     }
 
     private void run() {
-        powerManager = new PowerManager();
+        powerManager = new PowerManagerWrapper();
 
         selectDevice();
         loadKeyCharacterMap();
@@ -395,7 +395,7 @@ public class InputAgent {
 
         public WindowManagerEventInjector() {
             try {
-                Object windowManagerBinder = ServiceManager.getService("window");
+                Object windowManagerBinder = ServiceManagerWrapper.getService("window");
 
                 // We need to call IWindowManager.Stub.asInterface(IBinder obj) to get an instance
                 // of IWindowManager

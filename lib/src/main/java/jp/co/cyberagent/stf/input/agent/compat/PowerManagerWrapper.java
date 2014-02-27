@@ -6,13 +6,13 @@ import android.os.SystemClock;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class PowerManager {
+public class PowerManagerWrapper {
     private Object powerManager;
     private WakeInjector wakeInjector;
 
-    public PowerManager() {
+    public PowerManagerWrapper() {
         try {
-            Object powerManagerBinder = ServiceManager.getService("power");
+            Object powerManagerBinder = ServiceManagerWrapper.getService("power");
             Class<?> Stub = Class.forName("android.os.IPowerManager$Stub");
             Method asInterface = Stub.getMethod("asInterface", IBinder.class);
 
@@ -27,16 +27,16 @@ public class PowerManager {
             }
         }
         catch (ClassNotFoundException e) {
-            throw new UnsupportedOperationException("PowerManager is not supported");
+            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
         }
         catch (NoSuchMethodException e) {
-            throw new UnsupportedOperationException("PowerManager is not supported");
+            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
         }
         catch (IllegalAccessException e) {
-            throw new UnsupportedOperationException("PowerManager is not supported");
+            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
         }
         catch (InvocationTargetException e) {
-            throw new UnsupportedOperationException("PowerManager is not supported");
+            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
         }
     }
 

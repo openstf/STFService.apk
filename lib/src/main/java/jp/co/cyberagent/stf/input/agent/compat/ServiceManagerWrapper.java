@@ -3,7 +3,7 @@ package jp.co.cyberagent.stf.input.agent.compat;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class ServiceManager {
+public class ServiceManagerWrapper {
     public static Object getService(String name) {
         try {
             // The ServiceManager class is @hidden in newer SDKs
