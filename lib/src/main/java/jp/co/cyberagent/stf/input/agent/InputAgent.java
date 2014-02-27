@@ -15,12 +15,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import jp.co.cyberagent.stf.input.agent.compat.PowerManager;
+import jp.co.cyberagent.stf.input.agent.compat.ServiceManager;
+
 public class InputAgent {
     public static final int VERSION = 1;
     public static final int PORT = 1090;
 
     private EventInjector eventInjector;
-    private WakeInjector wakeInjector;
+    private PowerManager powerManager;
     private ServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
     private KeyCharacterMap keyCharacterMap;
@@ -77,7 +80,7 @@ public class InputAgent {
         };
 
         for (String service : services) {
-            if (getService(service) == null) {
+            if (ServiceManager.getService(service) == null) {
                 System.out.printf("FAIL: %s\n", service);
             }
             else {
@@ -86,36 +89,12 @@ public class InputAgent {
         }
     }
 
-    private static Object getService(String name) {
-        try {
-            // The ServiceManager class is @hidden in newer SDKs
-            Class<?> ServiceManager = Class.forName("android.os.ServiceManager");
-            Method getService = ServiceManager.getMethod("getService", String.class);
-            return getService.invoke(null, name);
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
-        }
-        catch (InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     private void run() {
+        powerManager = new PowerManager();
+
         selectDevice();
         loadKeyCharacterMap();
         loadEventInjector();
-        loadWakeInjector();
         startServer();
         waitForClients();
     }
@@ -157,27 +136,6 @@ public class InputAgent {
         }
 
         System.err.println("Unable to load any EventInjector");
-        System.exit(1);
-    }
-
-    private void loadWakeInjector() {
-        try {
-            wakeInjector = new WakeUpWakeInjector();
-            return;
-        }
-        catch (UnsupportedOperationException e) {
-            System.err.println("WakeUpWakeInjector is not supported");
-        }
-
-        try {
-            wakeInjector = new UserActivityWakeInjector();
-            return;
-        }
-        catch (UnsupportedOperationException e) {
-            System.err.println("UserActivityWakeInjector is not supported");
-        }
-
-        System.err.println("Unable to load any WakeInjector");
         System.exit(1);
     }
 
@@ -368,115 +326,12 @@ public class InputAgent {
         }
 
         private void wake() {
-            wakeInjector.wake();
+            powerManager.wakeUp();
         }
     }
 
     private interface EventInjector {
         public boolean injectKeyEvent(KeyEvent event);
-    }
-
-    private interface WakeInjector {
-        public boolean wake();
-    }
-
-    /**
-     * WakeInjector for newer API
-     */
-    private class WakeUpWakeInjector implements WakeInjector {
-        private Object powerManager;
-        private Method injector;
-
-        public WakeUpWakeInjector() {
-            try {
-                Object powerManagerBinder = getService("power");
-                Class<?> Stub = Class.forName("android.os.IPowerManager$Stub");
-                Method asInterface = Stub.getMethod("asInterface", IBinder.class);
-
-                powerManager = asInterface.invoke(null, powerManagerBinder);
-
-                injector = powerManager.getClass()
-                        // public void wakeUp(long time) throws android.os.RemoteException
-                        .getMethod("wakeUp", long.class);
-            }
-            catch (ClassNotFoundException e) {
-                throw new UnsupportedOperationException();
-            }
-            catch (NoSuchMethodException e) {
-                throw new UnsupportedOperationException();
-            }
-            catch (IllegalAccessException e) {
-                throw new UnsupportedOperationException();
-            }
-            catch (InvocationTargetException e) {
-                throw new UnsupportedOperationException();
-            }
-        }
-
-        public boolean wake() {
-            try {
-                injector.invoke(powerManager, SystemClock.uptimeMillis());
-                return true;
-            }
-            catch (IllegalAccessException e) {
-                e.printStackTrace();
-                return false;
-            }
-            catch (InvocationTargetException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-    }
-
-    /**
-     * WakeInjector for older API
-     */
-    private class UserActivityWakeInjector implements WakeInjector {
-        private Object powerManager;
-        private Method injector;
-
-        public UserActivityWakeInjector() {
-            try {
-                Object powerManagerBinder = getService("power");
-                Class<?> Stub = Class.forName("android.os.IPowerManager$Stub");
-                Method asInterface = Stub.getMethod("asInterface", IBinder.class);
-
-                powerManager = asInterface.invoke(null, powerManagerBinder);
-
-                injector = powerManager.getClass()
-                        // public void userActivityWithForce(long when, boolean noChangeLights,
-                        // boolean force) throws android.os.RemoteException
-                        .getMethod("userActivityWithForce", long.class, boolean.class, boolean.class);
-            }
-            catch (ClassNotFoundException e) {
-                throw new UnsupportedOperationException();
-            }
-            catch (NoSuchMethodException e) {
-                throw new UnsupportedOperationException();
-            }
-            catch (IllegalAccessException e) {
-                throw new UnsupportedOperationException();
-            }
-            catch (InvocationTargetException e) {
-                throw new UnsupportedOperationException();
-            }
-        }
-
-        public boolean wake() {
-            try {
-                injector.invoke(powerManager, SystemClock.uptimeMillis(), false, true);
-                return true;
-            }
-            catch (IllegalAccessException e) {
-                e.printStackTrace();
-                return false;
-            }
-            catch (InvocationTargetException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
     }
 
     /**
@@ -540,7 +395,7 @@ public class InputAgent {
 
         public WindowManagerEventInjector() {
             try {
-                Object windowManagerBinder = getService("window");
+                Object windowManagerBinder = ServiceManager.getService("window");
 
                 // We need to call IWindowManager.Stub.asInterface(IBinder obj) to get an instance
                 // of IWindowManager
