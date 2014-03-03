@@ -2,6 +2,7 @@ package jp.co.cyberagent.stf.input.agent;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,9 +21,13 @@ import java.lang.reflect.Method;
 public class IdentityActivity extends Activity {
     private static final String TAG = "IdentityActivity";
 
+    public static final String EXTRA_SERIAL = "serial";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
 
         LinearLayout layout = new LinearLayout(this);
         layout.setKeepScreenOn(true);
@@ -38,8 +43,14 @@ public class IdentityActivity extends Activity {
 
         TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 
+        String serial = intent.getStringExtra(EXTRA_SERIAL);
+
+        if (serial == null) {
+            serial = getProperty("ro.serialno", "unknown");
+        }
+
         layout.addView(createLabel("SERIAL"));
-        layout.addView(createData(getProperty("ro.serialno", "unknown")));
+        layout.addView(createData(serial));
         layout.addView(createLabel("MODEL"));
         layout.addView(createData(getProperty("ro.product.model", "unknown")));
         layout.addView(createLabel("VERSION"));

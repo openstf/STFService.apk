@@ -18,13 +18,13 @@ import java.net.UnknownHostException;
 public class InputService extends Service {
     private static final String TAG = "InputService";
 
-    private static final String ACTION_UNLOCK = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_UNLOCK";
-    private static final String ACTION_WAKE_LOCK_ACQUIRE = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_ACQUIRE";
-    private static final String ACTION_WAKE_LOCK_RELEASE = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_RELEASE";
-    private static final String ACTION_START = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_START";
-    private static final String ACTION_STOP = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_STOP";
+    public static final String ACTION_UNLOCK = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_UNLOCK";
+    public static final String ACTION_WAKE_LOCK_ACQUIRE = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_ACQUIRE";
+    public static final String ACTION_WAKE_LOCK_RELEASE = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_RELEASE";
+    public static final String ACTION_START = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_START";
+    public static final String ACTION_STOP = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_STOP";
 
-    private static final String EXTRA_PORT = "port";
+    public static final String EXTRA_PORT = "port";
 
     private PowerManager powerManager;
     private PowerManager.WakeLock wakeLock;
