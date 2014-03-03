@@ -7,27 +7,26 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import jp.co.cyberagent.stf.input.agent.proto.ServiceProto;
 
 public class InputService extends Service {
     private static final String TAG = "InputService";
 
-    public static final String ACTION_UNLOCK = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_UNLOCK";
-    public static final String ACTION_WAKE_LOCK_ACQUIRE = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_ACQUIRE";
-    public static final String ACTION_WAKE_LOCK_RELEASE = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_RELEASE";
     public static final String ACTION_START = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_START";
     public static final String ACTION_STOP = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_STOP";
 
     public static final String EXTRA_PORT = "port";
 
     private PowerManager powerManager;
-    private PowerManager.WakeLock wakeLock;
 
     private AcceptorThread acceptor;
 
@@ -42,25 +41,10 @@ public class InputService extends Service {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        releaseWakeLock();
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         String action = intent.getAction();
-        if (ACTION_UNLOCK.equals(action)) {
-            unlock();
-        }
-        else if (ACTION_WAKE_LOCK_ACQUIRE.equals(action)) {
-            acquireWakeLock();
-        }
-        else if (ACTION_WAKE_LOCK_RELEASE.equals(action)) {
-            releaseWakeLock();
-        }
-        else if (ACTION_START.equals(action)) {
+        if (ACTION_START.equals(action)) {
             if (acceptor == null) {
                 int port = intent.getIntExtra(EXTRA_PORT, 1100);
                 acceptor = new AcceptorThread(port);
@@ -70,44 +54,19 @@ public class InputService extends Service {
         else if (ACTION_STOP.equals(action)) {
             if (acceptor != null) {
                 acceptor.interrupt();
-                acceptor = null;
+                stopSelf();
             }
         }
         else {
             Log.e(TAG, "Unknown action " + action);
         }
-        return START_STICKY;
-    }
-
-    @SuppressWarnings("deprecation")
-    private void unlock() {
-        Log.i(TAG, "Unlocking device");
-        KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-        keyguardManager.newKeyguardLock("InputService").disableKeyguard();
-    }
-
-    @SuppressWarnings("deprecation")
-    private void acquireWakeLock() {
-        releaseWakeLock();
-        Log.i(TAG, "Acquiring wake lock");
-        wakeLock = powerManager.newWakeLock(
-                PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
-                "InputService"
-        );
-        wakeLock.acquire();
-    }
-
-    private void releaseWakeLock() {
-        if (wakeLock != null) {
-            Log.i(TAG, "Releasing wake lock");
-            wakeLock.release();
-            wakeLock = null;
-        }
+        return START_NOT_STICKY;
     }
 
     private class AcceptorThread extends Thread {
         private int port;
         private ServerSocket serverSocket;
+        private Set<ClientThread> clients = Collections.synchronizedSet(new HashSet<ClientThread>());
 
         public AcceptorThread(int port) {
             this.port = port;
@@ -135,10 +94,11 @@ public class InputService extends Service {
                     try {
                         Socket clientSocket = serverSocket.accept();
                         ClientThread client = new ClientThread(clientSocket);
+                        client.setDaemon(true);
+                        clients.add(client);
                         client.start();
                     }
                     catch (IOException e) {
-                        e.printStackTrace();
                         break;
                     }
                 }
@@ -154,17 +114,30 @@ public class InputService extends Service {
                     if (serverSocket != null) {
                         serverSocket.close();
                     }
+
+                    stopAll();
                 }
                 catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
+            for (ClientThread client : clients) {
+                client.interrupt();
+            }
+
             Log.i(TAG, "Closing InputService");
+        }
+
+        private void stopAll() {
+            for (ClientThread client : clients) {
+                client.interrupt();
+            }
         }
 
         private class ClientThread extends Thread {
             private Socket clientSocket;
+            private PowerManager.WakeLock wakeLock;
 
             public ClientThread(Socket clientSocket) {
                 this.clientSocket = clientSocket;
@@ -184,28 +157,75 @@ public class InputService extends Service {
             public void run() {
                 Log.i(TAG, "Starting ClientThread");
 
-                acquireWakeLock();
-                unlock();
-
                 try {
-                    BufferedReader input = new BufferedReader(
-                            new InputStreamReader(clientSocket.getInputStream()));
-
                     while (!isInterrupted()) {
-                        String cmd = input.readLine();
+                        ServiceProto.ServiceCall call = ServiceProto.ServiceCall.parseDelimitedFrom(
+                                clientSocket.getInputStream());
 
-                        if (cmd == null) {
+                        if (call == null) {
                             break;
+                        }
+
+                        switch (call.getAction()) {
+                            case UNLOCK:
+                                unlock();
+                                break;
+                            case WAKE_LOCK_ACQUIRE:
+                                acquireWakeLock();
+                                break;
+                            case WAKE_LOCK_RELEASE:
+                                releaseWakeLock();
+                                break;
+                            case IDENTITY:
+                                ServiceProto.IdentityServiceCall message = ServiceProto.IdentityServiceCall.parseFrom(call.getMessage());
+                                if (message != null) {
+                                    showIdentity(message.getSerial());
+                                }
+                                break;
                         }
                     }
                 }
                 catch (IOException e) {
-                    e.printStackTrace();
                 }
 
                 releaseWakeLock();
 
                 Log.i(TAG, "ClientThread closing");
+
+                clients.remove(this);
+            }
+
+
+            @SuppressWarnings("deprecation")
+            private void unlock() {
+                Log.i(TAG, "Unlocking device");
+                KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+                keyguardManager.newKeyguardLock("InputService").disableKeyguard();
+            }
+
+            @SuppressWarnings("deprecation")
+            private void acquireWakeLock() {
+                releaseWakeLock();
+                Log.i(TAG, "Acquiring wake lock");
+                wakeLock = powerManager.newWakeLock(
+                        PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
+                        "InputService"
+                );
+                wakeLock.acquire();
+            }
+
+            private void releaseWakeLock() {
+                if (wakeLock != null) {
+                    Log.i(TAG, "Releasing wake lock");
+                    wakeLock.release();
+                    wakeLock = null;
+                }
+            }
+
+            private void showIdentity(String serial) {
+                Intent intent = new Intent(InputService.this, IdentityActivity.class);
+                intent.putExtra(IdentityActivity.EXTRA_SERIAL, serial);
+                startActivity(intent);
             }
         }
     }

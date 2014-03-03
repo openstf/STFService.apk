@@ -1,0 +1,19 @@
+package jp.co.cyberagent.stf.input.agent.proto;
+
+option java_outer_classname = "ServiceProto";
+
+enum ServiceAction {
+  UNLOCK = 1;
+  WAKE_LOCK_ACQUIRE = 2;
+  WAKE_LOCK_RELEASE = 3;
+  IDENTITY = 4;
+}
+
+message ServiceCall {
+  required ServiceAction action = 1;
+  optional bytes message = 2;
+}
+
+message IdentityServiceCall {
+  required string serial = 1;
+}

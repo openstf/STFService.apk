@@ -13,10 +13,8 @@
         <service android:name=".InputService"
             android:exported="true">
             <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_UNLOCK"/>
-                <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_ACQUIRE"/>
-                <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_WAKE_LOCK_RELEASE"/>
                 <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_START"/>
+                <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_STOP"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
@@ -28,7 +26,7 @@
             android:stateNotNeeded="true"
             android:excludeFromRecents="true">
             <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.input.agent.IDENTITY"/>
+                <action android:name="jp.co.cyberagent.stf.input.agent.IdentityActivity.ACTION_IDENTITY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

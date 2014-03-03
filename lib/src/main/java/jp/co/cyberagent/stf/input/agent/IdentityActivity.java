@@ -21,6 +21,8 @@ import java.lang.reflect.Method;
 public class IdentityActivity extends Activity {
     private static final String TAG = "IdentityActivity";
 
+    public static final String ACTION_IDENTITY = "jp.co.cyberagent.stf.input.agent.IdentityActivity.ACTION_IDENTITY";
+
     public static final String EXTRA_SERIAL = "serial";
 
     @Override
