@@ -223,7 +223,8 @@ public class InputService extends Service {
             }
 
             private void showIdentity(String serial) {
-                Intent intent = new Intent(InputService.this, IdentityActivity.class);
+                Intent intent = new Intent(getBaseContext(), IdentityActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(IdentityActivity.EXTRA_SERIAL, serial);
                 startActivity(intent);
             }
