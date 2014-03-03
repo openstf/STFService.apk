@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.input.agent;
+package jp.co.cyberagent.stf.input.agent.proto;
 
 enum InputAction {
   KEYDOWN = 0;

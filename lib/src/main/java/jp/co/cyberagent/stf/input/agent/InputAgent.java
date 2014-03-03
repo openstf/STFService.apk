@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 import jp.co.cyberagent.stf.input.agent.compat.InputManagerWrapper;
 import jp.co.cyberagent.stf.input.agent.compat.PowerManagerWrapper;
 import jp.co.cyberagent.stf.input.agent.compat.ServiceManagerWrapper;
+import jp.co.cyberagent.stf.input.agent.proto.Input;
 
 public class InputAgent {
     public static final int VERSION = 1;
@@ -181,8 +182,8 @@ public class InputAgent {
 
             try {
                 while (!isInterrupted()) {
-                    InputAgentProtocol.InputEvent inEvent =
-                            InputAgentProtocol.InputEvent.parseDelimitedFrom(socket.getInputStream());
+                    Input.InputEvent inEvent =
+                            Input.InputEvent.parseDelimitedFrom(socket.getInputStream());
 
                     if (inEvent == null) {
                         break;
