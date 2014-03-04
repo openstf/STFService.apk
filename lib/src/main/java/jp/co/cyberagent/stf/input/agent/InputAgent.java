@@ -32,9 +32,13 @@ public class InputAgent {
                 System.out.println(VERSION);
                 return;
             }
-            if (arg.equals("--debug-info")) {
+            else if (arg.equals("--debug-info")) {
                 printServiceDebugInfo();
                 return;
+            }
+            else {
+                System.err.println("Error: unknown argument " + arg);
+                System.exit(1);
             }
         }
 
