@@ -7,7 +7,10 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,8 +18,6 @@ import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import jp.co.cyberagent.stf.input.agent.proto.ServiceProto;
 
 public class InputService extends Service {
     private static final String TAG = "InputService";
@@ -27,6 +28,7 @@ public class InputService extends Service {
     public static final String EXTRA_PORT = "port";
 
     private PowerManager powerManager;
+    private KeyguardManager keyguardManager;
 
     private AcceptorThread acceptor;
 
@@ -38,6 +40,7 @@ public class InputService extends Service {
     public void onCreate() {
         super.onCreate();
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
     }
 
     @Override
@@ -138,6 +141,7 @@ public class InputService extends Service {
         private class ClientThread extends Thread {
             private Socket clientSocket;
             private PowerManager.WakeLock wakeLock;
+            private KeyguardManager.KeyguardLock lock;
 
             public ClientThread(Socket clientSocket) {
                 this.clientSocket = clientSocket;
@@ -158,37 +162,50 @@ public class InputService extends Service {
                 Log.i(TAG, "Starting ClientThread");
 
                 try {
-                    while (!isInterrupted()) {
-                        ServiceProto.ServiceCall call = ServiceProto.ServiceCall.parseDelimitedFrom(
-                                clientSocket.getInputStream());
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(
+                            clientSocket.getInputStream()));
+                    OutputStreamWriter writer = new OutputStreamWriter(
+                            clientSocket.getOutputStream());
 
-                        if (call == null) {
+                    while (!isInterrupted()) {
+                        String line = reader.readLine();
+
+                        if (line == null) {
                             break;
                         }
 
-                        switch (call.getAction()) {
-                            case UNLOCK:
-                                unlock();
-                                break;
-                            case WAKE_LOCK_ACQUIRE:
-                                acquireWakeLock();
-                                break;
-                            case WAKE_LOCK_RELEASE:
-                                releaseWakeLock();
-                                break;
-                            case IDENTITY:
-                                ServiceProto.IdentityServiceCall message = ServiceProto.IdentityServiceCall.parseFrom(call.getMessage());
-                                if (message != null) {
-                                    showIdentity(message.getSerial());
-                                }
-                                break;
+                        if (line.equals("unlock")) {
+                            unlock();
+                            writer.write("OK\n");
                         }
+                        else if (line.equals("lock")) {
+                            lock();
+                            writer.write("OK\n");
+                        }
+                        else if (line.equals("acquire wake lock")) {
+                            acquireWakeLock();
+                            writer.write("OK\n");
+                        }
+                        else if (line.equals("release wake lock")) {
+                            releaseWakeLock();
+                            writer.write("OK\n");
+                        }
+                        else if (line.startsWith("show identity ")) {
+                            showIdentity(line.substring("show identity ".length()));
+                            writer.write("OK\n");
+                        }
+                        else {
+                            writer.write("ERROR: unknown command\n");
+                        }
+
+                        writer.flush();
                     }
                 }
                 catch (IOException e) {
                 }
 
                 releaseWakeLock();
+                lock();
 
                 Log.i(TAG, "ClientThread closing");
 
@@ -199,8 +216,18 @@ public class InputService extends Service {
             @SuppressWarnings("deprecation")
             private void unlock() {
                 Log.i(TAG, "Unlocking device");
-                KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-                keyguardManager.newKeyguardLock("InputService").disableKeyguard();
+                if (lock == null) {
+                    lock = keyguardManager.newKeyguardLock("InputService");
+                }
+                lock.reenableKeyguard();
+                lock.disableKeyguard();
+            }
+
+            private void lock() {
+                Log.i(TAG, "Locking device");
+                if (lock != null) {
+                    lock.reenableKeyguard();
+                }
             }
 
             @SuppressWarnings("deprecation")
