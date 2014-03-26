@@ -63,7 +63,7 @@ public class InputService extends Service {
         else {
             Log.e(TAG, "Unknown action " + action);
         }
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     private class AcceptorThread extends Thread {
