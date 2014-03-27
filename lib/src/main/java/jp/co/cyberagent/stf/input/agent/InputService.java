@@ -2,7 +2,9 @@ package jp.co.cyberagent.stf.input.agent;
 
 import android.app.KeyguardManager;
 import android.app.Service;
+import android.content.ClipData;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
@@ -29,6 +31,7 @@ public class InputService extends Service {
 
     private PowerManager powerManager;
     private KeyguardManager keyguardManager;
+    private Object clipboardManagerObject;
 
     private AcceptorThread acceptor;
 
@@ -41,6 +44,7 @@ public class InputService extends Service {
         super.onCreate();
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        clipboardManagerObject = getSystemService(CLIPBOARD_SERVICE);
     }
 
     @Override
@@ -190,6 +194,19 @@ public class InputService extends Service {
                             releaseWakeLock();
                             writer.write("OK\n");
                         }
+                        else if (line.equals("get clipboard")) {
+                            CharSequence content = getClipboardContent();
+                            if (content == null) {
+                                writer.write("ERR:Clipboard has no content");
+                            }
+                            else {
+                                writer.write("OK:" + content + "\n");
+                            }
+                        }
+                        else if (line.startsWith("set clipboard ")) {
+                            setClipboardContent(line.substring("set clipboard ".length()));
+                            writer.write("OK\n");
+                        }
                         else if (line.startsWith("show identity ")) {
                             showIdentity(line.substring("show identity ".length()));
                             writer.write("OK\n");
@@ -254,6 +271,44 @@ public class InputService extends Service {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(IdentityActivity.EXTRA_SERIAL, serial);
                 startActivity(intent);
+            }
+
+            private CharSequence getClipboardContent() {
+                if (Build.VERSION.SDK_INT >= 11) {
+                    android.content.ClipboardManager clipboardManager =
+                            (android.content.ClipboardManager) clipboardManagerObject;
+                    if (clipboardManager.hasPrimaryClip()) {
+                        ClipData clipData = clipboardManager.getPrimaryClip();
+                        if (clipData.getItemCount() > 0) {
+                            ClipData.Item clip = clipData.getItemAt(0);
+                            return clip.coerceToText(getApplicationContext());
+                        }
+                        else {
+                            return null;
+                        }
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                else {
+                    android.text.ClipboardManager clipboardManager =
+                            (android.text.ClipboardManager) clipboardManagerObject;
+                    return clipboardManager.getText();
+                }
+            }
+
+            private void setClipboardContent(String content) {
+                if (Build.VERSION.SDK_INT >= 11) {
+                    android.content.ClipboardManager clipboardManager =
+                            (android.content.ClipboardManager) clipboardManagerObject;
+                    clipboardManager.setPrimaryClip(ClipData.newPlainText(null, content));
+                }
+                else {
+                    android.text.ClipboardManager clipboardManager =
+                            (android.text.ClipboardManager) clipboardManagerObject;
+                    clipboardManager.setText(content);
+                }
             }
         }
     }
