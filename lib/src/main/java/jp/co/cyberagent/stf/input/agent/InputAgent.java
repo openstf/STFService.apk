@@ -200,7 +200,7 @@ public class InputAgent {
                     }
 
                     if (inEvent.getCtrlKey()) {
-                        meta |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_RIGHT_ON;
+                        meta |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_RIGHT_ON | KeyEvent.META_CTRL_ON;
                     }
 
                     if (inEvent.getAltKey()) {
