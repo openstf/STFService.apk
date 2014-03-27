@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -31,6 +32,7 @@ public class InputService extends Service {
 
     private PowerManager powerManager;
     private KeyguardManager keyguardManager;
+    private TelephonyManager telephonyManager;
     private Object clipboardManagerObject;
 
     private AcceptorThread acceptor;
@@ -44,6 +46,7 @@ public class InputService extends Service {
         super.onCreate();
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         clipboardManagerObject = getSystemService(CLIPBOARD_SERVICE);
     }
 
@@ -201,6 +204,33 @@ public class InputService extends Service {
                             }
                             else {
                                 writer.write("OK:" + content + "\n");
+                            }
+                        }
+                        else if (line.equals("get phone number")) {
+                            String phoneNumber = telephonyManager.getLine1Number();
+                            if (phoneNumber == null || phoneNumber.isEmpty()) {
+                                writer.write("ERR:No phone number\n");
+                            }
+                            else {
+                                writer.write("OK:" + phoneNumber + "\n");
+                            }
+                        }
+                        else if (line.equals("get imei")) {
+                            String deviceId = telephonyManager.getDeviceId();
+                            if (deviceId == null || deviceId.isEmpty()) {
+                                writer.write("ERR:No IMEI\n");
+                            }
+                            else {
+                                writer.write("OK:" + deviceId + "\n");
+                            }
+                        }
+                        else if (line.equals("get operator")) {
+                            String operator = telephonyManager.getSimOperatorName();
+                            if (operator == null || operator.isEmpty()) {
+                                writer.write("ERR:No operator\n");
+                            }
+                            else {
+                                writer.write("OK:" + operator + "\n");
                             }
                         }
                         else if (line.startsWith("set clipboard ")) {
