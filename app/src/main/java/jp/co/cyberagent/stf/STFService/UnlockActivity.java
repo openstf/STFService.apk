@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.input.agent;
+package jp.co.cyberagent.stf.STFService;
 
 import android.app.Activity;
 import android.app.KeyguardManager;

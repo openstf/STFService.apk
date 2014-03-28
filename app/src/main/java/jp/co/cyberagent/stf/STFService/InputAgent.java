@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.input.agent;
+package jp.co.cyberagent.stf.STFService;
 
 import android.os.SystemClock;
 import android.view.InputDevice;
@@ -11,10 +11,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import jp.co.cyberagent.stf.input.agent.compat.InputManagerWrapper;
-import jp.co.cyberagent.stf.input.agent.compat.PowerManagerWrapper;
-import jp.co.cyberagent.stf.input.agent.compat.ServiceManagerWrapper;
-import jp.co.cyberagent.stf.input.agent.proto.AgentProto;
+import jp.co.cyberagent.stf.STFService.compat.InputManagerWrapper;
+import jp.co.cyberagent.stf.STFService.compat.PowerManagerWrapper;
+import jp.co.cyberagent.stf.STFService.compat.ServiceManagerWrapper;
+import jp.co.cyberagent.stf.STFService.proto.AgentProto;
 
 public class InputAgent {
     public static final String VERSION = "0.2.0";

@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.input.agent;
+package jp.co.cyberagent.stf.STFService;
 
 import android.app.KeyguardManager;
 import android.app.Service;
@@ -22,11 +22,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InputService extends Service {
+public class STFService extends Service {
     private static final String TAG = "InputService";
 
-    public static final String ACTION_START = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_START";
-    public static final String ACTION_STOP = "jp.co.cyberagent.stf.input.agent.InputService.ACTION_STOP";
+    public static final String ACTION_START = "jp.co.cyberagent.stf.STFService.ACTION_START";
+    public static final String ACTION_STOP = "jp.co.cyberagent.stf.STFService.ACTION_STOP";
 
     public static final String EXTRA_PORT = "port";
 

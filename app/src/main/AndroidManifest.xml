@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.co.cyberagent.stf.input.agent">
+    package="jp.co.cyberagent.stf.STFService">
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -10,11 +10,11 @@
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher">
 
-        <service android:name=".InputService"
+        <service android:name=".STFService"
             android:exported="true">
             <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_START"/>
-                <action android:name="jp.co.cyberagent.stf.input.agent.InputService.ACTION_STOP"/>
+                <action android:name="jp.co.cyberagent.STFService.ACTION_START"/>
+                <action android:name="jp.co.cyberagent.STFService.ACTION_STOP"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
@@ -26,7 +26,7 @@
             android:stateNotNeeded="true"
             android:excludeFromRecents="true">
             <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.input.agent.IdentityActivity.ACTION_IDENTITY"/>
+                <action android:name="jp.co.cyberagent.stf.STFService.ACTION_IDENTIFY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

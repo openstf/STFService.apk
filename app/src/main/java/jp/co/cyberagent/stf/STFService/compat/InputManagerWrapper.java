@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.input.agent.compat;
+package jp.co.cyberagent.stf.STFService.compat;
 
 import android.os.IBinder;
 import android.view.InputEvent;
