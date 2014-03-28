@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.co.cyberagent.stf.STFService">
+    package="jp.co.cyberagent.stf">
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -13,8 +13,8 @@
         <service android:name=".STFService"
             android:exported="true">
             <intent-filter>
-                <action android:name="jp.co.cyberagent.STFService.ACTION_START"/>
-                <action android:name="jp.co.cyberagent.STFService.ACTION_STOP"/>
+                <action android:name="jp.co.cyberagent.stf.ACTION_START"/>
+                <action android:name="jp.co.cyberagent.stf.ACTION_STOP"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </service>
@@ -26,7 +26,7 @@
             android:stateNotNeeded="true"
             android:excludeFromRecents="true">
             <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.STFService.ACTION_IDENTIFY"/>
+                <action android:name="jp.co.cyberagent.stf.ACTION_IDENTIFY"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>

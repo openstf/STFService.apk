@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.STFService.compat;
+package jp.co.cyberagent.stf.compat;
 
 import android.os.IBinder;
 import android.os.SystemClock;

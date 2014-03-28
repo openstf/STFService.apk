@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.STFService.compat;
+package jp.co.cyberagent.stf.compat;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

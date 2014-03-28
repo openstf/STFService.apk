@@ -1,4 +1,4 @@
-package jp.co.cyberagent.stf.STFService;
+package jp.co.cyberagent.stf;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 public class IdentityActivity extends Activity {
     private static final String TAG = "IdentityActivity";
 
-    public static final String ACTION_IDENTITY = "jp.co.cyberagent.stf.STFService.ACTION_IDENTIFY";
+    public static final String ACTION_IDENTITY = "jp.co.cyberagent.stf.ACTION_IDENTIFY";
 
     public static final String EXTRA_SERIAL = "serial";
 
