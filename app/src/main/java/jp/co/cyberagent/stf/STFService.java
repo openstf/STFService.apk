@@ -15,17 +15,17 @@ import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import jp.co.cyberagent.stf.proto.ServiceProto;
 
 public class STFService extends Service {
     private static final String TAG = "STFService";
@@ -33,7 +33,7 @@ public class STFService extends Service {
     public static final String ACTION_START = "jp.co.cyberagent.stf.ACTION_START";
     public static final String ACTION_STOP = "jp.co.cyberagent.stf.ACTION_STOP";
 
-    public static final String EXTRA_PORT = "port";
+    public static final String EXTRA_PORT = "jp.co.cyberagent.stf.EXTRA_PORT";
 
     private static final int ONGOING_NOTIFICATION = 0x1;
 
@@ -184,98 +184,210 @@ public class STFService extends Service {
                 }
             }
 
+            private void handleVersionRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                try {
+                    PackageManager manager = getPackageManager();
+                    PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+                    ServiceProto.VersionResponse.newBuilder()
+                            .setSuccess(true)
+                            .setVersion(info.versionName)
+                            .build()
+                            .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+                catch (PackageManager.NameNotFoundException e) {
+                    ServiceProto.VersionResponse.newBuilder()
+                            .setSuccess(false)
+                            .build()
+                            .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+            }
+
+            private void handleSetKeyguardStateRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.SetKeyguardStateRequest request =
+                        ServiceProto.SetKeyguardStateRequest.parseFrom(envelope.getRequest());
+
+                if (request.getEnabled()) {
+                    lock();
+                }
+                else {
+                    unlock();
+                }
+
+                ServiceProto.SetKeyguardStateResponse.newBuilder()
+                        .setSuccess(true)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleSetWakeLockRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.SetWakeLockRequest request =
+                        ServiceProto.SetWakeLockRequest.parseFrom(envelope.getRequest());
+
+                if (request.getEnabled()) {
+                    acquireWakeLock();
+                }
+                else {
+                    releaseWakeLock();
+                }
+
+                ServiceProto.SetWakeLockResponse.newBuilder()
+                        .setSuccess(true)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleSetClipboardRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.SetClipboardRequest request =
+                        ServiceProto.SetClipboardRequest.parseFrom(envelope.getRequest());
+
+                switch (request.getType()) {
+                    case TEXT:
+                        setClipboardText(request.getText());
+                        ServiceProto.SetClipboardResponse.newBuilder()
+                                .setSuccess(true)
+                                .build()
+                                .writeDelimitedTo(clientSocket.getOutputStream());
+                        break;
+                    default:
+                        ServiceProto.SetClipboardResponse.newBuilder()
+                                .setSuccess(false)
+                                .build()
+                                .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+            }
+
+            private void handleGetClipboardRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.GetClipboardRequest request =
+                        ServiceProto.GetClipboardRequest.parseFrom(envelope.getRequest());
+
+                switch (request.getType()) {
+                    case TEXT:
+                        CharSequence text = getClipboardText();
+
+                        if (text == null) {
+                            ServiceProto.GetClipboardResponse.newBuilder()
+                                    .setSuccess(true)
+                                    .build()
+                                    .writeDelimitedTo(clientSocket.getOutputStream());
+                        }
+                        else {
+                            ServiceProto.GetClipboardResponse.newBuilder()
+                                    .setSuccess(true)
+                                    .setText(text.toString())
+                                    .build()
+                                    .writeDelimitedTo(clientSocket.getOutputStream());
+                        }
+
+                        break;
+                    default:
+                        ServiceProto.GetClipboardResponse.newBuilder()
+                                .setSuccess(false)
+                                .build()
+                                .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+            }
+
+            private void handleGetPropertiesRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.GetPropertiesRequest request =
+                        ServiceProto.GetPropertiesRequest.parseFrom(envelope.getRequest());
+
+                ArrayList<ServiceProto.Property> properties = new ArrayList<ServiceProto.Property>();
+
+                for (String name : request.getPropertiesList()) {
+                    if (name.equals("imei")) {
+                        String deviceId = telephonyManager.getDeviceId();
+                        if (deviceId != null && !deviceId.isEmpty()) {
+                            properties.add(ServiceProto.Property.newBuilder()
+                                .setName(name)
+                                .setValue(deviceId)
+                                .build());
+                        }
+                    }
+                    else if (name.equals("phoneNumber")) {
+                        String phoneNumber = telephonyManager.getLine1Number();
+                        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                            properties.add(ServiceProto.Property.newBuilder()
+                                .setName(name)
+                                .setValue(phoneNumber)
+                                .build());
+                        }
+                    }
+                    else if (name.equals("operator")) {
+                        String operator;
+                        switch (telephonyManager.getPhoneType()) {
+                            case TelephonyManager.PHONE_TYPE_CDMA:
+                                operator = telephonyManager.getSimOperatorName();
+                                break;
+                            default:
+                                operator = telephonyManager.getNetworkOperatorName();
+                                if (operator == null || operator.isEmpty()) {
+                                    operator = telephonyManager.getSimOperatorName();
+                                }
+                        }
+                        if (operator != null && !operator.isEmpty()) {
+                            properties.add(ServiceProto.Property.newBuilder()
+                                    .setName(name)
+                                    .setValue(operator)
+                                    .build());
+                        }
+                    }
+                }
+
+                ServiceProto.GetPropertiesResponse.newBuilder()
+                        .setSuccess(true)
+                        .addAllProperties(properties)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleIdentifyRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.IdentifyRequest request =
+                        ServiceProto.IdentifyRequest.parseFrom(envelope.getRequest());
+
+                showIdentity(request.getSerial());
+
+                ServiceProto.IdentifyResponse.newBuilder()
+                        .setSuccess(true)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
             @Override
             public void run() {
                 Log.i(TAG, "Starting ClientThread");
 
                 try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(
-                            clientSocket.getInputStream()));
-                    OutputStreamWriter writer = new OutputStreamWriter(
-                            clientSocket.getOutputStream());
-
                     while (!isInterrupted()) {
-                        String line = reader.readLine();
+                        ServiceProto.RequestEnvelope envelope =
+                                ServiceProto.RequestEnvelope.parseDelimitedFrom(clientSocket.getInputStream());
 
-                        if (line == null) {
+                        if (envelope == null) {
                             break;
                         }
 
-                        if (line.equals("version")) {
-                            try {
-                                PackageInfo info = getPackageManager().getPackageInfo(
-                                        getPackageName(), 0);
-                                writer.write("OK:" + info.versionName + "\n");
-                            }
-                            catch (PackageManager.NameNotFoundException e) {
-                                writer.write("ERR: package not found\n");
-                            }
+                        switch (envelope.getType()) {
+                            case VERSION:
+                                handleVersionRequest(envelope);
+                                break;
+                            case SET_KEYGUARD_STATE:
+                                handleSetKeyguardStateRequest(envelope);
+                                break;
+                            case SET_WAKE_LOCK:
+                                handleSetWakeLockRequest(envelope);
+                                break;
+                            case SET_CLIPBOARD:
+                                handleSetClipboardRequest(envelope);
+                                break;
+                            case GET_CLIPBOARD:
+                                handleGetClipboardRequest(envelope);
+                                break;
+                            case GET_PROPERTIES:
+                                handleGetPropertiesRequest(envelope);
+                                break;
+                            case IDENTIFY:
+                                handleIdentifyRequest(envelope);
+                                break;
                         }
-                        else if (line.equals("unlock")) {
-                            unlock();
-                            writer.write("OK\n");
-                        }
-                        else if (line.equals("lock")) {
-                            lock();
-                            writer.write("OK\n");
-                        }
-                        else if (line.equals("acquire wake lock")) {
-                            acquireWakeLock();
-                            writer.write("OK\n");
-                        }
-                        else if (line.equals("release wake lock")) {
-                            releaseWakeLock();
-                            writer.write("OK\n");
-                        }
-                        else if (line.equals("get clipboard")) {
-                            CharSequence content = getClipboardContent();
-                            if (content == null) {
-                                writer.write("ERR: clipboard has no content");
-                            }
-                            else {
-                                writer.write("OK:" + content + "\n");
-                            }
-                        }
-                        else if (line.equals("get phone number")) {
-                            String phoneNumber = telephonyManager.getLine1Number();
-                            if (phoneNumber == null || phoneNumber.isEmpty()) {
-                                writer.write("ERR: no phone number\n");
-                            }
-                            else {
-                                writer.write("OK:" + phoneNumber + "\n");
-                            }
-                        }
-                        else if (line.equals("get imei")) {
-                            String deviceId = telephonyManager.getDeviceId();
-                            if (deviceId == null || deviceId.isEmpty()) {
-                                writer.write("ERR: no IMEI\n");
-                            }
-                            else {
-                                writer.write("OK:" + deviceId + "\n");
-                            }
-                        }
-                        else if (line.equals("get operator")) {
-                            String operator = telephonyManager.getSimOperatorName();
-                            if (operator == null || operator.isEmpty()) {
-                                writer.write("ERR: no operator\n");
-                            }
-                            else {
-                                writer.write("OK:" + operator + "\n");
-                            }
-                        }
-                        else if (line.startsWith("set clipboard ")) {
-                            setClipboardContent(line.substring("set clipboard ".length()));
-                            writer.write("OK\n");
-                        }
-                        else if (line.startsWith("show identity ")) {
-                            showIdentity(line.substring("show identity ".length()));
-                            writer.write("OK\n");
-                        }
-                        else {
-                            writer.write("ERROR: unknown command\n");
-                        }
-
-                        writer.flush();
                     }
                 }
                 catch (IOException e) {
@@ -333,7 +445,7 @@ public class STFService extends Service {
                 startActivity(intent);
             }
 
-            private CharSequence getClipboardContent() {
+            private CharSequence getClipboardText() {
                 if (Build.VERSION.SDK_INT >= 11) {
                     android.content.ClipboardManager clipboardManager =
                             (android.content.ClipboardManager) clipboardManagerObject;
@@ -358,7 +470,7 @@ public class STFService extends Service {
                 }
             }
 
-            private void setClipboardContent(String content) {
+            private void setClipboardText(String content) {
                 if (Build.VERSION.SDK_INT >= 11) {
                     android.content.ClipboardManager clipboardManager =
                             (android.content.ClipboardManager) clipboardManagerObject;
