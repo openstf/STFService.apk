@@ -1,5 +1,6 @@
 package jp.co.cyberagent.stf;
 
+import android.content.Context;
 import android.os.SystemClock;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;

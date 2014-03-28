@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -199,7 +201,17 @@ public class STFService extends Service {
                             break;
                         }
 
-                        if (line.equals("unlock")) {
+                        if (line.equals("version")) {
+                            try {
+                                PackageInfo info = getPackageManager().getPackageInfo(
+                                        getPackageName(), 0);
+                                writer.write("OK:" + info.versionName + "\n");
+                            }
+                            catch (PackageManager.NameNotFoundException e) {
+                                writer.write("ERR: package not found\n");
+                            }
+                        }
+                        else if (line.equals("unlock")) {
                             unlock();
                             writer.write("OK\n");
                         }
@@ -218,7 +230,7 @@ public class STFService extends Service {
                         else if (line.equals("get clipboard")) {
                             CharSequence content = getClipboardContent();
                             if (content == null) {
-                                writer.write("ERR:Clipboard has no content");
+                                writer.write("ERR: clipboard has no content");
                             }
                             else {
                                 writer.write("OK:" + content + "\n");
@@ -227,7 +239,7 @@ public class STFService extends Service {
                         else if (line.equals("get phone number")) {
                             String phoneNumber = telephonyManager.getLine1Number();
                             if (phoneNumber == null || phoneNumber.isEmpty()) {
-                                writer.write("ERR:No phone number\n");
+                                writer.write("ERR: no phone number\n");
                             }
                             else {
                                 writer.write("OK:" + phoneNumber + "\n");
@@ -236,7 +248,7 @@ public class STFService extends Service {
                         else if (line.equals("get imei")) {
                             String deviceId = telephonyManager.getDeviceId();
                             if (deviceId == null || deviceId.isEmpty()) {
-                                writer.write("ERR:No IMEI\n");
+                                writer.write("ERR: no IMEI\n");
                             }
                             else {
                                 writer.write("OK:" + deviceId + "\n");
@@ -245,7 +257,7 @@ public class STFService extends Service {
                         else if (line.equals("get operator")) {
                             String operator = telephonyManager.getSimOperatorName();
                             if (operator == null || operator.isEmpty()) {
-                                writer.write("ERR:No operator\n");
+                                writer.write("ERR: no operator\n");
                             }
                             else {
                                 writer.write("OK:" + operator + "\n");
