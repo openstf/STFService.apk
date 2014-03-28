@@ -1,12 +1,15 @@
 package jp.co.cyberagent.stf;
 
 import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -30,6 +33,8 @@ public class STFService extends Service {
 
     public static final String EXTRA_PORT = "port";
 
+    private static final int ONGOING_NOTIFICATION = 0x1;
+
     private PowerManager powerManager;
     private KeyguardManager keyguardManager;
     private TelephonyManager telephonyManager;
@@ -44,10 +49,23 @@ public class STFService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
         powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         clipboardManagerObject = getSystemService(CLIPBOARD_SERVICE);
+
+        Intent notificationIntent = new Intent(this, IdentityActivity.class);
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(android.R.drawable.ic_menu_info_details)
+                .setTicker(getString(R.string.service_ticker))
+                .setContentTitle(getString(R.string.service_title))
+                .setContentText(getString(R.string.service_text))
+                .setContentIntent(PendingIntent.getActivity(this, 0, notificationIntent, 0))
+                .setWhen(System.currentTimeMillis())
+                .build();
+
+        startForeground(ONGOING_NOTIFICATION, notification);
     }
 
     @Override
