@@ -34,13 +34,17 @@ public final class ServiceProto {
      */
     GET_CLIPBOARD(4, 4),
     /**
+     * <code>GET_BROWSERS = 5;</code>
+     */
+    GET_BROWSERS(5, 5),
+    /**
      * <code>GET_PROPERTIES = 6;</code>
      */
-    GET_PROPERTIES(5, 6),
+    GET_PROPERTIES(6, 6),
     /**
      * <code>IDENTIFY = 7;</code>
      */
-    IDENTIFY(6, 7),
+    IDENTIFY(7, 7),
     ;
 
     /**
@@ -64,6 +68,10 @@ public final class ServiceProto {
      */
     public static final int GET_CLIPBOARD_VALUE = 4;
     /**
+     * <code>GET_BROWSERS = 5;</code>
+     */
+    public static final int GET_BROWSERS_VALUE = 5;
+    /**
      * <code>GET_PROPERTIES = 6;</code>
      */
     public static final int GET_PROPERTIES_VALUE = 6;
@@ -82,6 +90,7 @@ public final class ServiceProto {
         case 2: return SET_WAKE_LOCK;
         case 3: return SET_CLIPBOARD;
         case 4: return GET_CLIPBOARD;
+        case 5: return GET_BROWSERS;
         case 6: return GET_PROPERTIES;
         case 7: return IDENTIFY;
         default: return null;
@@ -5234,6 +5243,2078 @@ public final class ServiceProto {
     // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.GetClipboardResponse)
   }
 
+  public interface BrowserOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required string name = 1;
+    /**
+     * <code>required string name = 1;</code>
+     */
+    boolean hasName();
+    /**
+     * <code>required string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>required string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    // required string component = 2;
+    /**
+     * <code>required string component = 2;</code>
+     */
+    boolean hasComponent();
+    /**
+     * <code>required string component = 2;</code>
+     */
+    java.lang.String getComponent();
+    /**
+     * <code>required string component = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getComponentBytes();
+
+    // required bool selected = 3;
+    /**
+     * <code>required bool selected = 3;</code>
+     */
+    boolean hasSelected();
+    /**
+     * <code>required bool selected = 3;</code>
+     */
+    boolean getSelected();
+
+    // required string icon = 4;
+    /**
+     * <code>required string icon = 4;</code>
+     */
+    boolean hasIcon();
+    /**
+     * <code>required string icon = 4;</code>
+     */
+    java.lang.String getIcon();
+    /**
+     * <code>required string icon = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getIconBytes();
+  }
+  /**
+   * Protobuf type {@code jp.co.cyberagent.stf.proto.Browser}
+   */
+  public static final class Browser extends
+      com.google.protobuf.GeneratedMessage
+      implements BrowserOrBuilder {
+    // Use Browser.newBuilder() to construct.
+    private Browser(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Browser(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Browser defaultInstance;
+    public static Browser getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Browser getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Browser(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              name_ = input.readBytes();
+              break;
+            }
+            case 18: {
+              bitField0_ |= 0x00000002;
+              component_ = input.readBytes();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              selected_ = input.readBool();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              icon_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              jp.co.cyberagent.stf.proto.ServiceProto.Browser.class, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Browser> PARSER =
+        new com.google.protobuf.AbstractParser<Browser>() {
+      public Browser parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Browser(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Browser> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required string name = 1;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private java.lang.Object name_;
+    /**
+     * <code>required string name = 1;</code>
+     */
+    public boolean hasName() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          name_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required string component = 2;
+    public static final int COMPONENT_FIELD_NUMBER = 2;
+    private java.lang.Object component_;
+    /**
+     * <code>required string component = 2;</code>
+     */
+    public boolean hasComponent() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required string component = 2;</code>
+     */
+    public java.lang.String getComponent() {
+      java.lang.Object ref = component_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          component_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string component = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getComponentBytes() {
+      java.lang.Object ref = component_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        component_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    // required bool selected = 3;
+    public static final int SELECTED_FIELD_NUMBER = 3;
+    private boolean selected_;
+    /**
+     * <code>required bool selected = 3;</code>
+     */
+    public boolean hasSelected() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required bool selected = 3;</code>
+     */
+    public boolean getSelected() {
+      return selected_;
+    }
+
+    // required string icon = 4;
+    public static final int ICON_FIELD_NUMBER = 4;
+    private java.lang.Object icon_;
+    /**
+     * <code>required string icon = 4;</code>
+     */
+    public boolean hasIcon() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required string icon = 4;</code>
+     */
+    public java.lang.String getIcon() {
+      java.lang.Object ref = icon_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          icon_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string icon = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIconBytes() {
+      java.lang.Object ref = icon_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        icon_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private void initFields() {
+      name_ = "";
+      component_ = "";
+      selected_ = false;
+      icon_ = "";
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasName()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasComponent()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasSelected()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasIcon()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getComponentBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBool(3, selected_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getIconBytes());
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getNameBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getComponentBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(3, selected_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getIconBytes());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(jp.co.cyberagent.stf.proto.ServiceProto.Browser prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code jp.co.cyberagent.stf.proto.Browser}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                jp.co.cyberagent.stf.proto.ServiceProto.Browser.class, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder.class);
+      }
+
+      // Construct using jp.co.cyberagent.stf.proto.ServiceProto.Browser.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        component_ = "";
+        bitField0_ = (bitField0_ & ~0x00000002);
+        selected_ = false;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        icon_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance();
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser build() {
+        jp.co.cyberagent.stf.proto.ServiceProto.Browser result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser buildPartial() {
+        jp.co.cyberagent.stf.proto.ServiceProto.Browser result = new jp.co.cyberagent.stf.proto.ServiceProto.Browser(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.name_ = name_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.component_ = component_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.selected_ = selected_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.icon_ = icon_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof jp.co.cyberagent.stf.proto.ServiceProto.Browser) {
+          return mergeFrom((jp.co.cyberagent.stf.proto.ServiceProto.Browser)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(jp.co.cyberagent.stf.proto.ServiceProto.Browser other) {
+        if (other == jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance()) return this;
+        if (other.hasName()) {
+          bitField0_ |= 0x00000001;
+          name_ = other.name_;
+          onChanged();
+        }
+        if (other.hasComponent()) {
+          bitField0_ |= 0x00000002;
+          component_ = other.component_;
+          onChanged();
+        }
+        if (other.hasSelected()) {
+          setSelected(other.getSelected());
+        }
+        if (other.hasIcon()) {
+          bitField0_ |= 0x00000008;
+          icon_ = other.icon_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasName()) {
+          
+          return false;
+        }
+        if (!hasComponent()) {
+          
+          return false;
+        }
+        if (!hasSelected()) {
+          
+          return false;
+        }
+        if (!hasIcon()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        jp.co.cyberagent.stf.proto.ServiceProto.Browser parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (jp.co.cyberagent.stf.proto.ServiceProto.Browser) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required string name = 1;
+      private java.lang.Object name_ = "";
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public boolean hasName() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public Builder clearName() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      // required string component = 2;
+      private java.lang.Object component_ = "";
+      /**
+       * <code>required string component = 2;</code>
+       */
+      public boolean hasComponent() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required string component = 2;</code>
+       */
+      public java.lang.String getComponent() {
+        java.lang.Object ref = component_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          component_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string component = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getComponentBytes() {
+        java.lang.Object ref = component_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          component_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string component = 2;</code>
+       */
+      public Builder setComponent(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        component_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string component = 2;</code>
+       */
+      public Builder clearComponent() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        component_ = getDefaultInstance().getComponent();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string component = 2;</code>
+       */
+      public Builder setComponentBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000002;
+        component_ = value;
+        onChanged();
+        return this;
+      }
+
+      // required bool selected = 3;
+      private boolean selected_ ;
+      /**
+       * <code>required bool selected = 3;</code>
+       */
+      public boolean hasSelected() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required bool selected = 3;</code>
+       */
+      public boolean getSelected() {
+        return selected_;
+      }
+      /**
+       * <code>required bool selected = 3;</code>
+       */
+      public Builder setSelected(boolean value) {
+        bitField0_ |= 0x00000004;
+        selected_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bool selected = 3;</code>
+       */
+      public Builder clearSelected() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        selected_ = false;
+        onChanged();
+        return this;
+      }
+
+      // required string icon = 4;
+      private java.lang.Object icon_ = "";
+      /**
+       * <code>required string icon = 4;</code>
+       */
+      public boolean hasIcon() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required string icon = 4;</code>
+       */
+      public java.lang.String getIcon() {
+        java.lang.Object ref = icon_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          icon_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string icon = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIconBytes() {
+        java.lang.Object ref = icon_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          icon_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string icon = 4;</code>
+       */
+      public Builder setIcon(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        icon_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string icon = 4;</code>
+       */
+      public Builder clearIcon() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        icon_ = getDefaultInstance().getIcon();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string icon = 4;</code>
+       */
+      public Builder setIconBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        icon_ = value;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.Browser)
+    }
+
+    static {
+      defaultInstance = new Browser(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.Browser)
+  }
+
+  public interface GetBrowsersRequestOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code jp.co.cyberagent.stf.proto.GetBrowsersRequest}
+   */
+  public static final class GetBrowsersRequest extends
+      com.google.protobuf.GeneratedMessage
+      implements GetBrowsersRequestOrBuilder {
+    // Use GetBrowsersRequest.newBuilder() to construct.
+    private GetBrowsersRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private GetBrowsersRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetBrowsersRequest defaultInstance;
+    public static GetBrowsersRequest getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public GetBrowsersRequest getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetBrowsersRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.class, jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<GetBrowsersRequest> PARSER =
+        new com.google.protobuf.AbstractParser<GetBrowsersRequest>() {
+      public GetBrowsersRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetBrowsersRequest(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetBrowsersRequest> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code jp.co.cyberagent.stf.proto.GetBrowsersRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.class, jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.Builder.class);
+      }
+
+      // Construct using jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor;
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.getDefaultInstance();
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest build() {
+        jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest buildPartial() {
+        jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest result = new jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest) {
+          return mergeFrom((jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest other) {
+        if (other == jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersRequest) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.GetBrowsersRequest)
+    }
+
+    static {
+      defaultInstance = new GetBrowsersRequest(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.GetBrowsersRequest)
+  }
+
+  public interface GetBrowsersResponseOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+
+    // required bool success = 1;
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    boolean hasSuccess();
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    boolean getSuccess();
+
+    // required bool selected = 2;
+    /**
+     * <code>required bool selected = 2;</code>
+     */
+    boolean hasSelected();
+    /**
+     * <code>required bool selected = 2;</code>
+     */
+    boolean getSelected();
+
+    // repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> 
+        getBrowsersList();
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    jp.co.cyberagent.stf.proto.ServiceProto.Browser getBrowsers(int index);
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    int getBrowsersCount();
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
+        getBrowsersOrBuilderList();
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder getBrowsersOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code jp.co.cyberagent.stf.proto.GetBrowsersResponse}
+   */
+  public static final class GetBrowsersResponse extends
+      com.google.protobuf.GeneratedMessage
+      implements GetBrowsersResponseOrBuilder {
+    // Use GetBrowsersResponse.newBuilder() to construct.
+    private GetBrowsersResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private GetBrowsersResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetBrowsersResponse defaultInstance;
+    public static GetBrowsersResponse getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public GetBrowsersResponse getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetBrowsersResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              success_ = input.readBool();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              selected_ = input.readBool();
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                browsers_ = new java.util.ArrayList<jp.co.cyberagent.stf.proto.ServiceProto.Browser>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              browsers_.add(input.readMessage(jp.co.cyberagent.stf.proto.ServiceProto.Browser.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          browsers_ = java.util.Collections.unmodifiableList(browsers_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.class, jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<GetBrowsersResponse> PARSER =
+        new com.google.protobuf.AbstractParser<GetBrowsersResponse>() {
+      public GetBrowsersResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetBrowsersResponse(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetBrowsersResponse> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    // required bool success = 1;
+    public static final int SUCCESS_FIELD_NUMBER = 1;
+    private boolean success_;
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    public boolean hasSuccess() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required bool success = 1;</code>
+     */
+    public boolean getSuccess() {
+      return success_;
+    }
+
+    // required bool selected = 2;
+    public static final int SELECTED_FIELD_NUMBER = 2;
+    private boolean selected_;
+    /**
+     * <code>required bool selected = 2;</code>
+     */
+    public boolean hasSelected() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required bool selected = 2;</code>
+     */
+    public boolean getSelected() {
+      return selected_;
+    }
+
+    // repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;
+    public static final int BROWSERS_FIELD_NUMBER = 3;
+    private java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> browsers_;
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> getBrowsersList() {
+      return browsers_;
+    }
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    public java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
+        getBrowsersOrBuilderList() {
+      return browsers_;
+    }
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    public int getBrowsersCount() {
+      return browsers_.size();
+    }
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    public jp.co.cyberagent.stf.proto.ServiceProto.Browser getBrowsers(int index) {
+      return browsers_.get(index);
+    }
+    /**
+     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     */
+    public jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder getBrowsersOrBuilder(
+        int index) {
+      return browsers_.get(index);
+    }
+
+    private void initFields() {
+      success_ = false;
+      selected_ = false;
+      browsers_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+
+      if (!hasSuccess()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasSelected()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      for (int i = 0; i < getBrowsersCount(); i++) {
+        if (!getBrowsers(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBool(1, success_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBool(2, selected_);
+      }
+      for (int i = 0; i < browsers_.size(); i++) {
+        output.writeMessage(3, browsers_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(1, success_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, selected_);
+      }
+      for (int i = 0; i < browsers_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, browsers_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code jp.co.cyberagent.stf.proto.GetBrowsersResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.class, jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.Builder.class);
+      }
+
+      // Construct using jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getBrowsersFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        success_ = false;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        selected_ = false;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        if (browsersBuilder_ == null) {
+          browsers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          browsersBuilder_.clear();
+        }
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor;
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.getDefaultInstance();
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse build() {
+        jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse buildPartial() {
+        jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse result = new jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.success_ = success_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.selected_ = selected_;
+        if (browsersBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            browsers_ = java.util.Collections.unmodifiableList(browsers_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.browsers_ = browsers_;
+        } else {
+          result.browsers_ = browsersBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse) {
+          return mergeFrom((jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse other) {
+        if (other == jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse.getDefaultInstance()) return this;
+        if (other.hasSuccess()) {
+          setSuccess(other.getSuccess());
+        }
+        if (other.hasSelected()) {
+          setSelected(other.getSelected());
+        }
+        if (browsersBuilder_ == null) {
+          if (!other.browsers_.isEmpty()) {
+            if (browsers_.isEmpty()) {
+              browsers_ = other.browsers_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureBrowsersIsMutable();
+              browsers_.addAll(other.browsers_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.browsers_.isEmpty()) {
+            if (browsersBuilder_.isEmpty()) {
+              browsersBuilder_.dispose();
+              browsersBuilder_ = null;
+              browsers_ = other.browsers_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              browsersBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getBrowsersFieldBuilder() : null;
+            } else {
+              browsersBuilder_.addAllMessages(other.browsers_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasSuccess()) {
+          
+          return false;
+        }
+        if (!hasSelected()) {
+          
+          return false;
+        }
+        for (int i = 0; i < getBrowsersCount(); i++) {
+          if (!getBrowsers(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (jp.co.cyberagent.stf.proto.ServiceProto.GetBrowsersResponse) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      // required bool success = 1;
+      private boolean success_ ;
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public boolean hasSuccess() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public boolean getSuccess() {
+        return success_;
+      }
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public Builder setSuccess(boolean value) {
+        bitField0_ |= 0x00000001;
+        success_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bool success = 1;</code>
+       */
+      public Builder clearSuccess() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        success_ = false;
+        onChanged();
+        return this;
+      }
+
+      // required bool selected = 2;
+      private boolean selected_ ;
+      /**
+       * <code>required bool selected = 2;</code>
+       */
+      public boolean hasSelected() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required bool selected = 2;</code>
+       */
+      public boolean getSelected() {
+        return selected_;
+      }
+      /**
+       * <code>required bool selected = 2;</code>
+       */
+      public Builder setSelected(boolean value) {
+        bitField0_ |= 0x00000002;
+        selected_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required bool selected = 2;</code>
+       */
+      public Builder clearSelected() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        selected_ = false;
+        onChanged();
+        return this;
+      }
+
+      // repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;
+      private java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> browsers_ =
+        java.util.Collections.emptyList();
+      private void ensureBrowsersIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          browsers_ = new java.util.ArrayList<jp.co.cyberagent.stf.proto.ServiceProto.Browser>(browsers_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          jp.co.cyberagent.stf.proto.ServiceProto.Browser, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> browsersBuilder_;
+
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> getBrowsersList() {
+        if (browsersBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(browsers_);
+        } else {
+          return browsersBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public int getBrowsersCount() {
+        if (browsersBuilder_ == null) {
+          return browsers_.size();
+        } else {
+          return browsersBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser getBrowsers(int index) {
+        if (browsersBuilder_ == null) {
+          return browsers_.get(index);
+        } else {
+          return browsersBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder setBrowsers(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser value) {
+        if (browsersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBrowsersIsMutable();
+          browsers_.set(index, value);
+          onChanged();
+        } else {
+          browsersBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder setBrowsers(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder builderForValue) {
+        if (browsersBuilder_ == null) {
+          ensureBrowsersIsMutable();
+          browsers_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          browsersBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder addBrowsers(jp.co.cyberagent.stf.proto.ServiceProto.Browser value) {
+        if (browsersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBrowsersIsMutable();
+          browsers_.add(value);
+          onChanged();
+        } else {
+          browsersBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder addBrowsers(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser value) {
+        if (browsersBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureBrowsersIsMutable();
+          browsers_.add(index, value);
+          onChanged();
+        } else {
+          browsersBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder addBrowsers(
+          jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder builderForValue) {
+        if (browsersBuilder_ == null) {
+          ensureBrowsersIsMutable();
+          browsers_.add(builderForValue.build());
+          onChanged();
+        } else {
+          browsersBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder addBrowsers(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder builderForValue) {
+        if (browsersBuilder_ == null) {
+          ensureBrowsersIsMutable();
+          browsers_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          browsersBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder addAllBrowsers(
+          java.lang.Iterable<? extends jp.co.cyberagent.stf.proto.ServiceProto.Browser> values) {
+        if (browsersBuilder_ == null) {
+          ensureBrowsersIsMutable();
+          super.addAll(values, browsers_);
+          onChanged();
+        } else {
+          browsersBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder clearBrowsers() {
+        if (browsersBuilder_ == null) {
+          browsers_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          browsersBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public Builder removeBrowsers(int index) {
+        if (browsersBuilder_ == null) {
+          ensureBrowsersIsMutable();
+          browsers_.remove(index);
+          onChanged();
+        } else {
+          browsersBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder getBrowsersBuilder(
+          int index) {
+        return getBrowsersFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder getBrowsersOrBuilder(
+          int index) {
+        if (browsersBuilder_ == null) {
+          return browsers_.get(index);  } else {
+          return browsersBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
+           getBrowsersOrBuilderList() {
+        if (browsersBuilder_ != null) {
+          return browsersBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(browsers_);
+        }
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder addBrowsersBuilder() {
+        return getBrowsersFieldBuilder().addBuilder(
+            jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder addBrowsersBuilder(
+          int index) {
+        return getBrowsersFieldBuilder().addBuilder(
+            index, jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       */
+      public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder> 
+           getBrowsersBuilderList() {
+        return getBrowsersFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          jp.co.cyberagent.stf.proto.ServiceProto.Browser, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
+          getBrowsersFieldBuilder() {
+        if (browsersBuilder_ == null) {
+          browsersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              jp.co.cyberagent.stf.proto.ServiceProto.Browser, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder>(
+                  browsers_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          browsers_ = null;
+        }
+        return browsersBuilder_;
+      }
+
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.GetBrowsersResponse)
+    }
+
+    static {
+      defaultInstance = new GetBrowsersResponse(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.GetBrowsersResponse)
+  }
+
   public interface PropertyOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
@@ -8091,6 +10172,21 @@ public final class ServiceProto {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_jp_co_cyberagent_stf_proto_GetClipboardResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_jp_co_cyberagent_stf_proto_Property_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -8141,18 +10237,24 @@ public final class ServiceProto {
       "cyberagent.stf.proto.ClipboardType\"n\n\024Ge" +
       "tClipboardResponse\022\017\n\007success\030\001 \002(\010\0227\n\004t" +
       "ype\030\002 \001(\0162).jp.co.cyberagent.stf.proto.C" +
-      "lipboardType\022\014\n\004text\030\003 \001(\t\"\'\n\010Property\022\014" +
-      "\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"*\n\024GetProper" +
-      "tiesRequest\022\022\n\nproperties\030\001 \003(\t\"b\n\025GetPr",
-      "opertiesResponse\022\017\n\007success\030\001 \002(\010\0228\n\npro" +
-      "perties\030\002 \003(\0132$.jp.co.cyberagent.stf.pro" +
-      "to.Property\"!\n\017IdentifyRequest\022\016\n\006serial" +
-      "\030\001 \002(\t\"#\n\020IdentifyResponse\022\017\n\007success\030\001 " +
-      "\002(\010*\215\001\n\013RequestType\022\013\n\007VERSION\020\000\022\026\n\022SET_" +
-      "KEYGUARD_STATE\020\001\022\021\n\rSET_WAKE_LOCK\020\002\022\021\n\rS" +
-      "ET_CLIPBOARD\020\003\022\021\n\rGET_CLIPBOARD\020\004\022\022\n\016GET" +
-      "_PROPERTIES\020\006\022\014\n\010IDENTIFY\020\007*\031\n\rClipboard" +
-      "Type\022\010\n\004TEXT\020\001B\016B\014ServiceProto"
+      "lipboardType\022\014\n\004text\030\003 \001(\t\"J\n\007Browser\022\014\n" +
+      "\004name\030\001 \002(\t\022\021\n\tcomponent\030\002 \002(\t\022\020\n\010select" +
+      "ed\030\003 \002(\010\022\014\n\004icon\030\004 \002(\t\"\024\n\022GetBrowsersReq",
+      "uest\"o\n\023GetBrowsersResponse\022\017\n\007success\030\001" +
+      " \002(\010\022\020\n\010selected\030\002 \002(\010\0225\n\010browsers\030\003 \003(\013" +
+      "2#.jp.co.cyberagent.stf.proto.Browser\"\'\n" +
+      "\010Property\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"*" +
+      "\n\024GetPropertiesRequest\022\022\n\nproperties\030\001 \003" +
+      "(\t\"b\n\025GetPropertiesResponse\022\017\n\007success\030\001" +
+      " \002(\010\0228\n\nproperties\030\002 \003(\0132$.jp.co.cyberag" +
+      "ent.stf.proto.Property\"!\n\017IdentifyReques" +
+      "t\022\016\n\006serial\030\001 \002(\t\"#\n\020IdentifyResponse\022\017\n" +
+      "\007success\030\001 \002(\010*\237\001\n\013RequestType\022\013\n\007VERSIO",
+      "N\020\000\022\026\n\022SET_KEYGUARD_STATE\020\001\022\021\n\rSET_WAKE_" +
+      "LOCK\020\002\022\021\n\rSET_CLIPBOARD\020\003\022\021\n\rGET_CLIPBOA" +
+      "RD\020\004\022\020\n\014GET_BROWSERS\020\005\022\022\n\016GET_PROPERTIES" +
+      "\020\006\022\014\n\010IDENTIFY\020\007*\031\n\rClipboardType\022\010\n\004TEX" +
+      "T\020\001B\016B\014ServiceProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -8225,32 +10327,50 @@ public final class ServiceProto {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_GetClipboardResponse_descriptor,
               new java.lang.String[] { "Success", "Type", "Text", });
-          internal_static_jp_co_cyberagent_stf_proto_Property_descriptor =
+          internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor =
             getDescriptor().getMessageTypes().get(11);
+          internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor,
+              new java.lang.String[] { "Name", "Component", "Selected", "Icon", });
+          internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor =
+            getDescriptor().getMessageTypes().get(12);
+          internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor,
+              new java.lang.String[] { });
+          internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor =
+            getDescriptor().getMessageTypes().get(13);
+          internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor,
+              new java.lang.String[] { "Success", "Selected", "Browsers", });
+          internal_static_jp_co_cyberagent_stf_proto_Property_descriptor =
+            getDescriptor().getMessageTypes().get(14);
           internal_static_jp_co_cyberagent_stf_proto_Property_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_Property_descriptor,
               new java.lang.String[] { "Name", "Value", });
           internal_static_jp_co_cyberagent_stf_proto_GetPropertiesRequest_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(15);
           internal_static_jp_co_cyberagent_stf_proto_GetPropertiesRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_GetPropertiesRequest_descriptor,
               new java.lang.String[] { "Properties", });
           internal_static_jp_co_cyberagent_stf_proto_GetPropertiesResponse_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(16);
           internal_static_jp_co_cyberagent_stf_proto_GetPropertiesResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_GetPropertiesResponse_descriptor,
               new java.lang.String[] { "Success", "Properties", });
           internal_static_jp_co_cyberagent_stf_proto_IdentifyRequest_descriptor =
-            getDescriptor().getMessageTypes().get(14);
+            getDescriptor().getMessageTypes().get(17);
           internal_static_jp_co_cyberagent_stf_proto_IdentifyRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_IdentifyRequest_descriptor,
               new java.lang.String[] { "Serial", });
           internal_static_jp_co_cyberagent_stf_proto_IdentifyResponse_descriptor =
-            getDescriptor().getMessageTypes().get(15);
+            getDescriptor().getMessageTypes().get(18);
           internal_static_jp_co_cyberagent_stf_proto_IdentifyResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_IdentifyResponse_descriptor,

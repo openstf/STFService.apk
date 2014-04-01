@@ -8,6 +8,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
@@ -23,9 +24,12 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jp.co.cyberagent.stf.proto.ServiceProto;
+import jp.co.cyberagent.stf.util.BrowserUtil;
+import jp.co.cyberagent.stf.util.GraphicUtil;
 
 public class STFService extends Service {
     private static final String TAG = "STFService";
@@ -287,6 +291,34 @@ public class STFService extends Service {
                 }
             }
 
+            private void handleGetBrowsersRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
+                ServiceProto.GetBrowsersRequest request =
+                        ServiceProto.GetBrowsersRequest.parseFrom(envelope.getRequest());
+
+                PackageManager pm = getPackageManager();
+
+                List<ResolveInfo> allBrowsers = BrowserUtil.getBrowsers(getBaseContext());
+                ResolveInfo defaultBrowser = BrowserUtil.getDefaultBrowser(getBaseContext());
+
+                ArrayList<ServiceProto.Browser> browsers = new ArrayList<ServiceProto.Browser>();
+
+                for (ResolveInfo info : allBrowsers) {
+                    browsers.add(ServiceProto.Browser.newBuilder()
+                            .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
+                            .setComponent(String.format("%s/%s", info.activityInfo.packageName, info.activityInfo.name))
+                            .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
+                            .setIcon(GraphicUtil.drawableToDataUri(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
+                            .build());
+                }
+
+                ServiceProto.GetBrowsersResponse.newBuilder()
+                        .setSuccess(true)
+                        .setSelected(defaultBrowser != null)
+                        .addAllBrowsers(browsers)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
             private void handleGetPropertiesRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
                 ServiceProto.GetPropertiesRequest request =
                         ServiceProto.GetPropertiesRequest.parseFrom(envelope.getRequest());
@@ -380,6 +412,9 @@ public class STFService extends Service {
                                 break;
                             case GET_CLIPBOARD:
                                 handleGetClipboardRequest(envelope);
+                                break;
+                            case GET_BROWSERS:
+                                handleGetBrowsersRequest(envelope);
                                 break;
                             case GET_PROPERTIES:
                                 handleGetPropertiesRequest(envelope);

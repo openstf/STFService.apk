@@ -31,6 +31,17 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".DebugActivity"
+            android:exported="true"
+            android:finishOnTaskLaunch="true"
+            android:noHistory="true"
+            android:stateNotNeeded="true"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="jp.co.cyberagent.stf.ACTION_DEBUG"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
