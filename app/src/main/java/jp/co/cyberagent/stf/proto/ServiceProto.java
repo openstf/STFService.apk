@@ -5243,7 +5243,7 @@ public final class ServiceProto {
     // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.GetClipboardResponse)
   }
 
-  public interface BrowserOrBuilder
+  public interface BrowserAppOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // required string name = 1;
@@ -5286,40 +5286,35 @@ public final class ServiceProto {
      */
     boolean getSelected();
 
-    // required string icon = 4;
+    // required bytes icon = 4;
     /**
-     * <code>required string icon = 4;</code>
+     * <code>required bytes icon = 4;</code>
      */
     boolean hasIcon();
     /**
-     * <code>required string icon = 4;</code>
+     * <code>required bytes icon = 4;</code>
      */
-    java.lang.String getIcon();
-    /**
-     * <code>required string icon = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getIconBytes();
+    com.google.protobuf.ByteString getIcon();
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.proto.Browser}
+   * Protobuf type {@code jp.co.cyberagent.stf.proto.BrowserApp}
    */
-  public static final class Browser extends
+  public static final class BrowserApp extends
       com.google.protobuf.GeneratedMessage
-      implements BrowserOrBuilder {
-    // Use Browser.newBuilder() to construct.
-    private Browser(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements BrowserAppOrBuilder {
+    // Use BrowserApp.newBuilder() to construct.
+    private BrowserApp(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private Browser(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private BrowserApp(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final Browser defaultInstance;
-    public static Browser getDefaultInstance() {
+    private static final BrowserApp defaultInstance;
+    public static BrowserApp getDefaultInstance() {
       return defaultInstance;
     }
 
-    public Browser getDefaultInstanceForType() {
+    public BrowserApp getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -5329,7 +5324,7 @@ public final class ServiceProto {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private Browser(
+    private BrowserApp(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5386,28 +5381,28 @@ public final class ServiceProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_BrowserApp_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable
+      return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_BrowserApp_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.proto.ServiceProto.Browser.class, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder.class);
+              jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.class, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<Browser> PARSER =
-        new com.google.protobuf.AbstractParser<Browser>() {
-      public Browser parsePartialFrom(
+    public static com.google.protobuf.Parser<BrowserApp> PARSER =
+        new com.google.protobuf.AbstractParser<BrowserApp>() {
+      public BrowserApp parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Browser(input, extensionRegistry);
+        return new BrowserApp(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<Browser> getParserForType() {
+    public com.google.protobuf.Parser<BrowserApp> getParserForType() {
       return PARSER;
     }
 
@@ -5514,54 +5509,27 @@ public final class ServiceProto {
       return selected_;
     }
 
-    // required string icon = 4;
+    // required bytes icon = 4;
     public static final int ICON_FIELD_NUMBER = 4;
-    private java.lang.Object icon_;
+    private com.google.protobuf.ByteString icon_;
     /**
-     * <code>required string icon = 4;</code>
+     * <code>required bytes icon = 4;</code>
      */
     public boolean hasIcon() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
-     * <code>required string icon = 4;</code>
+     * <code>required bytes icon = 4;</code>
      */
-    public java.lang.String getIcon() {
-      java.lang.Object ref = icon_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          icon_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <code>required string icon = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIconBytes() {
-      java.lang.Object ref = icon_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        icon_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.google.protobuf.ByteString getIcon() {
+      return icon_;
     }
 
     private void initFields() {
       name_ = "";
       component_ = "";
       selected_ = false;
-      icon_ = "";
+      icon_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -5601,7 +5569,7 @@ public final class ServiceProto {
         output.writeBool(3, selected_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeBytes(4, getIconBytes());
+        output.writeBytes(4, icon_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -5626,7 +5594,7 @@ public final class ServiceProto {
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(4, getIconBytes());
+          .computeBytesSize(4, icon_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5640,53 +5608,53 @@ public final class ServiceProto {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.proto.ServiceProto.Browser parseFrom(
+    public static jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -5695,7 +5663,7 @@ public final class ServiceProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.proto.ServiceProto.Browser prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -5707,24 +5675,24 @@ public final class ServiceProto {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.proto.Browser}
+     * Protobuf type {@code jp.co.cyberagent.stf.proto.BrowserApp}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder {
+       implements jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_BrowserApp_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_BrowserApp_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.proto.ServiceProto.Browser.class, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder.class);
+                jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.class, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.proto.ServiceProto.Browser.newBuilder()
+      // Construct using jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -5750,7 +5718,7 @@ public final class ServiceProto {
         bitField0_ = (bitField0_ & ~0x00000002);
         selected_ = false;
         bitField0_ = (bitField0_ & ~0x00000004);
-        icon_ = "";
+        icon_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
@@ -5761,23 +5729,23 @@ public final class ServiceProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+        return jp.co.cyberagent.stf.proto.ServiceProto.internal_static_jp_co_cyberagent_stf_proto_BrowserApp_descriptor;
       }
 
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance();
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser build() {
-        jp.co.cyberagent.stf.proto.ServiceProto.Browser result = buildPartial();
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp build() {
+        jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser buildPartial() {
-        jp.co.cyberagent.stf.proto.ServiceProto.Browser result = new jp.co.cyberagent.stf.proto.ServiceProto.Browser(this);
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp buildPartial() {
+        jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp result = new jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -5802,16 +5770,16 @@ public final class ServiceProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.proto.ServiceProto.Browser) {
-          return mergeFrom((jp.co.cyberagent.stf.proto.ServiceProto.Browser)other);
+        if (other instanceof jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp) {
+          return mergeFrom((jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.proto.ServiceProto.Browser other) {
-        if (other == jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp other) {
+        if (other == jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.getDefaultInstance()) return this;
         if (other.hasName()) {
           bitField0_ |= 0x00000001;
           name_ = other.name_;
@@ -5826,9 +5794,7 @@ public final class ServiceProto {
           setSelected(other.getSelected());
         }
         if (other.hasIcon()) {
-          bitField0_ |= 0x00000008;
-          icon_ = other.icon_;
-          onChanged();
+          setIcon(other.getIcon());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -5858,11 +5824,11 @@ public final class ServiceProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.proto.ServiceProto.Browser parsedMessage = null;
+        jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.proto.ServiceProto.Browser) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -6054,49 +6020,24 @@ public final class ServiceProto {
         return this;
       }
 
-      // required string icon = 4;
-      private java.lang.Object icon_ = "";
+      // required bytes icon = 4;
+      private com.google.protobuf.ByteString icon_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>required string icon = 4;</code>
+       * <code>required bytes icon = 4;</code>
        */
       public boolean hasIcon() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
-       * <code>required string icon = 4;</code>
+       * <code>required bytes icon = 4;</code>
        */
-      public java.lang.String getIcon() {
-        java.lang.Object ref = icon_;
-        if (!(ref instanceof java.lang.String)) {
-          java.lang.String s = ((com.google.protobuf.ByteString) ref)
-              .toStringUtf8();
-          icon_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public com.google.protobuf.ByteString getIcon() {
+        return icon_;
       }
       /**
-       * <code>required string icon = 4;</code>
+       * <code>required bytes icon = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getIconBytes() {
-        java.lang.Object ref = icon_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          icon_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>required string icon = 4;</code>
-       */
-      public Builder setIcon(
-          java.lang.String value) {
+      public Builder setIcon(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -6106,7 +6047,7 @@ public final class ServiceProto {
         return this;
       }
       /**
-       * <code>required string icon = 4;</code>
+       * <code>required bytes icon = 4;</code>
        */
       public Builder clearIcon() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -6114,29 +6055,16 @@ public final class ServiceProto {
         onChanged();
         return this;
       }
-      /**
-       * <code>required string icon = 4;</code>
-       */
-      public Builder setIconBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-        icon_ = value;
-        onChanged();
-        return this;
-      }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.Browser)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.BrowserApp)
     }
 
     static {
-      defaultInstance = new Browser(true);
+      defaultInstance = new BrowserApp(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.Browser)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.proto.BrowserApp)
   }
 
   public interface GetBrowsersRequestOrBuilder
@@ -6471,29 +6399,29 @@ public final class ServiceProto {
      */
     boolean getSelected();
 
-    // repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;
+    // repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> 
-        getBrowsersList();
+    java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp> 
+        getAppsList();
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    jp.co.cyberagent.stf.proto.ServiceProto.Browser getBrowsers(int index);
+    jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp getApps(int index);
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    int getBrowsersCount();
+    int getAppsCount();
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
-        getBrowsersOrBuilderList();
+    java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder> 
+        getAppsOrBuilderList();
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder getBrowsersOrBuilder(
+    jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder getAppsOrBuilder(
         int index);
   }
   /**
@@ -6559,10 +6487,10 @@ public final class ServiceProto {
             }
             case 26: {
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                browsers_ = new java.util.ArrayList<jp.co.cyberagent.stf.proto.ServiceProto.Browser>();
+                apps_ = new java.util.ArrayList<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp>();
                 mutable_bitField0_ |= 0x00000004;
               }
-              browsers_.add(input.readMessage(jp.co.cyberagent.stf.proto.ServiceProto.Browser.PARSER, extensionRegistry));
+              apps_.add(input.readMessage(jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.PARSER, extensionRegistry));
               break;
             }
           }
@@ -6574,7 +6502,7 @@ public final class ServiceProto {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          browsers_ = java.util.Collections.unmodifiableList(browsers_);
+          apps_ = java.util.Collections.unmodifiableList(apps_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -6640,46 +6568,46 @@ public final class ServiceProto {
       return selected_;
     }
 
-    // repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;
-    public static final int BROWSERS_FIELD_NUMBER = 3;
-    private java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> browsers_;
+    // repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;
+    public static final int APPS_FIELD_NUMBER = 3;
+    private java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp> apps_;
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> getBrowsersList() {
-      return browsers_;
+    public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp> getAppsList() {
+      return apps_;
     }
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    public java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
-        getBrowsersOrBuilderList() {
-      return browsers_;
+    public java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder> 
+        getAppsOrBuilderList() {
+      return apps_;
     }
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    public int getBrowsersCount() {
-      return browsers_.size();
+    public int getAppsCount() {
+      return apps_.size();
     }
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    public jp.co.cyberagent.stf.proto.ServiceProto.Browser getBrowsers(int index) {
-      return browsers_.get(index);
+    public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp getApps(int index) {
+      return apps_.get(index);
     }
     /**
-     * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+     * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
      */
-    public jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder getBrowsersOrBuilder(
+    public jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder getAppsOrBuilder(
         int index) {
-      return browsers_.get(index);
+      return apps_.get(index);
     }
 
     private void initFields() {
       success_ = false;
       selected_ = false;
-      browsers_ = java.util.Collections.emptyList();
+      apps_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -6694,8 +6622,8 @@ public final class ServiceProto {
         memoizedIsInitialized = 0;
         return false;
       }
-      for (int i = 0; i < getBrowsersCount(); i++) {
-        if (!getBrowsers(i).isInitialized()) {
+      for (int i = 0; i < getAppsCount(); i++) {
+        if (!getApps(i).isInitialized()) {
           memoizedIsInitialized = 0;
           return false;
         }
@@ -6713,8 +6641,8 @@ public final class ServiceProto {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBool(2, selected_);
       }
-      for (int i = 0; i < browsers_.size(); i++) {
-        output.writeMessage(3, browsers_.get(i));
+      for (int i = 0; i < apps_.size(); i++) {
+        output.writeMessage(3, apps_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -6733,9 +6661,9 @@ public final class ServiceProto {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, selected_);
       }
-      for (int i = 0; i < browsers_.size(); i++) {
+      for (int i = 0; i < apps_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, browsers_.get(i));
+          .computeMessageSize(3, apps_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -6845,7 +6773,7 @@ public final class ServiceProto {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-          getBrowsersFieldBuilder();
+          getAppsFieldBuilder();
         }
       }
       private static Builder create() {
@@ -6858,11 +6786,11 @@ public final class ServiceProto {
         bitField0_ = (bitField0_ & ~0x00000001);
         selected_ = false;
         bitField0_ = (bitField0_ & ~0x00000002);
-        if (browsersBuilder_ == null) {
-          browsers_ = java.util.Collections.emptyList();
+        if (appsBuilder_ == null) {
+          apps_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
         } else {
-          browsersBuilder_.clear();
+          appsBuilder_.clear();
         }
         return this;
       }
@@ -6900,14 +6828,14 @@ public final class ServiceProto {
           to_bitField0_ |= 0x00000002;
         }
         result.selected_ = selected_;
-        if (browsersBuilder_ == null) {
+        if (appsBuilder_ == null) {
           if (((bitField0_ & 0x00000004) == 0x00000004)) {
-            browsers_ = java.util.Collections.unmodifiableList(browsers_);
+            apps_ = java.util.Collections.unmodifiableList(apps_);
             bitField0_ = (bitField0_ & ~0x00000004);
           }
-          result.browsers_ = browsers_;
+          result.apps_ = apps_;
         } else {
-          result.browsers_ = browsersBuilder_.build();
+          result.apps_ = appsBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -6931,29 +6859,29 @@ public final class ServiceProto {
         if (other.hasSelected()) {
           setSelected(other.getSelected());
         }
-        if (browsersBuilder_ == null) {
-          if (!other.browsers_.isEmpty()) {
-            if (browsers_.isEmpty()) {
-              browsers_ = other.browsers_;
+        if (appsBuilder_ == null) {
+          if (!other.apps_.isEmpty()) {
+            if (apps_.isEmpty()) {
+              apps_ = other.apps_;
               bitField0_ = (bitField0_ & ~0x00000004);
             } else {
-              ensureBrowsersIsMutable();
-              browsers_.addAll(other.browsers_);
+              ensureAppsIsMutable();
+              apps_.addAll(other.apps_);
             }
             onChanged();
           }
         } else {
-          if (!other.browsers_.isEmpty()) {
-            if (browsersBuilder_.isEmpty()) {
-              browsersBuilder_.dispose();
-              browsersBuilder_ = null;
-              browsers_ = other.browsers_;
+          if (!other.apps_.isEmpty()) {
+            if (appsBuilder_.isEmpty()) {
+              appsBuilder_.dispose();
+              appsBuilder_ = null;
+              apps_ = other.apps_;
               bitField0_ = (bitField0_ & ~0x00000004);
-              browsersBuilder_ = 
+              appsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getBrowsersFieldBuilder() : null;
+                   getAppsFieldBuilder() : null;
             } else {
-              browsersBuilder_.addAllMessages(other.browsers_);
+              appsBuilder_.addAllMessages(other.apps_);
             }
           }
         }
@@ -6970,8 +6898,8 @@ public final class ServiceProto {
           
           return false;
         }
-        for (int i = 0; i < getBrowsersCount(); i++) {
-          if (!getBrowsers(i).isInitialized()) {
+        for (int i = 0; i < getAppsCount(); i++) {
+          if (!getApps(i).isInitialized()) {
             
             return false;
           }
@@ -7064,244 +6992,244 @@ public final class ServiceProto {
         return this;
       }
 
-      // repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;
-      private java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> browsers_ =
+      // repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;
+      private java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp> apps_ =
         java.util.Collections.emptyList();
-      private void ensureBrowsersIsMutable() {
+      private void ensureAppsIsMutable() {
         if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          browsers_ = new java.util.ArrayList<jp.co.cyberagent.stf.proto.ServiceProto.Browser>(browsers_);
+          apps_ = new java.util.ArrayList<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp>(apps_);
           bitField0_ |= 0x00000004;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          jp.co.cyberagent.stf.proto.ServiceProto.Browser, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> browsersBuilder_;
+          jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder> appsBuilder_;
 
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser> getBrowsersList() {
-        if (browsersBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(browsers_);
+      public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp> getAppsList() {
+        if (appsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(apps_);
         } else {
-          return browsersBuilder_.getMessageList();
+          return appsBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public int getBrowsersCount() {
-        if (browsersBuilder_ == null) {
-          return browsers_.size();
+      public int getAppsCount() {
+        if (appsBuilder_ == null) {
+          return apps_.size();
         } else {
-          return browsersBuilder_.getCount();
+          return appsBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser getBrowsers(int index) {
-        if (browsersBuilder_ == null) {
-          return browsers_.get(index);
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp getApps(int index) {
+        if (appsBuilder_ == null) {
+          return apps_.get(index);
         } else {
-          return browsersBuilder_.getMessage(index);
+          return appsBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder setBrowsers(
-          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser value) {
-        if (browsersBuilder_ == null) {
+      public Builder setApps(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp value) {
+        if (appsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureBrowsersIsMutable();
-          browsers_.set(index, value);
+          ensureAppsIsMutable();
+          apps_.set(index, value);
           onChanged();
         } else {
-          browsersBuilder_.setMessage(index, value);
+          appsBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder setBrowsers(
-          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder builderForValue) {
-        if (browsersBuilder_ == null) {
-          ensureBrowsersIsMutable();
-          browsers_.set(index, builderForValue.build());
+      public Builder setApps(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder builderForValue) {
+        if (appsBuilder_ == null) {
+          ensureAppsIsMutable();
+          apps_.set(index, builderForValue.build());
           onChanged();
         } else {
-          browsersBuilder_.setMessage(index, builderForValue.build());
+          appsBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder addBrowsers(jp.co.cyberagent.stf.proto.ServiceProto.Browser value) {
-        if (browsersBuilder_ == null) {
+      public Builder addApps(jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp value) {
+        if (appsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureBrowsersIsMutable();
-          browsers_.add(value);
+          ensureAppsIsMutable();
+          apps_.add(value);
           onChanged();
         } else {
-          browsersBuilder_.addMessage(value);
+          appsBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder addBrowsers(
-          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser value) {
-        if (browsersBuilder_ == null) {
+      public Builder addApps(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp value) {
+        if (appsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureBrowsersIsMutable();
-          browsers_.add(index, value);
+          ensureAppsIsMutable();
+          apps_.add(index, value);
           onChanged();
         } else {
-          browsersBuilder_.addMessage(index, value);
+          appsBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder addBrowsers(
-          jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder builderForValue) {
-        if (browsersBuilder_ == null) {
-          ensureBrowsersIsMutable();
-          browsers_.add(builderForValue.build());
+      public Builder addApps(
+          jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder builderForValue) {
+        if (appsBuilder_ == null) {
+          ensureAppsIsMutable();
+          apps_.add(builderForValue.build());
           onChanged();
         } else {
-          browsersBuilder_.addMessage(builderForValue.build());
+          appsBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder addBrowsers(
-          int index, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder builderForValue) {
-        if (browsersBuilder_ == null) {
-          ensureBrowsersIsMutable();
-          browsers_.add(index, builderForValue.build());
+      public Builder addApps(
+          int index, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder builderForValue) {
+        if (appsBuilder_ == null) {
+          ensureAppsIsMutable();
+          apps_.add(index, builderForValue.build());
           onChanged();
         } else {
-          browsersBuilder_.addMessage(index, builderForValue.build());
+          appsBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder addAllBrowsers(
-          java.lang.Iterable<? extends jp.co.cyberagent.stf.proto.ServiceProto.Browser> values) {
-        if (browsersBuilder_ == null) {
-          ensureBrowsersIsMutable();
-          super.addAll(values, browsers_);
+      public Builder addAllApps(
+          java.lang.Iterable<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp> values) {
+        if (appsBuilder_ == null) {
+          ensureAppsIsMutable();
+          super.addAll(values, apps_);
           onChanged();
         } else {
-          browsersBuilder_.addAllMessages(values);
+          appsBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder clearBrowsers() {
-        if (browsersBuilder_ == null) {
-          browsers_ = java.util.Collections.emptyList();
+      public Builder clearApps() {
+        if (appsBuilder_ == null) {
+          apps_ = java.util.Collections.emptyList();
           bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
-          browsersBuilder_.clear();
+          appsBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public Builder removeBrowsers(int index) {
-        if (browsersBuilder_ == null) {
-          ensureBrowsersIsMutable();
-          browsers_.remove(index);
+      public Builder removeApps(int index) {
+        if (appsBuilder_ == null) {
+          ensureAppsIsMutable();
+          apps_.remove(index);
           onChanged();
         } else {
-          browsersBuilder_.remove(index);
+          appsBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder getBrowsersBuilder(
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder getAppsBuilder(
           int index) {
-        return getBrowsersFieldBuilder().getBuilder(index);
+        return getAppsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder getBrowsersOrBuilder(
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder getAppsOrBuilder(
           int index) {
-        if (browsersBuilder_ == null) {
-          return browsers_.get(index);  } else {
-          return browsersBuilder_.getMessageOrBuilder(index);
+        if (appsBuilder_ == null) {
+          return apps_.get(index);  } else {
+          return appsBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
-           getBrowsersOrBuilderList() {
-        if (browsersBuilder_ != null) {
-          return browsersBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder> 
+           getAppsOrBuilderList() {
+        if (appsBuilder_ != null) {
+          return appsBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(browsers_);
+          return java.util.Collections.unmodifiableList(apps_);
         }
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder addBrowsersBuilder() {
-        return getBrowsersFieldBuilder().addBuilder(
-            jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance());
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder addAppsBuilder() {
+        return getAppsFieldBuilder().addBuilder(
+            jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.getDefaultInstance());
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder addBrowsersBuilder(
+      public jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder addAppsBuilder(
           int index) {
-        return getBrowsersFieldBuilder().addBuilder(
-            index, jp.co.cyberagent.stf.proto.ServiceProto.Browser.getDefaultInstance());
+        return getAppsFieldBuilder().addBuilder(
+            index, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.getDefaultInstance());
       }
       /**
-       * <code>repeated .jp.co.cyberagent.stf.proto.Browser browsers = 3;</code>
+       * <code>repeated .jp.co.cyberagent.stf.proto.BrowserApp apps = 3;</code>
        */
-      public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder> 
-           getBrowsersBuilderList() {
-        return getBrowsersFieldBuilder().getBuilderList();
+      public java.util.List<jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder> 
+           getAppsBuilderList() {
+        return getAppsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          jp.co.cyberagent.stf.proto.ServiceProto.Browser, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder> 
-          getBrowsersFieldBuilder() {
-        if (browsersBuilder_ == null) {
-          browsersBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              jp.co.cyberagent.stf.proto.ServiceProto.Browser, jp.co.cyberagent.stf.proto.ServiceProto.Browser.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserOrBuilder>(
-                  browsers_,
+          jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder> 
+          getAppsFieldBuilder() {
+        if (appsBuilder_ == null) {
+          appsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp, jp.co.cyberagent.stf.proto.ServiceProto.BrowserApp.Builder, jp.co.cyberagent.stf.proto.ServiceProto.BrowserAppOrBuilder>(
+                  apps_,
                   ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
-          browsers_ = null;
+          apps_ = null;
         }
-        return browsersBuilder_;
+        return appsBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.GetBrowsersResponse)
@@ -10172,10 +10100,10 @@ public final class ServiceProto {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_jp_co_cyberagent_stf_proto_GetClipboardResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor;
+    internal_static_jp_co_cyberagent_stf_proto_BrowserApp_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_proto_BrowserApp_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor;
   private static
@@ -10237,24 +10165,24 @@ public final class ServiceProto {
       "cyberagent.stf.proto.ClipboardType\"n\n\024Ge" +
       "tClipboardResponse\022\017\n\007success\030\001 \002(\010\0227\n\004t" +
       "ype\030\002 \001(\0162).jp.co.cyberagent.stf.proto.C" +
-      "lipboardType\022\014\n\004text\030\003 \001(\t\"J\n\007Browser\022\014\n" +
-      "\004name\030\001 \002(\t\022\021\n\tcomponent\030\002 \002(\t\022\020\n\010select" +
-      "ed\030\003 \002(\010\022\014\n\004icon\030\004 \002(\t\"\024\n\022GetBrowsersReq",
-      "uest\"o\n\023GetBrowsersResponse\022\017\n\007success\030\001" +
-      " \002(\010\022\020\n\010selected\030\002 \002(\010\0225\n\010browsers\030\003 \003(\013" +
-      "2#.jp.co.cyberagent.stf.proto.Browser\"\'\n" +
-      "\010Property\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\t\"*" +
-      "\n\024GetPropertiesRequest\022\022\n\nproperties\030\001 \003" +
-      "(\t\"b\n\025GetPropertiesResponse\022\017\n\007success\030\001" +
-      " \002(\010\0228\n\nproperties\030\002 \003(\0132$.jp.co.cyberag" +
-      "ent.stf.proto.Property\"!\n\017IdentifyReques" +
-      "t\022\016\n\006serial\030\001 \002(\t\"#\n\020IdentifyResponse\022\017\n" +
-      "\007success\030\001 \002(\010*\237\001\n\013RequestType\022\013\n\007VERSIO",
-      "N\020\000\022\026\n\022SET_KEYGUARD_STATE\020\001\022\021\n\rSET_WAKE_" +
-      "LOCK\020\002\022\021\n\rSET_CLIPBOARD\020\003\022\021\n\rGET_CLIPBOA" +
-      "RD\020\004\022\020\n\014GET_BROWSERS\020\005\022\022\n\016GET_PROPERTIES" +
-      "\020\006\022\014\n\010IDENTIFY\020\007*\031\n\rClipboardType\022\010\n\004TEX" +
-      "T\020\001B\016B\014ServiceProto"
+      "lipboardType\022\014\n\004text\030\003 \001(\t\"M\n\nBrowserApp" +
+      "\022\014\n\004name\030\001 \002(\t\022\021\n\tcomponent\030\002 \002(\t\022\020\n\010sel" +
+      "ected\030\003 \002(\010\022\014\n\004icon\030\004 \002(\014\"\024\n\022GetBrowsers",
+      "Request\"n\n\023GetBrowsersResponse\022\017\n\007succes" +
+      "s\030\001 \002(\010\022\020\n\010selected\030\002 \002(\010\0224\n\004apps\030\003 \003(\0132" +
+      "&.jp.co.cyberagent.stf.proto.BrowserApp\"" +
+      "\'\n\010Property\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(\t" +
+      "\"*\n\024GetPropertiesRequest\022\022\n\nproperties\030\001" +
+      " \003(\t\"b\n\025GetPropertiesResponse\022\017\n\007success" +
+      "\030\001 \002(\010\0228\n\nproperties\030\002 \003(\0132$.jp.co.cyber" +
+      "agent.stf.proto.Property\"!\n\017IdentifyRequ" +
+      "est\022\016\n\006serial\030\001 \002(\t\"#\n\020IdentifyResponse\022" +
+      "\017\n\007success\030\001 \002(\010*\237\001\n\013RequestType\022\013\n\007VERS",
+      "ION\020\000\022\026\n\022SET_KEYGUARD_STATE\020\001\022\021\n\rSET_WAK" +
+      "E_LOCK\020\002\022\021\n\rSET_CLIPBOARD\020\003\022\021\n\rGET_CLIPB" +
+      "OARD\020\004\022\020\n\014GET_BROWSERS\020\005\022\022\n\016GET_PROPERTI" +
+      "ES\020\006\022\014\n\010IDENTIFY\020\007*\031\n\rClipboardType\022\010\n\004T" +
+      "EXT\020\001B\016B\014ServiceProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -10327,11 +10255,11 @@ public final class ServiceProto {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_GetClipboardResponse_descriptor,
               new java.lang.String[] { "Success", "Type", "Text", });
-          internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor =
+          internal_static_jp_co_cyberagent_stf_proto_BrowserApp_descriptor =
             getDescriptor().getMessageTypes().get(11);
-          internal_static_jp_co_cyberagent_stf_proto_Browser_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_proto_BrowserApp_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_proto_Browser_descriptor,
+              internal_static_jp_co_cyberagent_stf_proto_BrowserApp_descriptor,
               new java.lang.String[] { "Name", "Component", "Selected", "Icon", });
           internal_static_jp_co_cyberagent_stf_proto_GetBrowsersRequest_descriptor =
             getDescriptor().getMessageTypes().get(12);
@@ -10344,7 +10272,7 @@ public final class ServiceProto {
           internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_GetBrowsersResponse_descriptor,
-              new java.lang.String[] { "Success", "Selected", "Browsers", });
+              new java.lang.String[] { "Success", "Selected", "Apps", });
           internal_static_jp_co_cyberagent_stf_proto_Property_descriptor =
             getDescriptor().getMessageTypes().get(14);
           internal_static_jp_co_cyberagent_stf_proto_Property_fieldAccessorTable = new

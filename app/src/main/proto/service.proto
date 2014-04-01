@@ -65,11 +65,11 @@ message GetClipboardResponse {
   optional string text = 3;
 }
 
-message Browser {
+message BrowserApp {
   required string name = 1;
   required string component = 2;
   required bool selected = 3;
-  required string icon = 4;
+  required bytes icon = 4;
 }
 
 message GetBrowsersRequest {
@@ -78,7 +78,7 @@ message GetBrowsersRequest {
 message GetBrowsersResponse {
   required bool success = 1;
   required bool selected = 2;
-  repeated Browser browsers = 3;
+  repeated BrowserApp apps = 3;
 }
 
 message Property {

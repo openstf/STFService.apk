@@ -300,21 +300,21 @@ public class STFService extends Service {
                 List<ResolveInfo> allBrowsers = BrowserUtil.getBrowsers(getBaseContext());
                 ResolveInfo defaultBrowser = BrowserUtil.getDefaultBrowser(getBaseContext());
 
-                ArrayList<ServiceProto.Browser> browsers = new ArrayList<ServiceProto.Browser>();
+                ArrayList<ServiceProto.BrowserApp> apps = new ArrayList<ServiceProto.BrowserApp>();
 
                 for (ResolveInfo info : allBrowsers) {
-                    browsers.add(ServiceProto.Browser.newBuilder()
+                    apps.add(ServiceProto.BrowserApp.newBuilder()
                             .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
                             .setComponent(String.format("%s/%s", info.activityInfo.packageName, info.activityInfo.name))
                             .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
-                            .setIcon(GraphicUtil.drawableToDataUri(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
+                            .setIcon(GraphicUtil.drawableToPNGByteString(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
                             .build());
                 }
 
                 ServiceProto.GetBrowsersResponse.newBuilder()
                         .setSuccess(true)
                         .setSelected(defaultBrowser != null)
-                        .addAllBrowsers(browsers)
+                        .addAllApps(apps)
                         .build()
                         .writeDelimitedTo(clientSocket.getOutputStream());
             }
