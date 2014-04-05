@@ -5,6 +5,7 @@ import android.os.SystemClock;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.Surface;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -15,14 +16,16 @@ import java.net.UnknownHostException;
 import jp.co.cyberagent.stf.compat.InputManagerWrapper;
 import jp.co.cyberagent.stf.compat.PowerManagerWrapper;
 import jp.co.cyberagent.stf.compat.ServiceManagerWrapper;
+import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
 import jp.co.cyberagent.stf.proto.AgentProto;
 
 public class InputAgent {
-    public static final String VERSION = "0.3.0";
+    public static final String VERSION = "0.3.1";
     public static final int PORT = 1090;
 
     private InputManagerWrapper inputManager;
     private PowerManagerWrapper powerManager;
+    private WindowManagerWrapper windowManager;
     private ServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
     private KeyCharacterMap keyCharacterMap;
@@ -95,6 +98,7 @@ public class InputAgent {
     private void run() {
         powerManager = new PowerManagerWrapper();
         inputManager = new InputManagerWrapper();
+        windowManager = new WindowManagerWrapper();
 
         selectDevice();
         loadKeyCharacterMap();
@@ -249,6 +253,27 @@ public class InputAgent {
                             break;
                         case WAKE:
                             wake();
+                            break;
+                        case FREEZE_ROTATION:
+                            if (inEvent.hasRotation()) {
+                                switch (inEvent.getRotation()) {
+                                    case 0:
+                                        windowManager.freezeRotation(Surface.ROTATION_0);
+                                        break;
+                                    case 180:
+                                        windowManager.freezeRotation(Surface.ROTATION_180);
+                                        break;
+                                    case 270:
+                                        windowManager.freezeRotation(Surface.ROTATION_270);
+                                        break;
+                                    case 90:
+                                        windowManager.freezeRotation(Surface.ROTATION_90);
+                                        break;
+                                }
+                            }
+                            break;
+                        case THAW_ROTATION:
+                            windowManager.thawRotation();
                             break;
                     }
                 }

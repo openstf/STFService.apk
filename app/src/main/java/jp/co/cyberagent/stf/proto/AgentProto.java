@@ -33,6 +33,14 @@ public final class AgentProto {
      * <code>WAKE = 4;</code>
      */
     WAKE(4, 4),
+    /**
+     * <code>FREEZE_ROTATION = 5;</code>
+     */
+    FREEZE_ROTATION(5, 5),
+    /**
+     * <code>THAW_ROTATION = 6;</code>
+     */
+    THAW_ROTATION(6, 6),
     ;
 
     /**
@@ -55,6 +63,14 @@ public final class AgentProto {
      * <code>WAKE = 4;</code>
      */
     public static final int WAKE_VALUE = 4;
+    /**
+     * <code>FREEZE_ROTATION = 5;</code>
+     */
+    public static final int FREEZE_ROTATION_VALUE = 5;
+    /**
+     * <code>THAW_ROTATION = 6;</code>
+     */
+    public static final int THAW_ROTATION_VALUE = 6;
 
 
     public final int getNumber() { return value; }
@@ -66,6 +82,8 @@ public final class AgentProto {
         case 2: return KEYPRESS;
         case 3: return TYPE;
         case 4: return WAKE;
+        case 5: return FREEZE_ROTATION;
+        case 6: return THAW_ROTATION;
         default: return null;
       }
     }
@@ -244,6 +262,16 @@ public final class AgentProto {
      */
     com.google.protobuf.ByteString
         getTextBytes();
+
+    // optional int32 rotation = 13;
+    /**
+     * <code>optional int32 rotation = 13;</code>
+     */
+    boolean hasRotation();
+    /**
+     * <code>optional int32 rotation = 13;</code>
+     */
+    int getRotation();
   }
   /**
    * Protobuf type {@code jp.co.cyberagent.stf.proto.InputEvent}
@@ -360,6 +388,11 @@ public final class AgentProto {
             case 98: {
               bitField0_ |= 0x00000800;
               text_ = input.readBytes();
+              break;
+            }
+            case 104: {
+              bitField0_ |= 0x00001000;
+              rotation_ = input.readInt32();
               break;
             }
           }
@@ -621,6 +654,22 @@ public final class AgentProto {
       }
     }
 
+    // optional int32 rotation = 13;
+    public static final int ROTATION_FIELD_NUMBER = 13;
+    private int rotation_;
+    /**
+     * <code>optional int32 rotation = 13;</code>
+     */
+    public boolean hasRotation() {
+      return ((bitField0_ & 0x00001000) == 0x00001000);
+    }
+    /**
+     * <code>optional int32 rotation = 13;</code>
+     */
+    public int getRotation() {
+      return rotation_;
+    }
+
     private void initFields() {
       action_ = jp.co.cyberagent.stf.proto.AgentProto.InputAction.KEYDOWN;
       keyCode_ = 0;
@@ -634,6 +683,7 @@ public final class AgentProto {
       scrollLockKey_ = false;
       numLockKey_ = false;
       text_ = "";
+      rotation_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -686,6 +736,9 @@ public final class AgentProto {
       }
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         output.writeBytes(12, getTextBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        output.writeInt32(13, rotation_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -743,6 +796,10 @@ public final class AgentProto {
       if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(12, getTextBytes());
+      }
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(13, rotation_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -884,6 +941,8 @@ public final class AgentProto {
         bitField0_ = (bitField0_ & ~0x00000400);
         text_ = "";
         bitField0_ = (bitField0_ & ~0x00000800);
+        rotation_ = 0;
+        bitField0_ = (bitField0_ & ~0x00001000);
         return this;
       }
 
@@ -960,6 +1019,10 @@ public final class AgentProto {
           to_bitField0_ |= 0x00000800;
         }
         result.text_ = text_;
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
+          to_bitField0_ |= 0x00001000;
+        }
+        result.rotation_ = rotation_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1013,6 +1076,9 @@ public final class AgentProto {
           bitField0_ |= 0x00000800;
           text_ = other.text_;
           onChanged();
+        }
+        if (other.hasRotation()) {
+          setRotation(other.getRotation());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -1485,6 +1551,39 @@ public final class AgentProto {
         return this;
       }
 
+      // optional int32 rotation = 13;
+      private int rotation_ ;
+      /**
+       * <code>optional int32 rotation = 13;</code>
+       */
+      public boolean hasRotation() {
+        return ((bitField0_ & 0x00001000) == 0x00001000);
+      }
+      /**
+       * <code>optional int32 rotation = 13;</code>
+       */
+      public int getRotation() {
+        return rotation_;
+      }
+      /**
+       * <code>optional int32 rotation = 13;</code>
+       */
+      public Builder setRotation(int value) {
+        bitField0_ |= 0x00001000;
+        rotation_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 rotation = 13;</code>
+       */
+      public Builder clearRotation() {
+        bitField0_ = (bitField0_ & ~0x00001000);
+        rotation_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.proto.InputEvent)
     }
 
@@ -1511,16 +1610,17 @@ public final class AgentProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\021proto/agent.proto\022\032jp.co.cyberagent.st" +
-      "f.proto\"\215\002\n\nInputEvent\0227\n\006action\030\001 \002(\0162\'" +
+      "f.proto\"\237\002\n\nInputEvent\0227\n\006action\030\001 \002(\0162\'" +
       ".jp.co.cyberagent.stf.proto.InputAction\022" +
       "\017\n\007keyCode\030\002 \001(\005\022\020\n\010shiftKey\030\003 \001(\010\022\017\n\007ct" +
       "rlKey\030\004 \001(\010\022\016\n\006altKey\030\005 \001(\010\022\017\n\007metaKey\030\006" +
       " \001(\010\022\016\n\006symKey\030\007 \001(\010\022\023\n\013functionKey\030\010 \001(" +
       "\010\022\023\n\013capsLockKey\030\t \001(\010\022\025\n\rscrollLockKey\030" +
-      "\n \001(\010\022\022\n\nnumLockKey\030\013 \001(\010\022\014\n\004text\030\014 \001(\t*" +
-      "G\n\013InputAction\022\013\n\007KEYDOWN\020\000\022\t\n\005KEYUP\020\001\022\014" +
-      "\n\010KEYPRESS\020\002\022\010\n\004TYPE\020\003\022\010\n\004WAKE\020\004B\014B\nAgen",
-      "tProto"
+      "\n \001(\010\022\022\n\nnumLockKey\030\013 \001(\010\022\014\n\004text\030\014 \001(\t\022" +
+      "\020\n\010rotation\030\r \001(\005*o\n\013InputAction\022\013\n\007KEYD" +
+      "OWN\020\000\022\t\n\005KEYUP\020\001\022\014\n\010KEYPRESS\020\002\022\010\n\004TYPE\020\003",
+      "\022\010\n\004WAKE\020\004\022\023\n\017FREEZE_ROTATION\020\005\022\021\n\rTHAW_" +
+      "ROTATION\020\006B\014B\nAgentProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1532,7 +1632,7 @@ public final class AgentProto {
           internal_static_jp_co_cyberagent_stf_proto_InputEvent_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_proto_InputEvent_descriptor,
-              new java.lang.String[] { "Action", "KeyCode", "ShiftKey", "CtrlKey", "AltKey", "MetaKey", "SymKey", "FunctionKey", "CapsLockKey", "ScrollLockKey", "NumLockKey", "Text", });
+              new java.lang.String[] { "Action", "KeyCode", "ShiftKey", "CtrlKey", "AltKey", "MetaKey", "SymKey", "FunctionKey", "CapsLockKey", "ScrollLockKey", "NumLockKey", "Text", "Rotation", });
           return null;
         }
       };
