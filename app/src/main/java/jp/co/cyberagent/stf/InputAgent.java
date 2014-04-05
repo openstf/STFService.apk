@@ -18,7 +18,7 @@ import jp.co.cyberagent.stf.compat.ServiceManagerWrapper;
 import jp.co.cyberagent.stf.proto.AgentProto;
 
 public class InputAgent {
-    public static final String VERSION = "0.2.0";
+    public static final String VERSION = "0.3.0";
     public static final int PORT = 1090;
 
     private InputManagerWrapper inputManager;
