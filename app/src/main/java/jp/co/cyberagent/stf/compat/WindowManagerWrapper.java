@@ -1,9 +1,11 @@
 package jp.co.cyberagent.stf.compat;
 
-import android.os.IBinder;
-
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import jp.co.cyberagent.stf.util.InternalApi;
 
 public class WindowManagerWrapper {
     private RotationInjector rotationInjector;
@@ -12,6 +14,10 @@ public class WindowManagerWrapper {
     private interface RotationInjector {
         public void freezeRotation(int rotation);
         public void thawRotation();
+    }
+
+    public static interface RotationWatcher {
+        public void onRotationChanged(int rotation);
     }
 
     public WindowManagerWrapper() {
@@ -33,34 +39,48 @@ public class WindowManagerWrapper {
         rotationInjector.thawRotation();
     }
 
-    public static Object getWindowManager() {
+    public void watchRotation(final RotationWatcher watcher) {
         try {
-            Object windowManagerBinder = ServiceManagerWrapper.getService("window");
+            Class<?> IRotationWatcher = Class.forName("android.view.IRotationWatcher");
 
-            // We need to call IWindowManager.Stub.asInterface(IBinder obj) to get an instance
-            // of IWindowManager
-            Class<?> Stub = Class.forName("android.view.IWindowManager$Stub");
+            Object windowManager = getWindowManager();
 
-            Method asInterface = Stub.getMethod("asInterface", IBinder.class);
+            Object proxy = Proxy.newProxyInstance(IRotationWatcher.getClassLoader(), new Class[]{IRotationWatcher}, new InvocationHandler() {
+                @Override
+                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                    System.out.println("Invoked " + method.getName());
+                    if (method.getName().equals("onRotationChanged")) {
+                        watcher.onRotationChanged((Integer) args[0]);
+                    }
+                    return null;
+                }
+            });
 
-            return asInterface.invoke(null, windowManagerBinder);
+            Method watchRotation = windowManager.getClass().getMethod("watchRotation", IRotationWatcher);
+
+            watchRotation.invoke(windowManager, proxy);
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
-            throw new UnsupportedOperationException("WindowManager had ClassNotFoundException");
+            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
         }
         catch (NoSuchMethodException e) {
             e.printStackTrace();
-            throw new UnsupportedOperationException("WindowManager had NoSuchMethodException");
+            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
         }
         catch (IllegalAccessException e) {
             e.printStackTrace();
-            throw new UnsupportedOperationException("WindowManager had IllegalAccessException");
+            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
         }
         catch (InvocationTargetException e) {
             e.printStackTrace();
-            throw new UnsupportedOperationException("WindowManager had InvocationTargetException");
+            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
         }
+    }
+
+
+    public static Object getWindowManager() {
+        return InternalApi.getServiceAsInterface("window", "android.view.IWindowManager$Stub");
     }
 
     /**

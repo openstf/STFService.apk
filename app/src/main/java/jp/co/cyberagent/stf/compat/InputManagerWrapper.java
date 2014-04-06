@@ -1,11 +1,12 @@
 package jp.co.cyberagent.stf.compat;
 
-import android.os.IBinder;
 import android.view.InputEvent;
 import android.view.KeyEvent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import jp.co.cyberagent.stf.util.InternalApi;
 
 public class InputManagerWrapper {
     private EventInjector eventInjector;
@@ -36,29 +37,14 @@ public class InputManagerWrapper {
 
         public InputManagerEventInjector() {
             try {
-                // The InputManager class is public, but only since SDK 16
-                Class<?> inputManagerClass = Class.forName("android.hardware.input.InputManager");
-
-                // getInstance() is @hidden
-                Method getInstanceMethod = inputManagerClass.getMethod("getInstance");
-
-                inputManager = getInstanceMethod.invoke(null);
+                inputManager = InternalApi.getSingleton("android.hardware.input.InputManager");
 
                 // injectInputEvent() is @hidden
-                injector = inputManagerClass
+                injector = inputManager.getClass()
                         // public boolean injectInputEvent(InputEvent event, int mode)
                         .getMethod("injectInputEvent", InputEvent.class, int.class);
             }
-            catch (ClassNotFoundException e) {
-                throw new UnsupportedOperationException("InputManagerEventInjector is not supported");
-            }
             catch (NoSuchMethodException e) {
-                throw new UnsupportedOperationException("InputManagerEventInjector is not supported");
-            }
-            catch (IllegalAccessException e) {
-                throw new UnsupportedOperationException("InputManagerEventInjector is not supported");
-            }
-            catch (InvocationTargetException e) {
                 throw new UnsupportedOperationException("InputManagerEventInjector is not supported");
             }
         }
@@ -88,34 +74,14 @@ public class InputManagerWrapper {
 
         public WindowManagerEventInjector() {
             try {
-                Object windowManagerBinder = ServiceManagerWrapper.getService("window");
-
-                // We need to call IWindowManager.Stub.asInterface(IBinder obj) to get an instance
-                // of IWindowManager
-                Class<?> Stub = Class.forName("android.view.IWindowManager$Stub");
-
-                Method asInterface = Stub.getMethod("asInterface", IBinder.class);
-
-                windowManager = asInterface.invoke(null, windowManagerBinder);
+                windowManager = WindowManagerWrapper.getWindowManager();
 
                 keyInjector = windowManager.getClass()
                         // public boolean injectKeyEvent(android.view.KeyEvent ev, boolean sync)
                         // throws android.os.RemoteException
                         .getMethod("injectKeyEvent", KeyEvent.class, boolean.class);
             }
-            catch (ClassNotFoundException e) {
-                e.printStackTrace();
-                throw new UnsupportedOperationException("WindowManagerEventInjector is not supported");
-            }
             catch (NoSuchMethodException e) {
-                e.printStackTrace();
-                throw new UnsupportedOperationException("WindowManagerEventInjector is not supported");
-            }
-            catch (IllegalAccessException e) {
-                e.printStackTrace();
-                throw new UnsupportedOperationException("WindowManagerEventInjector is not supported");
-            }
-            catch (InvocationTargetException e) {
                 e.printStackTrace();
                 throw new UnsupportedOperationException("WindowManagerEventInjector is not supported");
             }

@@ -1,42 +1,25 @@
 package jp.co.cyberagent.stf.compat;
 
-import android.os.IBinder;
 import android.os.SystemClock;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import jp.co.cyberagent.stf.util.InternalApi;
 
 public class PowerManagerWrapper {
     private Object powerManager;
     private WakeInjector wakeInjector;
 
     public PowerManagerWrapper() {
+        powerManager = InternalApi.getServiceAsInterface("power", "android.os.IPowerManager$Stub");
+
         try {
-            Object powerManagerBinder = ServiceManagerWrapper.getService("power");
-            Class<?> Stub = Class.forName("android.os.IPowerManager$Stub");
-            Method asInterface = Stub.getMethod("asInterface", IBinder.class);
-
-            powerManager = asInterface.invoke(null, powerManagerBinder);
-
-            try {
-                wakeInjector = new WakeUpWakeInjector();
-            }
-            catch (UnsupportedOperationException e) {
-                // Let it bubble
-                wakeInjector = new UserActivityWakeInjector();
-            }
+            wakeInjector = new WakeUpWakeInjector();
         }
-        catch (ClassNotFoundException e) {
-            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
-        }
-        catch (NoSuchMethodException e) {
-            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
-        }
-        catch (IllegalAccessException e) {
-            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
-        }
-        catch (InvocationTargetException e) {
-            throw new UnsupportedOperationException("PowerManagerWrapper is not supported");
+        catch (UnsupportedOperationException e) {
+            // Let it bubble
+            wakeInjector = new UserActivityWakeInjector();
         }
     }
 
