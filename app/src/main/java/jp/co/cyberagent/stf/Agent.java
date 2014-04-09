@@ -18,7 +18,7 @@ import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
 import jp.co.cyberagent.stf.proto.AgentProto;
 import jp.co.cyberagent.stf.util.InternalApi;
 
-public class InputAgent {
+public class Agent {
     public static final String VERSION = "0.3.1";
     public static final int PORT = 1090;
 
@@ -45,7 +45,7 @@ public class InputAgent {
             }
         }
 
-        new InputAgent().run();
+        new Agent().run();
     }
 
     private static void printServiceDebugInfo() {
