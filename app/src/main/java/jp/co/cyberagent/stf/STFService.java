@@ -344,6 +344,15 @@ public class STFService extends Service {
                                 .build());
                         }
                     }
+                    else if (name.equals("simSerial")) {
+                        String simSerial = telephonyManager.getSimSerialNumber();
+                        if (simSerial != null && !simSerial.isEmpty()) {
+                            properties.add(ServiceProto.Property.newBuilder()
+                                    .setName(name)
+                                    .setValue(simSerial)
+                                    .build());
+                        }
+                    }
                     else if (name.equals("operator")) {
                         String operator;
                         switch (telephonyManager.getPhoneType()) {

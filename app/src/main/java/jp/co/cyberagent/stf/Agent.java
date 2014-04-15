@@ -19,7 +19,7 @@ import jp.co.cyberagent.stf.proto.AgentProto;
 import jp.co.cyberagent.stf.util.InternalApi;
 
 public class Agent {
-    public static final String VERSION = "0.3.1";
+    public static final String VERSION = "0.4.0";
     public static final int PORT = 1090;
 
     private InputManagerWrapper inputManager;
