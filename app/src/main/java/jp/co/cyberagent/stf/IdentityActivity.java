@@ -63,7 +63,7 @@ public class IdentityActivity extends Activity {
         layout.addView(createData(tm.getLine1Number()));
         layout.addView(createLabel("IMEI"));
         layout.addView(createData(tm.getDeviceId()));
-        layout.addView(createLabel("SIM SERIAL"));
+        layout.addView(createLabel("ICCID"));
         layout.addView(createData(tm.getSimSerialNumber()));
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);

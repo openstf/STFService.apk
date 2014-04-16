@@ -344,12 +344,12 @@ public class STFService extends Service {
                                 .build());
                         }
                     }
-                    else if (name.equals("simSerial")) {
-                        String simSerial = telephonyManager.getSimSerialNumber();
-                        if (simSerial != null && !simSerial.isEmpty()) {
+                    else if (name.equals("iccid")) {
+                        String iccid = telephonyManager.getSimSerialNumber();
+                        if (iccid != null && !iccid.isEmpty()) {
                             properties.add(ServiceProto.Property.newBuilder()
                                     .setName(name)
-                                    .setValue(simSerial)
+                                    .setValue(iccid)
                                     .build());
                         }
                     }
