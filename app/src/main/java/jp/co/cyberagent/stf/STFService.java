@@ -27,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jp.co.cyberagent.stf.proto.ServiceProto;
 import jp.co.cyberagent.stf.util.BrowserUtil;
 import jp.co.cyberagent.stf.util.GraphicUtil;
 
@@ -188,219 +187,14 @@ public class STFService extends Service {
                 }
             }
 
-            private void handleVersionRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                try {
-                    PackageManager manager = getPackageManager();
-                    PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
-                    ServiceProto.VersionResponse.newBuilder()
-                            .setSuccess(true)
-                            .setVersion(info.versionName)
-                            .build()
-                            .writeDelimitedTo(clientSocket.getOutputStream());
-                }
-                catch (PackageManager.NameNotFoundException e) {
-                    ServiceProto.VersionResponse.newBuilder()
-                            .setSuccess(false)
-                            .build()
-                            .writeDelimitedTo(clientSocket.getOutputStream());
-                }
-            }
-
-            private void handleSetKeyguardStateRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.SetKeyguardStateRequest request =
-                        ServiceProto.SetKeyguardStateRequest.parseFrom(envelope.getRequest());
-
-                if (request.getEnabled()) {
-                    lock();
-                }
-                else {
-                    unlock();
-                }
-
-                ServiceProto.SetKeyguardStateResponse.newBuilder()
-                        .setSuccess(true)
-                        .build()
-                        .writeDelimitedTo(clientSocket.getOutputStream());
-            }
-
-            private void handleSetWakeLockRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.SetWakeLockRequest request =
-                        ServiceProto.SetWakeLockRequest.parseFrom(envelope.getRequest());
-
-                if (request.getEnabled()) {
-                    acquireWakeLock();
-                }
-                else {
-                    releaseWakeLock();
-                }
-
-                ServiceProto.SetWakeLockResponse.newBuilder()
-                        .setSuccess(true)
-                        .build()
-                        .writeDelimitedTo(clientSocket.getOutputStream());
-            }
-
-            private void handleSetClipboardRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.SetClipboardRequest request =
-                        ServiceProto.SetClipboardRequest.parseFrom(envelope.getRequest());
-
-                switch (request.getType()) {
-                    case TEXT:
-                        setClipboardText(request.getText());
-                        ServiceProto.SetClipboardResponse.newBuilder()
-                                .setSuccess(true)
-                                .build()
-                                .writeDelimitedTo(clientSocket.getOutputStream());
-                        break;
-                    default:
-                        ServiceProto.SetClipboardResponse.newBuilder()
-                                .setSuccess(false)
-                                .build()
-                                .writeDelimitedTo(clientSocket.getOutputStream());
-                }
-            }
-
-            private void handleGetClipboardRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.GetClipboardRequest request =
-                        ServiceProto.GetClipboardRequest.parseFrom(envelope.getRequest());
-
-                switch (request.getType()) {
-                    case TEXT:
-                        CharSequence text = getClipboardText();
-
-                        if (text == null) {
-                            ServiceProto.GetClipboardResponse.newBuilder()
-                                    .setSuccess(true)
-                                    .build()
-                                    .writeDelimitedTo(clientSocket.getOutputStream());
-                        }
-                        else {
-                            ServiceProto.GetClipboardResponse.newBuilder()
-                                    .setSuccess(true)
-                                    .setText(text.toString())
-                                    .build()
-                                    .writeDelimitedTo(clientSocket.getOutputStream());
-                        }
-
-                        break;
-                    default:
-                        ServiceProto.GetClipboardResponse.newBuilder()
-                                .setSuccess(false)
-                                .build()
-                                .writeDelimitedTo(clientSocket.getOutputStream());
-                }
-            }
-
-            private void handleGetBrowsersRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.GetBrowsersRequest request =
-                        ServiceProto.GetBrowsersRequest.parseFrom(envelope.getRequest());
-
-                PackageManager pm = getPackageManager();
-
-                List<ResolveInfo> allBrowsers = BrowserUtil.getBrowsers(getBaseContext());
-                ResolveInfo defaultBrowser = BrowserUtil.getDefaultBrowser(getBaseContext());
-
-                ArrayList<ServiceProto.BrowserApp> apps = new ArrayList<ServiceProto.BrowserApp>();
-
-                for (ResolveInfo info : allBrowsers) {
-                    apps.add(ServiceProto.BrowserApp.newBuilder()
-                            .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
-                            .setComponent(String.format("%s/%s", info.activityInfo.packageName, info.activityInfo.name))
-                            .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
-                            .setIcon(GraphicUtil.drawableToPNGByteString(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
-                            .build());
-                }
-
-                ServiceProto.GetBrowsersResponse.newBuilder()
-                        .setSuccess(true)
-                        .setSelected(defaultBrowser != null)
-                        .addAllApps(apps)
-                        .build()
-                        .writeDelimitedTo(clientSocket.getOutputStream());
-            }
-
-            private void handleGetPropertiesRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.GetPropertiesRequest request =
-                        ServiceProto.GetPropertiesRequest.parseFrom(envelope.getRequest());
-
-                ArrayList<ServiceProto.Property> properties = new ArrayList<ServiceProto.Property>();
-
-                for (String name : request.getPropertiesList()) {
-                    if (name.equals("imei")) {
-                        String deviceId = telephonyManager.getDeviceId();
-                        if (deviceId != null && !deviceId.isEmpty()) {
-                            properties.add(ServiceProto.Property.newBuilder()
-                                .setName(name)
-                                .setValue(deviceId)
-                                .build());
-                        }
-                    }
-                    else if (name.equals("phoneNumber")) {
-                        String phoneNumber = telephonyManager.getLine1Number();
-                        if (phoneNumber != null && !phoneNumber.isEmpty()) {
-                            properties.add(ServiceProto.Property.newBuilder()
-                                .setName(name)
-                                .setValue(phoneNumber)
-                                .build());
-                        }
-                    }
-                    else if (name.equals("iccid")) {
-                        String iccid = telephonyManager.getSimSerialNumber();
-                        if (iccid != null && !iccid.isEmpty()) {
-                            properties.add(ServiceProto.Property.newBuilder()
-                                    .setName(name)
-                                    .setValue(iccid)
-                                    .build());
-                        }
-                    }
-                    else if (name.equals("operator")) {
-                        String operator;
-                        switch (telephonyManager.getPhoneType()) {
-                            case TelephonyManager.PHONE_TYPE_CDMA:
-                                operator = telephonyManager.getSimOperatorName();
-                                break;
-                            default:
-                                operator = telephonyManager.getNetworkOperatorName();
-                                if (operator == null || operator.isEmpty()) {
-                                    operator = telephonyManager.getSimOperatorName();
-                                }
-                        }
-                        if (operator != null && !operator.isEmpty()) {
-                            properties.add(ServiceProto.Property.newBuilder()
-                                    .setName(name)
-                                    .setValue(operator)
-                                    .build());
-                        }
-                    }
-                }
-
-                ServiceProto.GetPropertiesResponse.newBuilder()
-                        .setSuccess(true)
-                        .addAllProperties(properties)
-                        .build()
-                        .writeDelimitedTo(clientSocket.getOutputStream());
-            }
-
-            private void handleIdentifyRequest(ServiceProto.RequestEnvelope envelope) throws IOException {
-                ServiceProto.IdentifyRequest request =
-                        ServiceProto.IdentifyRequest.parseFrom(envelope.getRequest());
-
-                showIdentity(request.getSerial());
-
-                ServiceProto.IdentifyResponse.newBuilder()
-                        .setSuccess(true)
-                        .build()
-                        .writeDelimitedTo(clientSocket.getOutputStream());
-            }
-
             @Override
             public void run() {
                 Log.i(TAG, "Starting ClientThread");
 
                 try {
                     while (!isInterrupted()) {
-                        ServiceProto.RequestEnvelope envelope =
-                                ServiceProto.RequestEnvelope.parseDelimitedFrom(clientSocket.getInputStream());
+                        Wire.RequestEnvelope envelope =
+                                Wire.RequestEnvelope.parseDelimitedFrom(clientSocket.getInputStream());
 
                         if (envelope == null) {
                             break;
@@ -431,6 +225,8 @@ public class STFService extends Service {
                             case IDENTIFY:
                                 handleIdentifyRequest(envelope);
                                 break;
+                            default:
+                                Log.w(TAG, String.format("Unknown request type %d; maybe it's an Agent call?", envelope.getType()));
                         }
                     }
                 }
@@ -445,6 +241,210 @@ public class STFService extends Service {
                 clients.remove(this);
             }
 
+            private void handleVersionRequest(Wire.RequestEnvelope envelope) throws IOException {
+                try {
+                    PackageManager manager = getPackageManager();
+                    PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+                    Wire.VersionResponse.newBuilder()
+                            .setSuccess(true)
+                            .setVersion(info.versionName)
+                            .build()
+                            .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+                catch (PackageManager.NameNotFoundException e) {
+                    Wire.VersionResponse.newBuilder()
+                            .setSuccess(false)
+                            .build()
+                            .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+            }
+
+            private void handleSetKeyguardStateRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.SetKeyguardStateRequest request =
+                        Wire.SetKeyguardStateRequest.parseFrom(envelope.getRequest());
+
+                if (request.getEnabled()) {
+                    lock();
+                }
+                else {
+                    unlock();
+                }
+
+                Wire.SetKeyguardStateResponse.newBuilder()
+                        .setSuccess(true)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleSetWakeLockRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.SetWakeLockRequest request =
+                        Wire.SetWakeLockRequest.parseFrom(envelope.getRequest());
+
+                if (request.getEnabled()) {
+                    acquireWakeLock();
+                }
+                else {
+                    releaseWakeLock();
+                }
+
+                Wire.SetWakeLockResponse.newBuilder()
+                        .setSuccess(true)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleSetClipboardRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.SetClipboardRequest request =
+                        Wire.SetClipboardRequest.parseFrom(envelope.getRequest());
+
+                switch (request.getType()) {
+                    case TEXT:
+                        setClipboardText(request.getText());
+                        Wire.SetClipboardResponse.newBuilder()
+                                .setSuccess(true)
+                                .build()
+                                .writeDelimitedTo(clientSocket.getOutputStream());
+                        break;
+                    default:
+                        Wire.SetClipboardResponse.newBuilder()
+                                .setSuccess(false)
+                                .build()
+                                .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+            }
+
+            private void handleGetClipboardRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.GetClipboardRequest request =
+                        Wire.GetClipboardRequest.parseFrom(envelope.getRequest());
+
+                switch (request.getType()) {
+                    case TEXT:
+                        CharSequence text = getClipboardText();
+
+                        if (text == null) {
+                            Wire.GetClipboardResponse.newBuilder()
+                                    .setSuccess(true)
+                                    .build()
+                                    .writeDelimitedTo(clientSocket.getOutputStream());
+                        }
+                        else {
+                            Wire.GetClipboardResponse.newBuilder()
+                                    .setSuccess(true)
+                                    .setText(text.toString())
+                                    .build()
+                                    .writeDelimitedTo(clientSocket.getOutputStream());
+                        }
+
+                        break;
+                    default:
+                        Wire.GetClipboardResponse.newBuilder()
+                                .setSuccess(false)
+                                .build()
+                                .writeDelimitedTo(clientSocket.getOutputStream());
+                }
+            }
+
+            private void handleGetBrowsersRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.GetBrowsersRequest request =
+                        Wire.GetBrowsersRequest.parseFrom(envelope.getRequest());
+
+                PackageManager pm = getPackageManager();
+
+                List<ResolveInfo> allBrowsers = BrowserUtil.getBrowsers(getBaseContext());
+                ResolveInfo defaultBrowser = BrowserUtil.getDefaultBrowser(getBaseContext());
+
+                ArrayList<Wire.BrowserApp> apps = new ArrayList<Wire.BrowserApp>();
+
+                for (ResolveInfo info : allBrowsers) {
+                    apps.add(Wire.BrowserApp.newBuilder()
+                            .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
+                            .setComponent(String.format("%s/%s", info.activityInfo.packageName, info.activityInfo.name))
+                            .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
+                            .setIcon(GraphicUtil.drawableToPNGByteString(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
+                            .build());
+                }
+
+                Wire.GetBrowsersResponse.newBuilder()
+                        .setSuccess(true)
+                        .setSelected(defaultBrowser != null)
+                        .addAllApps(apps)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleGetPropertiesRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.GetPropertiesRequest request =
+                        Wire.GetPropertiesRequest.parseFrom(envelope.getRequest());
+
+                ArrayList<Wire.Property> properties = new ArrayList<Wire.Property>();
+
+                for (String name : request.getPropertiesList()) {
+                    if (name.equals("imei")) {
+                        String deviceId = telephonyManager.getDeviceId();
+                        if (deviceId != null && !deviceId.isEmpty()) {
+                            properties.add(Wire.Property.newBuilder()
+                                    .setName(name)
+                                    .setValue(deviceId)
+                                    .build());
+                        }
+                    }
+                    else if (name.equals("phoneNumber")) {
+                        String phoneNumber = telephonyManager.getLine1Number();
+                        if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                            properties.add(Wire.Property.newBuilder()
+                                    .setName(name)
+                                    .setValue(phoneNumber)
+                                    .build());
+                        }
+                    }
+                    else if (name.equals("iccid")) {
+                        String iccid = telephonyManager.getSimSerialNumber();
+                        if (iccid != null && !iccid.isEmpty()) {
+                            properties.add(Wire.Property.newBuilder()
+                                    .setName(name)
+                                    .setValue(iccid)
+                                    .build());
+                        }
+                    }
+                    else if (name.equals("operator")) {
+                        String operator;
+                        switch (telephonyManager.getPhoneType()) {
+                            case TelephonyManager.PHONE_TYPE_CDMA:
+                                operator = telephonyManager.getSimOperatorName();
+                                break;
+                            default:
+                                operator = telephonyManager.getNetworkOperatorName();
+                                if (operator == null || operator.isEmpty()) {
+                                    operator = telephonyManager.getSimOperatorName();
+                                }
+                        }
+                        if (operator != null && !operator.isEmpty()) {
+                            properties.add(Wire.Property.newBuilder()
+                                    .setName(name)
+                                    .setValue(operator)
+                                    .build());
+                        }
+                    }
+                }
+
+                Wire.GetPropertiesResponse.newBuilder()
+                        .setSuccess(true)
+                        .addAllProperties(properties)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
+
+            private void handleIdentifyRequest(Wire.RequestEnvelope envelope) throws IOException {
+                Wire.IdentifyRequest request =
+                        Wire.IdentifyRequest.parseFrom(envelope.getRequest());
+
+                showIdentity(request.getSerial());
+
+                Wire.IdentifyResponse.newBuilder()
+                        .setSuccess(true)
+                        .build()
+                        .writeDelimitedTo(clientSocket.getOutputStream());
+            }
 
             @SuppressWarnings("deprecation")
             private void unlock() {

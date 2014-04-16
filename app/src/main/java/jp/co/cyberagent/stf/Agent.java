@@ -15,7 +15,6 @@ import java.net.UnknownHostException;
 import jp.co.cyberagent.stf.compat.InputManagerWrapper;
 import jp.co.cyberagent.stf.compat.PowerManagerWrapper;
 import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
-import jp.co.cyberagent.stf.proto.AgentProto;
 import jp.co.cyberagent.stf.util.InternalApi;
 
 public class Agent {
@@ -168,16 +167,16 @@ public class Agent {
     }
 
     private class InputClient extends Thread {
-        private Socket socket;
+        private Socket clientSocket;
 
-        public InputClient(Socket socket) {
-            this.socket = socket;
+        public InputClient(Socket clientSocket) {
+            this.clientSocket = clientSocket;
         }
 
         @Override
         public void interrupt() {
             try {
-                socket.close();
+                clientSocket.close();
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -190,90 +189,28 @@ public class Agent {
 
             try {
                 while (!isInterrupted()) {
-                    AgentProto.InputEvent inEvent =
-                            AgentProto.InputEvent.parseDelimitedFrom(socket.getInputStream());
+                    Wire.RequestEnvelope envelope =
+                            Wire.RequestEnvelope.parseDelimitedFrom(clientSocket.getInputStream());
 
-                    if (inEvent == null) {
+                    if (envelope == null) {
                         break;
                     }
 
-                    int meta = 0;
-
-                    if (inEvent.getShiftKey()) {
-                        meta |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_RIGHT_ON;
-                    }
-
-                    if (inEvent.getCtrlKey()) {
-                        meta |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_RIGHT_ON | KeyEvent.META_CTRL_ON;
-                    }
-
-                    if (inEvent.getAltKey()) {
-                        meta |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_RIGHT_ON;
-                    }
-
-                    if (inEvent.getMetaKey()) {
-                        meta |= meta |= KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_RIGHT_ON;
-                    }
-
-                    if (inEvent.getSymKey()) {
-                        meta |= KeyEvent.META_SYM_ON;
-                    }
-
-                    if (inEvent.getFunctionKey()) {
-                        meta |= KeyEvent.META_FUNCTION_ON;
-                    }
-
-                    if (inEvent.getCapsLockKey()) {
-                        meta |= KeyEvent.META_CAPS_LOCK_ON;
-                    }
-
-                    if (inEvent.getNumLockKey()) {
-                        meta |= KeyEvent.META_NUM_LOCK_ON;
-                    }
-
-                    if (inEvent.getScrollLockKey()) {
-                        meta |= KeyEvent.META_SCROLL_LOCK_ON;
-                    }
-
-                    switch (inEvent.getAction()) {
-                        case KEYDOWN:
-                            keyDown(inEvent.getKeyCode(), meta);
-                            break;
-                        case KEYUP:
-                            keyUp(inEvent.getKeyCode(), meta);
-                            break;
-                        case KEYPRESS:
-                            keyPress(inEvent.getKeyCode(), meta);
+                    switch (envelope.getType()) {
+                        case KEYEVENT:
+                            handleKeyEventRequest(envelope);
                             break;
                         case TYPE:
-                            if (inEvent.hasText()) {
-                                type(inEvent.getText());
-                            }
+                            handleTypeRequest(envelope);
                             break;
                         case WAKE:
-                            wake();
+                            handleWakeRequest(envelope);
                             break;
-                        case FREEZE_ROTATION:
-                            if (inEvent.hasRotation()) {
-                                switch (inEvent.getRotation()) {
-                                    case 0:
-                                        windowManager.freezeRotation(Surface.ROTATION_0);
-                                        break;
-                                    case 180:
-                                        windowManager.freezeRotation(Surface.ROTATION_180);
-                                        break;
-                                    case 270:
-                                        windowManager.freezeRotation(Surface.ROTATION_270);
-                                        break;
-                                    case 90:
-                                        windowManager.freezeRotation(Surface.ROTATION_90);
-                                        break;
-                                }
-                            }
+                        case SET_ROTATION:
+                            handleSetRotationRequest(envelope);
                             break;
-                        case THAW_ROTATION:
-                            windowManager.thawRotation();
-                            break;
+                        default:
+                            System.err.printf("Unknown request type %d; maybe it's a Service call?\n", envelope.getType());
                     }
                 }
             }
@@ -282,6 +219,93 @@ public class Agent {
             }
 
             System.err.println("InputClient closing");
+        }
+
+        private void handleKeyEventRequest(Wire.RequestEnvelope envelope) throws IOException {
+            Wire.KeyEventRequest request = Wire.KeyEventRequest.parseFrom(envelope.getRequest());
+
+            int meta = 0;
+
+            if (request.getShiftKey()) {
+                meta |= KeyEvent.META_SHIFT_LEFT_ON | KeyEvent.META_SHIFT_RIGHT_ON;
+            }
+
+            if (request.getCtrlKey()) {
+                meta |= KeyEvent.META_CTRL_LEFT_ON | KeyEvent.META_CTRL_RIGHT_ON | KeyEvent.META_CTRL_ON;
+            }
+
+            if (request.getAltKey()) {
+                meta |= KeyEvent.META_ALT_LEFT_ON | KeyEvent.META_ALT_RIGHT_ON;
+            }
+
+            if (request.getMetaKey()) {
+                meta |= meta |= KeyEvent.META_META_LEFT_ON | KeyEvent.META_META_RIGHT_ON;
+            }
+
+            if (request.getSymKey()) {
+                meta |= KeyEvent.META_SYM_ON;
+            }
+
+            if (request.getFunctionKey()) {
+                meta |= KeyEvent.META_FUNCTION_ON;
+            }
+
+            if (request.getCapsLockKey()) {
+                meta |= KeyEvent.META_CAPS_LOCK_ON;
+            }
+
+            if (request.getNumLockKey()) {
+                meta |= KeyEvent.META_NUM_LOCK_ON;
+            }
+
+            if (request.getScrollLockKey()) {
+                meta |= KeyEvent.META_SCROLL_LOCK_ON;
+            }
+
+            switch (request.getEvent()) {
+                case DOWN:
+                    keyDown(request.getKeyCode(), meta);
+                    break;
+                case UP:
+                    keyUp(request.getKeyCode(), meta);
+                    break;
+                case PRESS:
+                    keyPress(request.getKeyCode(), meta);
+                    break;
+            }
+        }
+
+        private void handleWakeRequest(Wire.RequestEnvelope envelope) throws IOException {
+            Wire.WakeRequest request = Wire.WakeRequest.parseFrom(envelope.getRequest());
+            wake();
+        }
+
+        private void handleTypeRequest(Wire.RequestEnvelope envelope) throws IOException {
+            Wire.TypeRequest request = Wire.TypeRequest.parseFrom(envelope.getRequest());
+            type(request.getText());
+        }
+
+        private void handleSetRotationRequest(Wire.RequestEnvelope envelope) throws IOException {
+            Wire.SetRotationRequest request = Wire.SetRotationRequest.parseFrom(envelope.getRequest());
+
+            switch (request.getRotation()) {
+                case 0:
+                    freezeRotation(Surface.ROTATION_0);
+                    break;
+                case 180:
+                    freezeRotation(Surface.ROTATION_180);
+                    break;
+                case 270:
+                    freezeRotation(Surface.ROTATION_270);
+                    break;
+                case 90:
+                    freezeRotation(Surface.ROTATION_90);
+                    break;
+            }
+
+            if (!request.getLock()) {
+                thawRotation();
+            }
         }
 
         private void keyDown(int keyCode, int metaState) {
@@ -333,6 +357,14 @@ public class Agent {
 
         private void wake() {
             powerManager.wakeUp();
+        }
+
+        private void freezeRotation(int rotation) {
+            windowManager.freezeRotation(rotation);
+        }
+
+        private void thawRotation() {
+            windowManager.thawRotation();
         }
     }
 }
