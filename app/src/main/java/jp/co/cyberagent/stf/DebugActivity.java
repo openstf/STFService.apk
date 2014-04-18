@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import jp.co.cyberagent.stf.util.BrowserUtil;
+import jp.co.cyberagent.stf.util.PhoneUtil;
 
 public class DebugActivity extends Activity {
     private static final String TAG = "DebugActivity";
@@ -37,6 +39,7 @@ public class DebugActivity extends Activity {
         layout.setGravity(Gravity.CENTER);
 
         PackageManager pm = getPackageManager();
+        TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 
         ResolveInfo defaultBrowser = BrowserUtil.getDefaultBrowser(this);
         List<ResolveInfo> browsers = BrowserUtil.getBrowsers(this);
@@ -51,6 +54,9 @@ public class DebugActivity extends Activity {
             layout.addView(createLabel(name));
             layout.addView(createData(info.activityInfo.packageName + "/" + info.activityInfo.name));
         }
+
+        layout.addView(createLabel("NETWORK"));
+        layout.addView(createData(PhoneUtil.getNetworkType(tm.getNetworkType())));
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(layout);

@@ -29,6 +29,7 @@ import java.util.Set;
 
 import jp.co.cyberagent.stf.util.BrowserUtil;
 import jp.co.cyberagent.stf.util.GraphicUtil;
+import jp.co.cyberagent.stf.util.PhoneUtil;
 
 public class STFService extends Service {
     private static final String TAG = "STFService";
@@ -424,6 +425,12 @@ public class STFService extends Service {
                                     .setValue(operator)
                                     .build());
                         }
+                    }
+                    else if (name.equals("network")) {
+                        properties.add(Wire.Property.newBuilder()
+                                .setName(name)
+                                .setValue(PhoneUtil.getNetworkType(telephonyManager.getNetworkType()))
+                                .build());
                     }
                 }
 
