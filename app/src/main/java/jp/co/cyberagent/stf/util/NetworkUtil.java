@@ -2,7 +2,7 @@ package jp.co.cyberagent.stf.util;
 
 import android.telephony.TelephonyManager;
 
-public class PhoneUtil {
+public class NetworkUtil {
     public static String getNetworkType(int type) {
         switch (type) {
             case TelephonyManager.NETWORK_TYPE_1xRTT:

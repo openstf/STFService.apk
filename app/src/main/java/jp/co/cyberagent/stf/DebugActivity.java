@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import jp.co.cyberagent.stf.util.BrowserUtil;
-import jp.co.cyberagent.stf.util.PhoneUtil;
+import jp.co.cyberagent.stf.util.NetworkUtil;
 
 public class DebugActivity extends Activity {
     private static final String TAG = "DebugActivity";
@@ -56,7 +56,7 @@ public class DebugActivity extends Activity {
         }
 
         layout.addView(createLabel("NETWORK"));
-        layout.addView(createData(PhoneUtil.getNetworkType(tm.getNetworkType())));
+        layout.addView(createData(NetworkUtil.getNetworkType(tm.getNetworkType())));
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(layout);
