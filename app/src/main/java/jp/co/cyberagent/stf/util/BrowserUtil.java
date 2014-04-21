@@ -48,4 +48,15 @@ public class BrowserUtil {
                 && browserOne.activityInfo.packageName.equals(browserTwo.activityInfo.packageName)
                 && browserOne.activityInfo.name.equals(browserTwo.activityInfo.name);
     }
+
+    public static String getComponent(ResolveInfo info) {
+        String packageName = info.activityInfo.packageName;
+        String activityName = info.activityInfo.name;
+
+        if (activityName.startsWith(packageName)) {
+            return String.format("%s/%s", packageName, activityName.substring(packageName.length()));
+        }
+
+        return String.format("%s/%s", packageName, activityName);
+    }
 }

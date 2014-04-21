@@ -359,7 +359,7 @@ public class STFService extends Service {
                 for (ResolveInfo info : allBrowsers) {
                     apps.add(Wire.BrowserApp.newBuilder()
                             .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
-                            .setComponent(String.format("%s/%s", info.activityInfo.packageName, info.activityInfo.name))
+                            .setComponent(BrowserUtil.getComponent(info))
                             .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
                             .setIcon(GraphicUtil.drawableToPNGByteString(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
                             .build());

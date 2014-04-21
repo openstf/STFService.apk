@@ -52,7 +52,8 @@ public class DebugActivity extends Activity {
             }
 
             layout.addView(createLabel(name));
-            layout.addView(createData(info.activityInfo.packageName + "/" + info.activityInfo.name));
+            layout.addView(createData(BrowserUtil.getComponent(info)));
+
         }
 
         layout.addView(createLabel("NETWORK"));
