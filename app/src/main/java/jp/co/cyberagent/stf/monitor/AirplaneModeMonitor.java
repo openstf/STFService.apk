@@ -52,7 +52,8 @@ public class AirplaneModeMonitor extends AbstractMonitor {
         }
     }
 
-    private void peek() {
+    @Override
+    public void peek() {
         if (Build.VERSION.SDK_INT >= 17) {
             report(Settings.Global.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) == 1);
         }

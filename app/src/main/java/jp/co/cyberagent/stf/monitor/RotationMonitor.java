@@ -58,7 +58,8 @@ public class RotationMonitor extends AbstractMonitor {
         }
     }
 
-    private void peek() {
+    @Override
+    public void peek() {
         try {
             report(wm.getRotation());
         }

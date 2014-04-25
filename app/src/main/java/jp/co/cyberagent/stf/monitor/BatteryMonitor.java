@@ -12,6 +12,8 @@ import jp.co.cyberagent.stf.io.MessageWriter;
 public class BatteryMonitor extends AbstractMonitor {
     private static final String TAG  = "STFBatteryMonitor";
 
+    private BatteryState state = null;
+
     public BatteryMonitor(Context context, MessageWriter.Pool writer) {
         super(context, writer);
     }
@@ -23,23 +25,8 @@ public class BatteryMonitor extends AbstractMonitor {
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
-                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-                int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
-                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
-                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
-                String tech = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
-                int temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
-                int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0);
-                Log.i(TAG, String.format("Battery is %s (%s health); connected via %s; level at %d/%d; temp %.1fC@%.3fV",
-                        statusLabel(status),
-                        healthLabel(health),
-                        pluggedLabel(plugged),
-                        level,
-                        scale,
-                        temp / 10.0,
-                        voltage / 1000.0
-                ));
+                state = new BatteryState(intent);
+                report();
             }
         };
 
@@ -63,6 +50,25 @@ public class BatteryMonitor extends AbstractMonitor {
 
             context.unregisterReceiver(receiver);
         }
+    }
+
+    @Override
+    public void peek() {
+        if (state != null) {
+            report();
+        }
+    }
+
+    private void report() {
+        Log.i(TAG, String.format("Battery is %s (%s health); connected via %s; level at %d/%d; temp %.1fC@%.3fV",
+                statusLabel(state.status),
+                healthLabel(state.health),
+                pluggedLabel(state.plugged),
+                state.level,
+                state.scale,
+                state.temp / 10.0,
+                state.voltage / 1000.0
+        ));
     }
 
     private String healthLabel(int health) {
@@ -113,6 +119,28 @@ public class BatteryMonitor extends AbstractMonitor {
                 return "unknown";
             default:
                 return "unknown_" + status;
+        }
+    }
+
+    private static class BatteryState {
+        private int health;
+        private int level;
+        private int plugged;
+        private int scale;
+        private int status;
+        private String tech;
+        private int temp;
+        private int voltage;
+
+        public BatteryState(Intent intent) {
+            health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
+            level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+            plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
+            scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
+            status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+            tech = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
+            temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
+            voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, 0);
         }
     }
 }

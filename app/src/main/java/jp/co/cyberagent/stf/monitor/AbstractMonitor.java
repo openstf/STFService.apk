@@ -12,4 +12,6 @@ abstract public class AbstractMonitor extends Thread {
         this.context = context;
         this.writer = writer;
     }
+
+    abstract public void peek();
 }

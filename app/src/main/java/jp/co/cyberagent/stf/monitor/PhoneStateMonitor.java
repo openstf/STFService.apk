@@ -11,6 +11,8 @@ import jp.co.cyberagent.stf.io.MessageWriter;
 public class PhoneStateMonitor extends AbstractMonitor {
     private static final String TAG = "STFPhoneStateMonitor";
 
+    private ServiceState state = null;
+
     public PhoneStateMonitor(Context context, MessageWriter.Pool writer) {
         super(context, writer);
     }
@@ -23,8 +25,9 @@ public class PhoneStateMonitor extends AbstractMonitor {
 
         PhoneStateListener listener = new PhoneStateListener() {
             @Override
-            public void onServiceStateChanged(ServiceState state) {
-                report(state);
+            public void onServiceStateChanged(ServiceState newState) {
+                state = newState;
+                report();
             }
         };
 
@@ -50,7 +53,14 @@ public class PhoneStateMonitor extends AbstractMonitor {
         }
     }
 
-    private void report(ServiceState state) {
+    @Override
+    public void peek() {
+        if (state != null) {
+            report();
+        }
+    }
+
+    private void report() {
         Log.i(TAG, String.format("Phone state is %s; %s; %s",
                 stateLabel(state.getState()),
                 state.getIsManualSelection() ? "manual" : "automatic",

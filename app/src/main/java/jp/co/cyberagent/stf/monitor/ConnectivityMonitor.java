@@ -54,7 +54,8 @@ public class ConnectivityMonitor extends AbstractMonitor {
         }
     }
 
-    private void peek() {
+    @Override
+    public void peek() {
         report(cm.getActiveNetworkInfo());
     }
 

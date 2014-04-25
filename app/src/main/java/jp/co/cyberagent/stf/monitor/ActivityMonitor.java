@@ -121,4 +121,9 @@ public class ActivityMonitor extends AbstractMonitor {
             }
         }
     }
+
+    @Override
+    public void peek() {
+        // Report current activity
+    }
 }
