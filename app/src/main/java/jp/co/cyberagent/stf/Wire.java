@@ -14,121 +14,121 @@ public final class Wire {
   public enum RequestType
       implements com.google.protobuf.ProtocolMessageEnum {
     /**
-     * <code>VERSION = 0;</code>
+     * <code>DO_IDENTIFY = 1;</code>
      */
-    VERSION(0, 0),
+    DO_IDENTIFY(0, 1),
     /**
-     * <code>SET_KEYGUARD_STATE = 1;</code>
+     * <code>DO_KEYEVENT = 2;</code>
      */
-    SET_KEYGUARD_STATE(1, 1),
+    DO_KEYEVENT(1, 2),
     /**
-     * <code>SET_WAKE_LOCK = 2;</code>
+     * <code>DO_TYPE = 3;</code>
      */
-    SET_WAKE_LOCK(2, 2),
+    DO_TYPE(2, 3),
     /**
-     * <code>SET_CLIPBOARD = 3;</code>
+     * <code>DO_WAKE = 4;</code>
      */
-    SET_CLIPBOARD(3, 3),
-    /**
-     * <code>GET_CLIPBOARD = 4;</code>
-     */
-    GET_CLIPBOARD(4, 4),
+    DO_WAKE(3, 4),
     /**
      * <code>GET_BROWSERS = 5;</code>
      */
-    GET_BROWSERS(5, 5),
+    GET_BROWSERS(4, 5),
     /**
-     * <code>GET_PROPERTIES = 6;</code>
+     * <code>GET_CLIPBOARD = 6;</code>
      */
-    GET_PROPERTIES(6, 6),
+    GET_CLIPBOARD(5, 6),
     /**
-     * <code>IDENTIFY = 7;</code>
+     * <code>GET_PROPERTIES = 7;</code>
      */
-    IDENTIFY(7, 7),
+    GET_PROPERTIES(6, 7),
     /**
-     * <code>KEYEVENT = 8;</code>
+     * <code>GET_VERSION = 8;</code>
      */
-    KEYEVENT(8, 8),
+    GET_VERSION(7, 8),
     /**
-     * <code>TYPE = 9;</code>
+     * <code>SET_CLIPBOARD = 9;</code>
      */
-    TYPE(9, 9),
+    SET_CLIPBOARD(8, 9),
     /**
-     * <code>WAKE = 10;</code>
+     * <code>SET_KEYGUARD_STATE = 10;</code>
      */
-    WAKE(10, 10),
+    SET_KEYGUARD_STATE(9, 10),
     /**
-     * <code>SET_ROTATION = 11;</code>
+     * <code>SET_WAKE_LOCK = 11;</code>
      */
-    SET_ROTATION(11, 11),
+    SET_WAKE_LOCK(10, 11),
+    /**
+     * <code>SET_ROTATION = 12;</code>
+     */
+    SET_ROTATION(11, 12),
     ;
 
     /**
-     * <code>VERSION = 0;</code>
+     * <code>DO_IDENTIFY = 1;</code>
      */
-    public static final int VERSION_VALUE = 0;
+    public static final int DO_IDENTIFY_VALUE = 1;
     /**
-     * <code>SET_KEYGUARD_STATE = 1;</code>
+     * <code>DO_KEYEVENT = 2;</code>
      */
-    public static final int SET_KEYGUARD_STATE_VALUE = 1;
+    public static final int DO_KEYEVENT_VALUE = 2;
     /**
-     * <code>SET_WAKE_LOCK = 2;</code>
+     * <code>DO_TYPE = 3;</code>
      */
-    public static final int SET_WAKE_LOCK_VALUE = 2;
+    public static final int DO_TYPE_VALUE = 3;
     /**
-     * <code>SET_CLIPBOARD = 3;</code>
+     * <code>DO_WAKE = 4;</code>
      */
-    public static final int SET_CLIPBOARD_VALUE = 3;
-    /**
-     * <code>GET_CLIPBOARD = 4;</code>
-     */
-    public static final int GET_CLIPBOARD_VALUE = 4;
+    public static final int DO_WAKE_VALUE = 4;
     /**
      * <code>GET_BROWSERS = 5;</code>
      */
     public static final int GET_BROWSERS_VALUE = 5;
     /**
-     * <code>GET_PROPERTIES = 6;</code>
+     * <code>GET_CLIPBOARD = 6;</code>
      */
-    public static final int GET_PROPERTIES_VALUE = 6;
+    public static final int GET_CLIPBOARD_VALUE = 6;
     /**
-     * <code>IDENTIFY = 7;</code>
+     * <code>GET_PROPERTIES = 7;</code>
      */
-    public static final int IDENTIFY_VALUE = 7;
+    public static final int GET_PROPERTIES_VALUE = 7;
     /**
-     * <code>KEYEVENT = 8;</code>
+     * <code>GET_VERSION = 8;</code>
      */
-    public static final int KEYEVENT_VALUE = 8;
+    public static final int GET_VERSION_VALUE = 8;
     /**
-     * <code>TYPE = 9;</code>
+     * <code>SET_CLIPBOARD = 9;</code>
      */
-    public static final int TYPE_VALUE = 9;
+    public static final int SET_CLIPBOARD_VALUE = 9;
     /**
-     * <code>WAKE = 10;</code>
+     * <code>SET_KEYGUARD_STATE = 10;</code>
      */
-    public static final int WAKE_VALUE = 10;
+    public static final int SET_KEYGUARD_STATE_VALUE = 10;
     /**
-     * <code>SET_ROTATION = 11;</code>
+     * <code>SET_WAKE_LOCK = 11;</code>
      */
-    public static final int SET_ROTATION_VALUE = 11;
+    public static final int SET_WAKE_LOCK_VALUE = 11;
+    /**
+     * <code>SET_ROTATION = 12;</code>
+     */
+    public static final int SET_ROTATION_VALUE = 12;
 
 
     public final int getNumber() { return value; }
 
     public static RequestType valueOf(int value) {
       switch (value) {
-        case 0: return VERSION;
-        case 1: return SET_KEYGUARD_STATE;
-        case 2: return SET_WAKE_LOCK;
-        case 3: return SET_CLIPBOARD;
-        case 4: return GET_CLIPBOARD;
+        case 1: return DO_IDENTIFY;
+        case 2: return DO_KEYEVENT;
+        case 3: return DO_TYPE;
+        case 4: return DO_WAKE;
         case 5: return GET_BROWSERS;
-        case 6: return GET_PROPERTIES;
-        case 7: return IDENTIFY;
-        case 8: return KEYEVENT;
-        case 9: return TYPE;
-        case 10: return WAKE;
-        case 11: return SET_ROTATION;
+        case 6: return GET_CLIPBOARD;
+        case 7: return GET_PROPERTIES;
+        case 8: return GET_VERSION;
+        case 9: return SET_CLIPBOARD;
+        case 10: return SET_KEYGUARD_STATE;
+        case 11: return SET_WAKE_LOCK;
+        case 12: return SET_ROTATION;
         default: return null;
       }
     }
@@ -507,7 +507,7 @@ public final class Wire {
     }
 
     private void initFields() {
-      type_ = jp.co.cyberagent.stf.Wire.RequestType.VERSION;
+      type_ = jp.co.cyberagent.stf.Wire.RequestType.DO_IDENTIFY;
       request_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
@@ -669,7 +669,7 @@ public final class Wire {
 
       public Builder clear() {
         super.clear();
-        type_ = jp.co.cyberagent.stf.Wire.RequestType.VERSION;
+        type_ = jp.co.cyberagent.stf.Wire.RequestType.DO_IDENTIFY;
         bitField0_ = (bitField0_ & ~0x00000001);
         request_ = com.google.protobuf.ByteString.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -767,7 +767,7 @@ public final class Wire {
       private int bitField0_;
 
       // required .jp.co.cyberagent.stf.RequestType type = 1;
-      private jp.co.cyberagent.stf.Wire.RequestType type_ = jp.co.cyberagent.stf.Wire.RequestType.VERSION;
+      private jp.co.cyberagent.stf.Wire.RequestType type_ = jp.co.cyberagent.stf.Wire.RequestType.DO_IDENTIFY;
       /**
        * <code>required .jp.co.cyberagent.stf.RequestType type = 1;</code>
        */
@@ -797,7 +797,7 @@ public final class Wire {
        */
       public Builder clearType() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        type_ = jp.co.cyberagent.stf.Wire.RequestType.VERSION;
+        type_ = jp.co.cyberagent.stf.Wire.RequestType.DO_IDENTIFY;
         onChanged();
         return this;
       }
@@ -849,28 +849,28 @@ public final class Wire {
     // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.RequestEnvelope)
   }
 
-  public interface VersionRequestOrBuilder
+  public interface GetVersionRequestOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.VersionRequest}
+   * Protobuf type {@code jp.co.cyberagent.stf.GetVersionRequest}
    */
-  public static final class VersionRequest extends
+  public static final class GetVersionRequest extends
       com.google.protobuf.GeneratedMessage
-      implements VersionRequestOrBuilder {
-    // Use VersionRequest.newBuilder() to construct.
-    private VersionRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements GetVersionRequestOrBuilder {
+    // Use GetVersionRequest.newBuilder() to construct.
+    private GetVersionRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private VersionRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private GetVersionRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final VersionRequest defaultInstance;
-    public static VersionRequest getDefaultInstance() {
+    private static final GetVersionRequest defaultInstance;
+    public static GetVersionRequest getDefaultInstance() {
       return defaultInstance;
     }
 
-    public VersionRequest getDefaultInstanceForType() {
+    public GetVersionRequest getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -880,7 +880,7 @@ public final class Wire {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private VersionRequest(
+    private GetVersionRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -916,28 +916,28 @@ public final class Wire {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionRequest_descriptor;
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionRequest_fieldAccessorTable
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.Wire.VersionRequest.class, jp.co.cyberagent.stf.Wire.VersionRequest.Builder.class);
+              jp.co.cyberagent.stf.Wire.GetVersionRequest.class, jp.co.cyberagent.stf.Wire.GetVersionRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<VersionRequest> PARSER =
-        new com.google.protobuf.AbstractParser<VersionRequest>() {
-      public VersionRequest parsePartialFrom(
+    public static com.google.protobuf.Parser<GetVersionRequest> PARSER =
+        new com.google.protobuf.AbstractParser<GetVersionRequest>() {
+      public GetVersionRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new VersionRequest(input, extensionRegistry);
+        return new GetVersionRequest(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<VersionRequest> getParserForType() {
+    public com.google.protobuf.Parser<GetVersionRequest> getParserForType() {
       return PARSER;
     }
 
@@ -976,53 +976,53 @@ public final class Wire {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1031,7 +1031,7 @@ public final class Wire {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.VersionRequest prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.GetVersionRequest prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -1043,24 +1043,24 @@ public final class Wire {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.VersionRequest}
+     * Protobuf type {@code jp.co.cyberagent.stf.GetVersionRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.Wire.VersionRequestOrBuilder {
+       implements jp.co.cyberagent.stf.Wire.GetVersionRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionRequest_fieldAccessorTable
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.Wire.VersionRequest.class, jp.co.cyberagent.stf.Wire.VersionRequest.Builder.class);
+                jp.co.cyberagent.stf.Wire.GetVersionRequest.class, jp.co.cyberagent.stf.Wire.GetVersionRequest.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.Wire.VersionRequest.newBuilder()
+      // Construct using jp.co.cyberagent.stf.Wire.GetVersionRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1089,38 +1089,38 @@ public final class Wire {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionRequest_descriptor;
       }
 
-      public jp.co.cyberagent.stf.Wire.VersionRequest getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.Wire.VersionRequest.getDefaultInstance();
+      public jp.co.cyberagent.stf.Wire.GetVersionRequest getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.Wire.GetVersionRequest.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.Wire.VersionRequest build() {
-        jp.co.cyberagent.stf.Wire.VersionRequest result = buildPartial();
+      public jp.co.cyberagent.stf.Wire.GetVersionRequest build() {
+        jp.co.cyberagent.stf.Wire.GetVersionRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.Wire.VersionRequest buildPartial() {
-        jp.co.cyberagent.stf.Wire.VersionRequest result = new jp.co.cyberagent.stf.Wire.VersionRequest(this);
+      public jp.co.cyberagent.stf.Wire.GetVersionRequest buildPartial() {
+        jp.co.cyberagent.stf.Wire.GetVersionRequest result = new jp.co.cyberagent.stf.Wire.GetVersionRequest(this);
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.Wire.VersionRequest) {
-          return mergeFrom((jp.co.cyberagent.stf.Wire.VersionRequest)other);
+        if (other instanceof jp.co.cyberagent.stf.Wire.GetVersionRequest) {
+          return mergeFrom((jp.co.cyberagent.stf.Wire.GetVersionRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.VersionRequest other) {
-        if (other == jp.co.cyberagent.stf.Wire.VersionRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.GetVersionRequest other) {
+        if (other == jp.co.cyberagent.stf.Wire.GetVersionRequest.getDefaultInstance()) return this;
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1133,11 +1133,11 @@ public final class Wire {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.Wire.VersionRequest parsedMessage = null;
+        jp.co.cyberagent.stf.Wire.GetVersionRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.Wire.VersionRequest) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.Wire.GetVersionRequest) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1147,18 +1147,18 @@ public final class Wire {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.VersionRequest)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.GetVersionRequest)
     }
 
     static {
-      defaultInstance = new VersionRequest(true);
+      defaultInstance = new GetVersionRequest(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.VersionRequest)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.GetVersionRequest)
   }
 
-  public interface VersionResponseOrBuilder
+  public interface GetVersionResponseOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // required bool success = 1;
@@ -1187,24 +1187,24 @@ public final class Wire {
         getVersionBytes();
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.VersionResponse}
+   * Protobuf type {@code jp.co.cyberagent.stf.GetVersionResponse}
    */
-  public static final class VersionResponse extends
+  public static final class GetVersionResponse extends
       com.google.protobuf.GeneratedMessage
-      implements VersionResponseOrBuilder {
-    // Use VersionResponse.newBuilder() to construct.
-    private VersionResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements GetVersionResponseOrBuilder {
+    // Use GetVersionResponse.newBuilder() to construct.
+    private GetVersionResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private VersionResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private GetVersionResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final VersionResponse defaultInstance;
-    public static VersionResponse getDefaultInstance() {
+    private static final GetVersionResponse defaultInstance;
+    public static GetVersionResponse getDefaultInstance() {
       return defaultInstance;
     }
 
-    public VersionResponse getDefaultInstanceForType() {
+    public GetVersionResponse getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -1214,7 +1214,7 @@ public final class Wire {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private VersionResponse(
+    private GetVersionResponse(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1261,28 +1261,28 @@ public final class Wire {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionResponse_descriptor;
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionResponse_fieldAccessorTable
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.Wire.VersionResponse.class, jp.co.cyberagent.stf.Wire.VersionResponse.Builder.class);
+              jp.co.cyberagent.stf.Wire.GetVersionResponse.class, jp.co.cyberagent.stf.Wire.GetVersionResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<VersionResponse> PARSER =
-        new com.google.protobuf.AbstractParser<VersionResponse>() {
-      public VersionResponse parsePartialFrom(
+    public static com.google.protobuf.Parser<GetVersionResponse> PARSER =
+        new com.google.protobuf.AbstractParser<GetVersionResponse>() {
+      public GetVersionResponse parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new VersionResponse(input, extensionRegistry);
+        return new GetVersionResponse(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<VersionResponse> getParserForType() {
+    public com.google.protobuf.Parser<GetVersionResponse> getParserForType() {
       return PARSER;
     }
 
@@ -1401,53 +1401,53 @@ public final class Wire {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.VersionResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.GetVersionResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1456,7 +1456,7 @@ public final class Wire {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.VersionResponse prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.GetVersionResponse prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -1468,24 +1468,24 @@ public final class Wire {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.VersionResponse}
+     * Protobuf type {@code jp.co.cyberagent.stf.GetVersionResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.Wire.VersionResponseOrBuilder {
+       implements jp.co.cyberagent.stf.Wire.GetVersionResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionResponse_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionResponse_fieldAccessorTable
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.Wire.VersionResponse.class, jp.co.cyberagent.stf.Wire.VersionResponse.Builder.class);
+                jp.co.cyberagent.stf.Wire.GetVersionResponse.class, jp.co.cyberagent.stf.Wire.GetVersionResponse.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.Wire.VersionResponse.newBuilder()
+      // Construct using jp.co.cyberagent.stf.Wire.GetVersionResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1518,23 +1518,23 @@ public final class Wire {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_VersionResponse_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_GetVersionResponse_descriptor;
       }
 
-      public jp.co.cyberagent.stf.Wire.VersionResponse getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.Wire.VersionResponse.getDefaultInstance();
+      public jp.co.cyberagent.stf.Wire.GetVersionResponse getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.Wire.GetVersionResponse.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.Wire.VersionResponse build() {
-        jp.co.cyberagent.stf.Wire.VersionResponse result = buildPartial();
+      public jp.co.cyberagent.stf.Wire.GetVersionResponse build() {
+        jp.co.cyberagent.stf.Wire.GetVersionResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.Wire.VersionResponse buildPartial() {
-        jp.co.cyberagent.stf.Wire.VersionResponse result = new jp.co.cyberagent.stf.Wire.VersionResponse(this);
+      public jp.co.cyberagent.stf.Wire.GetVersionResponse buildPartial() {
+        jp.co.cyberagent.stf.Wire.GetVersionResponse result = new jp.co.cyberagent.stf.Wire.GetVersionResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -1551,16 +1551,16 @@ public final class Wire {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.Wire.VersionResponse) {
-          return mergeFrom((jp.co.cyberagent.stf.Wire.VersionResponse)other);
+        if (other instanceof jp.co.cyberagent.stf.Wire.GetVersionResponse) {
+          return mergeFrom((jp.co.cyberagent.stf.Wire.GetVersionResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.VersionResponse other) {
-        if (other == jp.co.cyberagent.stf.Wire.VersionResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.GetVersionResponse other) {
+        if (other == jp.co.cyberagent.stf.Wire.GetVersionResponse.getDefaultInstance()) return this;
         if (other.hasSuccess()) {
           setSuccess(other.getSuccess());
         }
@@ -1585,11 +1585,11 @@ public final class Wire {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.Wire.VersionResponse parsedMessage = null;
+        jp.co.cyberagent.stf.Wire.GetVersionResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.Wire.VersionResponse) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.Wire.GetVersionResponse) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -1707,15 +1707,15 @@ public final class Wire {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.VersionResponse)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.GetVersionResponse)
     }
 
     static {
-      defaultInstance = new VersionResponse(true);
+      defaultInstance = new GetVersionResponse(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.VersionResponse)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.GetVersionResponse)
   }
 
   public interface SetKeyguardStateRequestOrBuilder
@@ -9288,7 +9288,7 @@ public final class Wire {
     // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.GetPropertiesResponse)
   }
 
-  public interface IdentifyRequestOrBuilder
+  public interface DoIdentifyRequestOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // required string serial = 1;
@@ -9307,24 +9307,24 @@ public final class Wire {
         getSerialBytes();
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.IdentifyRequest}
+   * Protobuf type {@code jp.co.cyberagent.stf.DoIdentifyRequest}
    */
-  public static final class IdentifyRequest extends
+  public static final class DoIdentifyRequest extends
       com.google.protobuf.GeneratedMessage
-      implements IdentifyRequestOrBuilder {
-    // Use IdentifyRequest.newBuilder() to construct.
-    private IdentifyRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements DoIdentifyRequestOrBuilder {
+    // Use DoIdentifyRequest.newBuilder() to construct.
+    private DoIdentifyRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private IdentifyRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private DoIdentifyRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final IdentifyRequest defaultInstance;
-    public static IdentifyRequest getDefaultInstance() {
+    private static final DoIdentifyRequest defaultInstance;
+    public static DoIdentifyRequest getDefaultInstance() {
       return defaultInstance;
     }
 
-    public IdentifyRequest getDefaultInstanceForType() {
+    public DoIdentifyRequest getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -9334,7 +9334,7 @@ public final class Wire {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private IdentifyRequest(
+    private DoIdentifyRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -9376,28 +9376,28 @@ public final class Wire {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyRequest_descriptor;
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyRequest_fieldAccessorTable
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.Wire.IdentifyRequest.class, jp.co.cyberagent.stf.Wire.IdentifyRequest.Builder.class);
+              jp.co.cyberagent.stf.Wire.DoIdentifyRequest.class, jp.co.cyberagent.stf.Wire.DoIdentifyRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<IdentifyRequest> PARSER =
-        new com.google.protobuf.AbstractParser<IdentifyRequest>() {
-      public IdentifyRequest parsePartialFrom(
+    public static com.google.protobuf.Parser<DoIdentifyRequest> PARSER =
+        new com.google.protobuf.AbstractParser<DoIdentifyRequest>() {
+      public DoIdentifyRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new IdentifyRequest(input, extensionRegistry);
+        return new DoIdentifyRequest(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<IdentifyRequest> getParserForType() {
+    public com.google.protobuf.Parser<DoIdentifyRequest> getParserForType() {
       return PARSER;
     }
 
@@ -9492,53 +9492,53 @@ public final class Wire {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -9547,7 +9547,7 @@ public final class Wire {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.IdentifyRequest prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.DoIdentifyRequest prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -9559,24 +9559,24 @@ public final class Wire {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.IdentifyRequest}
+     * Protobuf type {@code jp.co.cyberagent.stf.DoIdentifyRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.Wire.IdentifyRequestOrBuilder {
+       implements jp.co.cyberagent.stf.Wire.DoIdentifyRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyRequest_fieldAccessorTable
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.Wire.IdentifyRequest.class, jp.co.cyberagent.stf.Wire.IdentifyRequest.Builder.class);
+                jp.co.cyberagent.stf.Wire.DoIdentifyRequest.class, jp.co.cyberagent.stf.Wire.DoIdentifyRequest.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.Wire.IdentifyRequest.newBuilder()
+      // Construct using jp.co.cyberagent.stf.Wire.DoIdentifyRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -9607,23 +9607,23 @@ public final class Wire {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_descriptor;
       }
 
-      public jp.co.cyberagent.stf.Wire.IdentifyRequest getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.Wire.IdentifyRequest.getDefaultInstance();
+      public jp.co.cyberagent.stf.Wire.DoIdentifyRequest getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.Wire.DoIdentifyRequest.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.Wire.IdentifyRequest build() {
-        jp.co.cyberagent.stf.Wire.IdentifyRequest result = buildPartial();
+      public jp.co.cyberagent.stf.Wire.DoIdentifyRequest build() {
+        jp.co.cyberagent.stf.Wire.DoIdentifyRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.Wire.IdentifyRequest buildPartial() {
-        jp.co.cyberagent.stf.Wire.IdentifyRequest result = new jp.co.cyberagent.stf.Wire.IdentifyRequest(this);
+      public jp.co.cyberagent.stf.Wire.DoIdentifyRequest buildPartial() {
+        jp.co.cyberagent.stf.Wire.DoIdentifyRequest result = new jp.co.cyberagent.stf.Wire.DoIdentifyRequest(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -9636,16 +9636,16 @@ public final class Wire {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.Wire.IdentifyRequest) {
-          return mergeFrom((jp.co.cyberagent.stf.Wire.IdentifyRequest)other);
+        if (other instanceof jp.co.cyberagent.stf.Wire.DoIdentifyRequest) {
+          return mergeFrom((jp.co.cyberagent.stf.Wire.DoIdentifyRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.IdentifyRequest other) {
-        if (other == jp.co.cyberagent.stf.Wire.IdentifyRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.DoIdentifyRequest other) {
+        if (other == jp.co.cyberagent.stf.Wire.DoIdentifyRequest.getDefaultInstance()) return this;
         if (other.hasSerial()) {
           bitField0_ |= 0x00000001;
           serial_ = other.serial_;
@@ -9667,11 +9667,11 @@ public final class Wire {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.Wire.IdentifyRequest parsedMessage = null;
+        jp.co.cyberagent.stf.Wire.DoIdentifyRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.Wire.IdentifyRequest) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.Wire.DoIdentifyRequest) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -9756,18 +9756,18 @@ public final class Wire {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.IdentifyRequest)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.DoIdentifyRequest)
     }
 
     static {
-      defaultInstance = new IdentifyRequest(true);
+      defaultInstance = new DoIdentifyRequest(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.IdentifyRequest)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.DoIdentifyRequest)
   }
 
-  public interface IdentifyResponseOrBuilder
+  public interface DoIdentifyResponseOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // required bool success = 1;
@@ -9781,24 +9781,24 @@ public final class Wire {
     boolean getSuccess();
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.IdentifyResponse}
+   * Protobuf type {@code jp.co.cyberagent.stf.DoIdentifyResponse}
    */
-  public static final class IdentifyResponse extends
+  public static final class DoIdentifyResponse extends
       com.google.protobuf.GeneratedMessage
-      implements IdentifyResponseOrBuilder {
-    // Use IdentifyResponse.newBuilder() to construct.
-    private IdentifyResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements DoIdentifyResponseOrBuilder {
+    // Use DoIdentifyResponse.newBuilder() to construct.
+    private DoIdentifyResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private IdentifyResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private DoIdentifyResponse(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final IdentifyResponse defaultInstance;
-    public static IdentifyResponse getDefaultInstance() {
+    private static final DoIdentifyResponse defaultInstance;
+    public static DoIdentifyResponse getDefaultInstance() {
       return defaultInstance;
     }
 
-    public IdentifyResponse getDefaultInstanceForType() {
+    public DoIdentifyResponse getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -9808,7 +9808,7 @@ public final class Wire {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private IdentifyResponse(
+    private DoIdentifyResponse(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -9850,28 +9850,28 @@ public final class Wire {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyResponse_descriptor;
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyResponse_fieldAccessorTable
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.Wire.IdentifyResponse.class, jp.co.cyberagent.stf.Wire.IdentifyResponse.Builder.class);
+              jp.co.cyberagent.stf.Wire.DoIdentifyResponse.class, jp.co.cyberagent.stf.Wire.DoIdentifyResponse.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<IdentifyResponse> PARSER =
-        new com.google.protobuf.AbstractParser<IdentifyResponse>() {
-      public IdentifyResponse parsePartialFrom(
+    public static com.google.protobuf.Parser<DoIdentifyResponse> PARSER =
+        new com.google.protobuf.AbstractParser<DoIdentifyResponse>() {
+      public DoIdentifyResponse parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new IdentifyResponse(input, extensionRegistry);
+        return new DoIdentifyResponse(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<IdentifyResponse> getParserForType() {
+    public com.google.protobuf.Parser<DoIdentifyResponse> getParserForType() {
       return PARSER;
     }
 
@@ -9939,53 +9939,53 @@ public final class Wire {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.IdentifyResponse parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoIdentifyResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -9994,7 +9994,7 @@ public final class Wire {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.IdentifyResponse prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.DoIdentifyResponse prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -10006,24 +10006,24 @@ public final class Wire {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.IdentifyResponse}
+     * Protobuf type {@code jp.co.cyberagent.stf.DoIdentifyResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.Wire.IdentifyResponseOrBuilder {
+       implements jp.co.cyberagent.stf.Wire.DoIdentifyResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyResponse_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyResponse_fieldAccessorTable
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.Wire.IdentifyResponse.class, jp.co.cyberagent.stf.Wire.IdentifyResponse.Builder.class);
+                jp.co.cyberagent.stf.Wire.DoIdentifyResponse.class, jp.co.cyberagent.stf.Wire.DoIdentifyResponse.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.Wire.IdentifyResponse.newBuilder()
+      // Construct using jp.co.cyberagent.stf.Wire.DoIdentifyResponse.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -10054,23 +10054,23 @@ public final class Wire {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_IdentifyResponse_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_descriptor;
       }
 
-      public jp.co.cyberagent.stf.Wire.IdentifyResponse getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.Wire.IdentifyResponse.getDefaultInstance();
+      public jp.co.cyberagent.stf.Wire.DoIdentifyResponse getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.Wire.DoIdentifyResponse.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.Wire.IdentifyResponse build() {
-        jp.co.cyberagent.stf.Wire.IdentifyResponse result = buildPartial();
+      public jp.co.cyberagent.stf.Wire.DoIdentifyResponse build() {
+        jp.co.cyberagent.stf.Wire.DoIdentifyResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.Wire.IdentifyResponse buildPartial() {
-        jp.co.cyberagent.stf.Wire.IdentifyResponse result = new jp.co.cyberagent.stf.Wire.IdentifyResponse(this);
+      public jp.co.cyberagent.stf.Wire.DoIdentifyResponse buildPartial() {
+        jp.co.cyberagent.stf.Wire.DoIdentifyResponse result = new jp.co.cyberagent.stf.Wire.DoIdentifyResponse(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -10083,16 +10083,16 @@ public final class Wire {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.Wire.IdentifyResponse) {
-          return mergeFrom((jp.co.cyberagent.stf.Wire.IdentifyResponse)other);
+        if (other instanceof jp.co.cyberagent.stf.Wire.DoIdentifyResponse) {
+          return mergeFrom((jp.co.cyberagent.stf.Wire.DoIdentifyResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.IdentifyResponse other) {
-        if (other == jp.co.cyberagent.stf.Wire.IdentifyResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.DoIdentifyResponse other) {
+        if (other == jp.co.cyberagent.stf.Wire.DoIdentifyResponse.getDefaultInstance()) return this;
         if (other.hasSuccess()) {
           setSuccess(other.getSuccess());
         }
@@ -10112,11 +10112,11 @@ public final class Wire {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.Wire.IdentifyResponse parsedMessage = null;
+        jp.co.cyberagent.stf.Wire.DoIdentifyResponse parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.Wire.IdentifyResponse) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.Wire.DoIdentifyResponse) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -10160,15 +10160,15 @@ public final class Wire {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.IdentifyResponse)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.DoIdentifyResponse)
     }
 
     static {
-      defaultInstance = new IdentifyResponse(true);
+      defaultInstance = new DoIdentifyResponse(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.IdentifyResponse)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.DoIdentifyResponse)
   }
 
   public interface KeyEventRequestOrBuilder
@@ -11402,7 +11402,7 @@ public final class Wire {
     // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.KeyEventRequest)
   }
 
-  public interface TypeRequestOrBuilder
+  public interface DoTypeRequestOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
     // required string text = 1;
@@ -11421,24 +11421,24 @@ public final class Wire {
         getTextBytes();
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.TypeRequest}
+   * Protobuf type {@code jp.co.cyberagent.stf.DoTypeRequest}
    */
-  public static final class TypeRequest extends
+  public static final class DoTypeRequest extends
       com.google.protobuf.GeneratedMessage
-      implements TypeRequestOrBuilder {
-    // Use TypeRequest.newBuilder() to construct.
-    private TypeRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements DoTypeRequestOrBuilder {
+    // Use DoTypeRequest.newBuilder() to construct.
+    private DoTypeRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private TypeRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private DoTypeRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final TypeRequest defaultInstance;
-    public static TypeRequest getDefaultInstance() {
+    private static final DoTypeRequest defaultInstance;
+    public static DoTypeRequest getDefaultInstance() {
       return defaultInstance;
     }
 
-    public TypeRequest getDefaultInstanceForType() {
+    public DoTypeRequest getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -11448,7 +11448,7 @@ public final class Wire {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private TypeRequest(
+    private DoTypeRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -11490,28 +11490,28 @@ public final class Wire {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_TypeRequest_descriptor;
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoTypeRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_TypeRequest_fieldAccessorTable
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoTypeRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.Wire.TypeRequest.class, jp.co.cyberagent.stf.Wire.TypeRequest.Builder.class);
+              jp.co.cyberagent.stf.Wire.DoTypeRequest.class, jp.co.cyberagent.stf.Wire.DoTypeRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<TypeRequest> PARSER =
-        new com.google.protobuf.AbstractParser<TypeRequest>() {
-      public TypeRequest parsePartialFrom(
+    public static com.google.protobuf.Parser<DoTypeRequest> PARSER =
+        new com.google.protobuf.AbstractParser<DoTypeRequest>() {
+      public DoTypeRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TypeRequest(input, extensionRegistry);
+        return new DoTypeRequest(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<TypeRequest> getParserForType() {
+    public com.google.protobuf.Parser<DoTypeRequest> getParserForType() {
       return PARSER;
     }
 
@@ -11606,53 +11606,53 @@ public final class Wire {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.TypeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoTypeRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -11661,7 +11661,7 @@ public final class Wire {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.TypeRequest prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.DoTypeRequest prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -11673,24 +11673,24 @@ public final class Wire {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.TypeRequest}
+     * Protobuf type {@code jp.co.cyberagent.stf.DoTypeRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.Wire.TypeRequestOrBuilder {
+       implements jp.co.cyberagent.stf.Wire.DoTypeRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_TypeRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoTypeRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_TypeRequest_fieldAccessorTable
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoTypeRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.Wire.TypeRequest.class, jp.co.cyberagent.stf.Wire.TypeRequest.Builder.class);
+                jp.co.cyberagent.stf.Wire.DoTypeRequest.class, jp.co.cyberagent.stf.Wire.DoTypeRequest.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.Wire.TypeRequest.newBuilder()
+      // Construct using jp.co.cyberagent.stf.Wire.DoTypeRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -11721,23 +11721,23 @@ public final class Wire {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_TypeRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoTypeRequest_descriptor;
       }
 
-      public jp.co.cyberagent.stf.Wire.TypeRequest getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.Wire.TypeRequest.getDefaultInstance();
+      public jp.co.cyberagent.stf.Wire.DoTypeRequest getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.Wire.DoTypeRequest.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.Wire.TypeRequest build() {
-        jp.co.cyberagent.stf.Wire.TypeRequest result = buildPartial();
+      public jp.co.cyberagent.stf.Wire.DoTypeRequest build() {
+        jp.co.cyberagent.stf.Wire.DoTypeRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.Wire.TypeRequest buildPartial() {
-        jp.co.cyberagent.stf.Wire.TypeRequest result = new jp.co.cyberagent.stf.Wire.TypeRequest(this);
+      public jp.co.cyberagent.stf.Wire.DoTypeRequest buildPartial() {
+        jp.co.cyberagent.stf.Wire.DoTypeRequest result = new jp.co.cyberagent.stf.Wire.DoTypeRequest(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -11750,16 +11750,16 @@ public final class Wire {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.Wire.TypeRequest) {
-          return mergeFrom((jp.co.cyberagent.stf.Wire.TypeRequest)other);
+        if (other instanceof jp.co.cyberagent.stf.Wire.DoTypeRequest) {
+          return mergeFrom((jp.co.cyberagent.stf.Wire.DoTypeRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.TypeRequest other) {
-        if (other == jp.co.cyberagent.stf.Wire.TypeRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.DoTypeRequest other) {
+        if (other == jp.co.cyberagent.stf.Wire.DoTypeRequest.getDefaultInstance()) return this;
         if (other.hasText()) {
           bitField0_ |= 0x00000001;
           text_ = other.text_;
@@ -11781,11 +11781,11 @@ public final class Wire {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.Wire.TypeRequest parsedMessage = null;
+        jp.co.cyberagent.stf.Wire.DoTypeRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.Wire.TypeRequest) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.Wire.DoTypeRequest) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -11870,15 +11870,15 @@ public final class Wire {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.TypeRequest)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.DoTypeRequest)
     }
 
     static {
-      defaultInstance = new TypeRequest(true);
+      defaultInstance = new DoTypeRequest(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.TypeRequest)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.DoTypeRequest)
   }
 
   public interface SetRotationRequestOrBuilder
@@ -12374,28 +12374,28 @@ public final class Wire {
     // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.SetRotationRequest)
   }
 
-  public interface WakeRequestOrBuilder
+  public interface DoWakeRequestOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code jp.co.cyberagent.stf.WakeRequest}
+   * Protobuf type {@code jp.co.cyberagent.stf.DoWakeRequest}
    */
-  public static final class WakeRequest extends
+  public static final class DoWakeRequest extends
       com.google.protobuf.GeneratedMessage
-      implements WakeRequestOrBuilder {
-    // Use WakeRequest.newBuilder() to construct.
-    private WakeRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      implements DoWakeRequestOrBuilder {
+    // Use DoWakeRequest.newBuilder() to construct.
+    private DoWakeRequest(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private WakeRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private DoWakeRequest(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final WakeRequest defaultInstance;
-    public static WakeRequest getDefaultInstance() {
+    private static final DoWakeRequest defaultInstance;
+    public static DoWakeRequest getDefaultInstance() {
       return defaultInstance;
     }
 
-    public WakeRequest getDefaultInstanceForType() {
+    public DoWakeRequest getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -12405,7 +12405,7 @@ public final class Wire {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private WakeRequest(
+    private DoWakeRequest(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -12441,28 +12441,28 @@ public final class Wire {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_WakeRequest_descriptor;
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoWakeRequest_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_WakeRequest_fieldAccessorTable
+      return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoWakeRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              jp.co.cyberagent.stf.Wire.WakeRequest.class, jp.co.cyberagent.stf.Wire.WakeRequest.Builder.class);
+              jp.co.cyberagent.stf.Wire.DoWakeRequest.class, jp.co.cyberagent.stf.Wire.DoWakeRequest.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<WakeRequest> PARSER =
-        new com.google.protobuf.AbstractParser<WakeRequest>() {
-      public WakeRequest parsePartialFrom(
+    public static com.google.protobuf.Parser<DoWakeRequest> PARSER =
+        new com.google.protobuf.AbstractParser<DoWakeRequest>() {
+      public DoWakeRequest parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new WakeRequest(input, extensionRegistry);
+        return new DoWakeRequest(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<WakeRequest> getParserForType() {
+    public com.google.protobuf.Parser<DoWakeRequest> getParserForType() {
       return PARSER;
     }
 
@@ -12501,53 +12501,53 @@ public final class Wire {
       return super.writeReplace();
     }
 
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(byte[] data)
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseDelimitedFrom(java.io.InputStream input)
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseDelimitedFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static jp.co.cyberagent.stf.Wire.WakeRequest parseFrom(
+    public static jp.co.cyberagent.stf.Wire.DoWakeRequest parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -12556,7 +12556,7 @@ public final class Wire {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.WakeRequest prototype) {
+    public static Builder newBuilder(jp.co.cyberagent.stf.Wire.DoWakeRequest prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -12568,24 +12568,24 @@ public final class Wire {
       return builder;
     }
     /**
-     * Protobuf type {@code jp.co.cyberagent.stf.WakeRequest}
+     * Protobuf type {@code jp.co.cyberagent.stf.DoWakeRequest}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder>
-       implements jp.co.cyberagent.stf.Wire.WakeRequestOrBuilder {
+       implements jp.co.cyberagent.stf.Wire.DoWakeRequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_WakeRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoWakeRequest_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_WakeRequest_fieldAccessorTable
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoWakeRequest_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                jp.co.cyberagent.stf.Wire.WakeRequest.class, jp.co.cyberagent.stf.Wire.WakeRequest.Builder.class);
+                jp.co.cyberagent.stf.Wire.DoWakeRequest.class, jp.co.cyberagent.stf.Wire.DoWakeRequest.Builder.class);
       }
 
-      // Construct using jp.co.cyberagent.stf.Wire.WakeRequest.newBuilder()
+      // Construct using jp.co.cyberagent.stf.Wire.DoWakeRequest.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -12614,38 +12614,38 @@ public final class Wire {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_WakeRequest_descriptor;
+        return jp.co.cyberagent.stf.Wire.internal_static_jp_co_cyberagent_stf_DoWakeRequest_descriptor;
       }
 
-      public jp.co.cyberagent.stf.Wire.WakeRequest getDefaultInstanceForType() {
-        return jp.co.cyberagent.stf.Wire.WakeRequest.getDefaultInstance();
+      public jp.co.cyberagent.stf.Wire.DoWakeRequest getDefaultInstanceForType() {
+        return jp.co.cyberagent.stf.Wire.DoWakeRequest.getDefaultInstance();
       }
 
-      public jp.co.cyberagent.stf.Wire.WakeRequest build() {
-        jp.co.cyberagent.stf.Wire.WakeRequest result = buildPartial();
+      public jp.co.cyberagent.stf.Wire.DoWakeRequest build() {
+        jp.co.cyberagent.stf.Wire.DoWakeRequest result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public jp.co.cyberagent.stf.Wire.WakeRequest buildPartial() {
-        jp.co.cyberagent.stf.Wire.WakeRequest result = new jp.co.cyberagent.stf.Wire.WakeRequest(this);
+      public jp.co.cyberagent.stf.Wire.DoWakeRequest buildPartial() {
+        jp.co.cyberagent.stf.Wire.DoWakeRequest result = new jp.co.cyberagent.stf.Wire.DoWakeRequest(this);
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof jp.co.cyberagent.stf.Wire.WakeRequest) {
-          return mergeFrom((jp.co.cyberagent.stf.Wire.WakeRequest)other);
+        if (other instanceof jp.co.cyberagent.stf.Wire.DoWakeRequest) {
+          return mergeFrom((jp.co.cyberagent.stf.Wire.DoWakeRequest)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.WakeRequest other) {
-        if (other == jp.co.cyberagent.stf.Wire.WakeRequest.getDefaultInstance()) return this;
+      public Builder mergeFrom(jp.co.cyberagent.stf.Wire.DoWakeRequest other) {
+        if (other == jp.co.cyberagent.stf.Wire.DoWakeRequest.getDefaultInstance()) return this;
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -12658,11 +12658,11 @@ public final class Wire {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        jp.co.cyberagent.stf.Wire.WakeRequest parsedMessage = null;
+        jp.co.cyberagent.stf.Wire.DoWakeRequest parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (jp.co.cyberagent.stf.Wire.WakeRequest) e.getUnfinishedMessage();
+          parsedMessage = (jp.co.cyberagent.stf.Wire.DoWakeRequest) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -12672,15 +12672,15 @@ public final class Wire {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.WakeRequest)
+      // @@protoc_insertion_point(builder_scope:jp.co.cyberagent.stf.DoWakeRequest)
     }
 
     static {
-      defaultInstance = new WakeRequest(true);
+      defaultInstance = new DoWakeRequest(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.WakeRequest)
+    // @@protoc_insertion_point(class_scope:jp.co.cyberagent.stf.DoWakeRequest)
   }
 
   private static com.google.protobuf.Descriptors.Descriptor
@@ -12689,15 +12689,15 @@ public final class Wire {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_jp_co_cyberagent_stf_RequestEnvelope_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_VersionRequest_descriptor;
+    internal_static_jp_co_cyberagent_stf_GetVersionRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_VersionRequest_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_GetVersionRequest_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_VersionResponse_descriptor;
+    internal_static_jp_co_cyberagent_stf_GetVersionResponse_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_VersionResponse_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_GetVersionResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_jp_co_cyberagent_stf_SetKeyguardStateRequest_descriptor;
   private static
@@ -12769,35 +12769,35 @@ public final class Wire {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_jp_co_cyberagent_stf_GetPropertiesResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_IdentifyRequest_descriptor;
+    internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_IdentifyRequest_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_IdentifyResponse_descriptor;
+    internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_IdentifyResponse_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_jp_co_cyberagent_stf_KeyEventRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_jp_co_cyberagent_stf_KeyEventRequest_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_TypeRequest_descriptor;
+    internal_static_jp_co_cyberagent_stf_DoTypeRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_TypeRequest_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_DoTypeRequest_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_jp_co_cyberagent_stf_SetRotationRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_jp_co_cyberagent_stf_SetRotationRequest_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_jp_co_cyberagent_stf_WakeRequest_descriptor;
+    internal_static_jp_co_cyberagent_stf_DoWakeRequest_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_jp_co_cyberagent_stf_WakeRequest_fieldAccessorTable;
+      internal_static_jp_co_cyberagent_stf_DoWakeRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -12810,48 +12810,49 @@ public final class Wire {
       "\n\020proto/wire.proto\022\024jp.co.cyberagent.stf" +
       "\"S\n\017RequestEnvelope\022/\n\004type\030\001 \002(\0162!.jp.c" +
       "o.cyberagent.stf.RequestType\022\017\n\007request\030" +
-      "\002 \002(\014\"\020\n\016VersionRequest\"3\n\017VersionRespon" +
-      "se\022\017\n\007success\030\001 \002(\010\022\017\n\007version\030\002 \001(\t\"*\n\027" +
-      "SetKeyguardStateRequest\022\017\n\007enabled\030\001 \002(\010" +
-      "\"+\n\030SetKeyguardStateResponse\022\017\n\007success\030" +
-      "\001 \002(\010\"%\n\022SetWakeLockRequest\022\017\n\007enabled\030\001" +
-      " \002(\010\"&\n\023SetWakeLockResponse\022\017\n\007success\030\001" +
-      " \002(\010\"V\n\023SetClipboardRequest\0221\n\004type\030\001 \002(",
-      "\0162#.jp.co.cyberagent.stf.ClipboardType\022\014" +
-      "\n\004text\030\002 \001(\t\"\'\n\024SetClipboardResponse\022\017\n\007" +
-      "success\030\001 \002(\010\"H\n\023GetClipboardRequest\0221\n\004" +
-      "type\030\001 \002(\0162#.jp.co.cyberagent.stf.Clipbo" +
-      "ardType\"h\n\024GetClipboardResponse\022\017\n\007succe" +
-      "ss\030\001 \002(\010\0221\n\004type\030\002 \001(\0162#.jp.co.cyberagen" +
-      "t.stf.ClipboardType\022\014\n\004text\030\003 \001(\t\"M\n\nBro" +
-      "wserApp\022\014\n\004name\030\001 \002(\t\022\021\n\tcomponent\030\002 \002(\t" +
-      "\022\020\n\010selected\030\003 \002(\010\022\014\n\004icon\030\004 \002(\014\"\024\n\022GetB" +
-      "rowsersRequest\"h\n\023GetBrowsersResponse\022\017\n",
-      "\007success\030\001 \002(\010\022\020\n\010selected\030\002 \002(\010\022.\n\004apps" +
-      "\030\003 \003(\0132 .jp.co.cyberagent.stf.BrowserApp" +
-      "\"\'\n\010Property\022\014\n\004name\030\001 \002(\t\022\r\n\005value\030\002 \002(" +
-      "\t\"*\n\024GetPropertiesRequest\022\022\n\nproperties\030" +
-      "\001 \003(\t\"\\\n\025GetPropertiesResponse\022\017\n\007succes" +
-      "s\030\001 \002(\010\0222\n\nproperties\030\002 \003(\0132\036.jp.co.cybe" +
-      "ragent.stf.Property\"!\n\017IdentifyRequest\022\016" +
-      "\n\006serial\030\001 \002(\t\"#\n\020IdentifyResponse\022\017\n\007su" +
-      "ccess\030\001 \002(\010\"\372\001\n\017KeyEventRequest\022-\n\005event" +
-      "\030\001 \002(\0162\036.jp.co.cyberagent.stf.KeyEvent\022\017",
-      "\n\007keyCode\030\002 \002(\005\022\020\n\010shiftKey\030\003 \001(\010\022\017\n\007ctr" +
-      "lKey\030\004 \001(\010\022\016\n\006altKey\030\005 \001(\010\022\017\n\007metaKey\030\006 " +
-      "\001(\010\022\016\n\006symKey\030\007 \001(\010\022\023\n\013functionKey\030\010 \001(\010" +
-      "\022\023\n\013capsLockKey\030\t \001(\010\022\025\n\rscrollLockKey\030\n" +
-      " \001(\010\022\022\n\nnumLockKey\030\013 \001(\010\"\033\n\013TypeRequest\022" +
-      "\014\n\004text\030\001 \002(\t\"4\n\022SetRotationRequest\022\020\n\010r" +
-      "otation\030\001 \002(\005\022\014\n\004lock\030\002 \002(\010\"\r\n\013WakeReque" +
-      "st*\323\001\n\013RequestType\022\013\n\007VERSION\020\000\022\026\n\022SET_K" +
-      "EYGUARD_STATE\020\001\022\021\n\rSET_WAKE_LOCK\020\002\022\021\n\rSE" +
-      "T_CLIPBOARD\020\003\022\021\n\rGET_CLIPBOARD\020\004\022\020\n\014GET_",
-      "BROWSERS\020\005\022\022\n\016GET_PROPERTIES\020\006\022\014\n\010IDENTI" +
-      "FY\020\007\022\014\n\010KEYEVENT\020\010\022\010\n\004TYPE\020\t\022\010\n\004WAKE\020\n\022\020" +
-      "\n\014SET_ROTATION\020\013*\031\n\rClipboardType\022\010\n\004TEX" +
-      "T\020\001*\'\n\010KeyEvent\022\010\n\004DOWN\020\000\022\006\n\002UP\020\001\022\t\n\005PRE" +
-      "SS\020\002B\006B\004Wire"
+      "\002 \002(\014\"\023\n\021GetVersionRequest\"6\n\022GetVersion" +
+      "Response\022\017\n\007success\030\001 \002(\010\022\017\n\007version\030\002 \001" +
+      "(\t\"*\n\027SetKeyguardStateRequest\022\017\n\007enabled" +
+      "\030\001 \002(\010\"+\n\030SetKeyguardStateResponse\022\017\n\007su" +
+      "ccess\030\001 \002(\010\"%\n\022SetWakeLockRequest\022\017\n\007ena" +
+      "bled\030\001 \002(\010\"&\n\023SetWakeLockResponse\022\017\n\007suc" +
+      "cess\030\001 \002(\010\"V\n\023SetClipboardRequest\0221\n\004typ",
+      "e\030\001 \002(\0162#.jp.co.cyberagent.stf.Clipboard" +
+      "Type\022\014\n\004text\030\002 \001(\t\"\'\n\024SetClipboardRespon" +
+      "se\022\017\n\007success\030\001 \002(\010\"H\n\023GetClipboardReque" +
+      "st\0221\n\004type\030\001 \002(\0162#.jp.co.cyberagent.stf." +
+      "ClipboardType\"h\n\024GetClipboardResponse\022\017\n" +
+      "\007success\030\001 \002(\010\0221\n\004type\030\002 \001(\0162#.jp.co.cyb" +
+      "eragent.stf.ClipboardType\022\014\n\004text\030\003 \001(\t\"" +
+      "M\n\nBrowserApp\022\014\n\004name\030\001 \002(\t\022\021\n\tcomponent" +
+      "\030\002 \002(\t\022\020\n\010selected\030\003 \002(\010\022\014\n\004icon\030\004 \002(\014\"\024" +
+      "\n\022GetBrowsersRequest\"h\n\023GetBrowsersRespo",
+      "nse\022\017\n\007success\030\001 \002(\010\022\020\n\010selected\030\002 \002(\010\022." +
+      "\n\004apps\030\003 \003(\0132 .jp.co.cyberagent.stf.Brow" +
+      "serApp\"\'\n\010Property\022\014\n\004name\030\001 \002(\t\022\r\n\005valu" +
+      "e\030\002 \002(\t\"*\n\024GetPropertiesRequest\022\022\n\nprope" +
+      "rties\030\001 \003(\t\"\\\n\025GetPropertiesResponse\022\017\n\007" +
+      "success\030\001 \002(\010\0222\n\nproperties\030\002 \003(\0132\036.jp.c" +
+      "o.cyberagent.stf.Property\"#\n\021DoIdentifyR" +
+      "equest\022\016\n\006serial\030\001 \002(\t\"%\n\022DoIdentifyResp" +
+      "onse\022\017\n\007success\030\001 \002(\010\"\372\001\n\017KeyEventReques" +
+      "t\022-\n\005event\030\001 \002(\0162\036.jp.co.cyberagent.stf.",
+      "KeyEvent\022\017\n\007keyCode\030\002 \002(\005\022\020\n\010shiftKey\030\003 " +
+      "\001(\010\022\017\n\007ctrlKey\030\004 \001(\010\022\016\n\006altKey\030\005 \001(\010\022\017\n\007" +
+      "metaKey\030\006 \001(\010\022\016\n\006symKey\030\007 \001(\010\022\023\n\013functio" +
+      "nKey\030\010 \001(\010\022\023\n\013capsLockKey\030\t \001(\010\022\025\n\rscrol" +
+      "lLockKey\030\n \001(\010\022\022\n\nnumLockKey\030\013 \001(\010\"\035\n\rDo" +
+      "TypeRequest\022\014\n\004text\030\001 \002(\t\"4\n\022SetRotation" +
+      "Request\022\020\n\010rotation\030\001 \002(\005\022\014\n\004lock\030\002 \002(\010\"" +
+      "\017\n\rDoWakeRequest*\343\001\n\013RequestType\022\017\n\013DO_I" +
+      "DENTIFY\020\001\022\017\n\013DO_KEYEVENT\020\002\022\013\n\007DO_TYPE\020\003\022" +
+      "\013\n\007DO_WAKE\020\004\022\020\n\014GET_BROWSERS\020\005\022\021\n\rGET_CL",
+      "IPBOARD\020\006\022\022\n\016GET_PROPERTIES\020\007\022\017\n\013GET_VER" +
+      "SION\020\010\022\021\n\rSET_CLIPBOARD\020\t\022\026\n\022SET_KEYGUAR" +
+      "D_STATE\020\n\022\021\n\rSET_WAKE_LOCK\020\013\022\020\n\014SET_ROTA" +
+      "TION\020\014*\031\n\rClipboardType\022\010\n\004TEXT\020\001*\'\n\010Key" +
+      "Event\022\010\n\004DOWN\020\000\022\006\n\002UP\020\001\022\t\n\005PRESS\020\002B\006B\004Wi" +
+      "re"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -12864,17 +12865,17 @@ public final class Wire {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_RequestEnvelope_descriptor,
               new java.lang.String[] { "Type", "Request", });
-          internal_static_jp_co_cyberagent_stf_VersionRequest_descriptor =
+          internal_static_jp_co_cyberagent_stf_GetVersionRequest_descriptor =
             getDescriptor().getMessageTypes().get(1);
-          internal_static_jp_co_cyberagent_stf_VersionRequest_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_GetVersionRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_VersionRequest_descriptor,
+              internal_static_jp_co_cyberagent_stf_GetVersionRequest_descriptor,
               new java.lang.String[] { });
-          internal_static_jp_co_cyberagent_stf_VersionResponse_descriptor =
+          internal_static_jp_co_cyberagent_stf_GetVersionResponse_descriptor =
             getDescriptor().getMessageTypes().get(2);
-          internal_static_jp_co_cyberagent_stf_VersionResponse_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_GetVersionResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_VersionResponse_descriptor,
+              internal_static_jp_co_cyberagent_stf_GetVersionResponse_descriptor,
               new java.lang.String[] { "Success", "Version", });
           internal_static_jp_co_cyberagent_stf_SetKeyguardStateRequest_descriptor =
             getDescriptor().getMessageTypes().get(3);
@@ -12960,17 +12961,17 @@ public final class Wire {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_GetPropertiesResponse_descriptor,
               new java.lang.String[] { "Success", "Properties", });
-          internal_static_jp_co_cyberagent_stf_IdentifyRequest_descriptor =
+          internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_descriptor =
             getDescriptor().getMessageTypes().get(17);
-          internal_static_jp_co_cyberagent_stf_IdentifyRequest_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_IdentifyRequest_descriptor,
+              internal_static_jp_co_cyberagent_stf_DoIdentifyRequest_descriptor,
               new java.lang.String[] { "Serial", });
-          internal_static_jp_co_cyberagent_stf_IdentifyResponse_descriptor =
+          internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_descriptor =
             getDescriptor().getMessageTypes().get(18);
-          internal_static_jp_co_cyberagent_stf_IdentifyResponse_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_IdentifyResponse_descriptor,
+              internal_static_jp_co_cyberagent_stf_DoIdentifyResponse_descriptor,
               new java.lang.String[] { "Success", });
           internal_static_jp_co_cyberagent_stf_KeyEventRequest_descriptor =
             getDescriptor().getMessageTypes().get(19);
@@ -12978,11 +12979,11 @@ public final class Wire {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_KeyEventRequest_descriptor,
               new java.lang.String[] { "Event", "KeyCode", "ShiftKey", "CtrlKey", "AltKey", "MetaKey", "SymKey", "FunctionKey", "CapsLockKey", "ScrollLockKey", "NumLockKey", });
-          internal_static_jp_co_cyberagent_stf_TypeRequest_descriptor =
+          internal_static_jp_co_cyberagent_stf_DoTypeRequest_descriptor =
             getDescriptor().getMessageTypes().get(20);
-          internal_static_jp_co_cyberagent_stf_TypeRequest_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_DoTypeRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_TypeRequest_descriptor,
+              internal_static_jp_co_cyberagent_stf_DoTypeRequest_descriptor,
               new java.lang.String[] { "Text", });
           internal_static_jp_co_cyberagent_stf_SetRotationRequest_descriptor =
             getDescriptor().getMessageTypes().get(21);
@@ -12990,11 +12991,11 @@ public final class Wire {
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_jp_co_cyberagent_stf_SetRotationRequest_descriptor,
               new java.lang.String[] { "Rotation", "Lock", });
-          internal_static_jp_co_cyberagent_stf_WakeRequest_descriptor =
+          internal_static_jp_co_cyberagent_stf_DoWakeRequest_descriptor =
             getDescriptor().getMessageTypes().get(22);
-          internal_static_jp_co_cyberagent_stf_WakeRequest_fieldAccessorTable = new
+          internal_static_jp_co_cyberagent_stf_DoWakeRequest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_jp_co_cyberagent_stf_WakeRequest_descriptor,
+              internal_static_jp_co_cyberagent_stf_DoWakeRequest_descriptor,
               new java.lang.String[] { });
           return null;
         }

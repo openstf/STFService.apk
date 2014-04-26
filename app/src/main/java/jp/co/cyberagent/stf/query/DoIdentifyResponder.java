@@ -9,19 +9,19 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import jp.co.cyberagent.stf.IdentityActivity;
 import jp.co.cyberagent.stf.Wire;
 
-public class IdentifyResponder extends AbstractResponder {
-    public IdentifyResponder(Context context) {
+public class DoIdentifyResponder extends AbstractResponder {
+    public DoIdentifyResponder(Context context) {
         super(context);
     }
 
     @Override
     public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
-        Wire.IdentifyRequest request =
-                Wire.IdentifyRequest.parseFrom(envelope.getRequest());
+        Wire.DoIdentifyRequest request =
+                Wire.DoIdentifyRequest.parseFrom(envelope.getRequest());
 
         showIdentity(request.getSerial());
 
-        return Wire.IdentifyResponse.newBuilder()
+        return Wire.DoIdentifyResponse.newBuilder()
                 .setSuccess(true)
                 .build();
     }

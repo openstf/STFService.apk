@@ -8,8 +8,8 @@ import com.google.protobuf.GeneratedMessage;
 
 import jp.co.cyberagent.stf.Wire;
 
-public class VersionResponder extends AbstractResponder {
-    public VersionResponder(Context context) {
+public class GetVersionResponder extends AbstractResponder {
+    public GetVersionResponder(Context context) {
         super(context);
     }
 
@@ -18,13 +18,13 @@ public class VersionResponder extends AbstractResponder {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-            return Wire.VersionResponse.newBuilder()
+            return Wire.GetVersionResponse.newBuilder()
                     .setSuccess(true)
                     .setVersion(info.versionName)
                     .build();
         }
         catch (PackageManager.NameNotFoundException e) {
-            return Wire.VersionResponse.newBuilder()
+            return Wire.GetVersionResponse.newBuilder()
                     .setSuccess(false)
                     .build();
         }

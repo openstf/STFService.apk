@@ -27,14 +27,14 @@ import jp.co.cyberagent.stf.monitor.BatteryMonitor;
 import jp.co.cyberagent.stf.monitor.ConnectivityMonitor;
 import jp.co.cyberagent.stf.monitor.PhoneStateMonitor;
 import jp.co.cyberagent.stf.monitor.RotationMonitor;
+import jp.co.cyberagent.stf.query.DoIdentifyResponder;
 import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
-import jp.co.cyberagent.stf.query.IdentifyResponder;
+import jp.co.cyberagent.stf.query.GetVersionResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
 import jp.co.cyberagent.stf.query.SetKeyguardStateResponder;
 import jp.co.cyberagent.stf.query.SetWakeLockResponder;
-import jp.co.cyberagent.stf.query.VersionResponder;
 
 public class Service extends android.app.Service {
     public static final String ACTION_START = "jp.co.cyberagent.stf.ACTION_START";
@@ -238,8 +238,8 @@ public class Service extends android.app.Service {
                     router.register(Wire.RequestType.GET_PROPERTIES,
                             new GetPropertiesResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.IDENTIFY,
-                            new IdentifyResponder(getBaseContext()));
+                    router.register(Wire.RequestType.DO_IDENTIFY,
+                            new DoIdentifyResponder(getBaseContext()));
 
                     router.register(Wire.RequestType.SET_CLIPBOARD,
                             new SetClipboardResponder(getBaseContext()));
@@ -250,8 +250,8 @@ public class Service extends android.app.Service {
                     router.register(Wire.RequestType.SET_WAKE_LOCK,
                             new SetWakeLockResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.VERSION,
-                            new VersionResponder(getBaseContext()));
+                    router.register(Wire.RequestType.GET_VERSION,
+                            new GetVersionResponder(getBaseContext()));
 
                     while (!isInterrupted()) {
                         Wire.RequestEnvelope envelope = reader.read();

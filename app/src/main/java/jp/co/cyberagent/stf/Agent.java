@@ -197,13 +197,13 @@ public class Agent {
                     }
 
                     switch (envelope.getType()) {
-                        case KEYEVENT:
+                        case DO_KEYEVENT:
                             handleKeyEventRequest(envelope);
                             break;
-                        case TYPE:
+                        case DO_TYPE:
                             handleTypeRequest(envelope);
                             break;
-                        case WAKE:
+                        case DO_WAKE:
                             handleWakeRequest(envelope);
                             break;
                         case SET_ROTATION:
@@ -276,12 +276,12 @@ public class Agent {
         }
 
         private void handleWakeRequest(Wire.RequestEnvelope envelope) throws IOException {
-            Wire.WakeRequest request = Wire.WakeRequest.parseFrom(envelope.getRequest());
+            Wire.DoWakeRequest request = Wire.DoWakeRequest.parseFrom(envelope.getRequest());
             wake();
         }
 
         private void handleTypeRequest(Wire.RequestEnvelope envelope) throws IOException {
-            Wire.TypeRequest request = Wire.TypeRequest.parseFrom(envelope.getRequest());
+            Wire.DoTypeRequest request = Wire.DoTypeRequest.parseFrom(envelope.getRequest());
             type(request.getText());
         }
 
