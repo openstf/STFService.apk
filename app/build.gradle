@@ -9,6 +9,7 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName "1.0.0"
+        packageName "jp.co.cyberagent.stf"
     }
     buildTypes {
         release {
