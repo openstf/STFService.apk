@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 
 import com.google.protobuf.GeneratedMessage;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class GetVersionResponder extends AbstractResponder {
     public GetVersionResponder(Context context) {

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 
 abstract public class AbstractResponder {
     Context context;

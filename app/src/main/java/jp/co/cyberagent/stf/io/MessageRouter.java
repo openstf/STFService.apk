@@ -5,7 +5,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.query.AbstractResponder;
 
 public class MessageRouter {

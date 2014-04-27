@@ -8,7 +8,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.util.NetworkUtil;
 
 public class GetPropertiesResponder extends AbstractResponder {

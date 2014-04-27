@@ -7,7 +7,7 @@ import android.os.Build;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class SetClipboardResponder extends AbstractResponder {
     public SetClipboardResponder(Context context) {

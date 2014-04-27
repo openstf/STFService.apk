@@ -7,7 +7,7 @@ import android.util.Log;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class SetKeyguardStateResponder extends AbstractResponder {
     private static final String TAG = "STFKeyguardStateResponder";

@@ -27,6 +27,7 @@ import jp.co.cyberagent.stf.monitor.BatteryMonitor;
 import jp.co.cyberagent.stf.monitor.ConnectivityMonitor;
 import jp.co.cyberagent.stf.monitor.PhoneStateMonitor;
 import jp.co.cyberagent.stf.monitor.RotationMonitor;
+import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.query.DoIdentifyResponder;
 import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;

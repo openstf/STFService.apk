@@ -7,7 +7,7 @@ import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import jp.co.cyberagent.stf.IdentityActivity;
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class DoIdentifyResponder extends AbstractResponder {
     public DoIdentifyResponder(Context context) {

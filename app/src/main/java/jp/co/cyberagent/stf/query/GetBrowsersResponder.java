@@ -10,7 +10,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.util.BrowserUtil;
 import jp.co.cyberagent.stf.util.GraphicUtil;
 

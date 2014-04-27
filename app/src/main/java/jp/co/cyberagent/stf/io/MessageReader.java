@@ -3,7 +3,7 @@ package jp.co.cyberagent.stf.io;
 import java.io.IOException;
 import java.io.InputStream;
 
-import jp.co.cyberagent.stf.Wire;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class MessageReader {
     private InputStream in;

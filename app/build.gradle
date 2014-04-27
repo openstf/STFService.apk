@@ -21,6 +21,7 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile group: 'com.google.protobuf', name: 'protobuf-java', version: '2.5.0'
+    compile project(':proto')
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     provided fileTree(dir: 'provided', include: ['*.jar'])
 }
