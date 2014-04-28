@@ -12,7 +12,7 @@ public class MessageReader {
         this.in = in;
     }
 
-    public Wire.RequestEnvelope read() throws IOException {
-        return Wire.RequestEnvelope.parseDelimitedFrom(in);
+    public Wire.Envelope read() throws IOException {
+        return Wire.Envelope.parseDelimitedFrom(in);
     }
 }

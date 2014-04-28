@@ -230,32 +230,32 @@ public class Service extends android.app.Service {
 
                     router = new MessageRouter(writer);
 
-                    router.register(Wire.RequestType.GET_BROWSERS,
+                    router.register(Wire.MessageType.GET_BROWSERS,
                             new GetBrowsersResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.GET_CLIPBOARD,
+                    router.register(Wire.MessageType.GET_CLIPBOARD,
                             new GetClipboardResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.GET_PROPERTIES,
+                    router.register(Wire.MessageType.GET_PROPERTIES,
                             new GetPropertiesResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.DO_IDENTIFY,
+                    router.register(Wire.MessageType.DO_IDENTIFY,
                             new DoIdentifyResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.SET_CLIPBOARD,
+                    router.register(Wire.MessageType.SET_CLIPBOARD,
                             new SetClipboardResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.SET_KEYGUARD_STATE,
+                    router.register(Wire.MessageType.SET_KEYGUARD_STATE,
                             new SetKeyguardStateResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.SET_WAKE_LOCK,
+                    router.register(Wire.MessageType.SET_WAKE_LOCK,
                             new SetWakeLockResponder(getBaseContext()));
 
-                    router.register(Wire.RequestType.GET_VERSION,
+                    router.register(Wire.MessageType.GET_VERSION,
                             new GetVersionResponder(getBaseContext()));
 
                     while (!isInterrupted()) {
-                        Wire.RequestEnvelope envelope = reader.read();
+                        Wire.Envelope envelope = reader.read();
 
                         if (envelope == null) {
                             break;

@@ -190,8 +190,8 @@ public class Agent {
 
             try {
                 while (!isInterrupted()) {
-                    Wire.RequestEnvelope envelope =
-                            Wire.RequestEnvelope.parseDelimitedFrom(clientSocket.getInputStream());
+                    Wire.Envelope envelope =
+                            Wire.Envelope.parseDelimitedFrom(clientSocket.getInputStream());
 
                     if (envelope == null) {
                         break;
@@ -222,8 +222,8 @@ public class Agent {
             System.err.println("InputClient closing");
         }
 
-        private void handleKeyEventRequest(Wire.RequestEnvelope envelope) throws IOException {
-            Wire.KeyEventRequest request = Wire.KeyEventRequest.parseFrom(envelope.getRequest());
+        private void handleKeyEventRequest(Wire.Envelope envelope) throws IOException {
+            Wire.KeyEventRequest request = Wire.KeyEventRequest.parseFrom(envelope.getMessage());
 
             int meta = 0;
 
@@ -276,18 +276,18 @@ public class Agent {
             }
         }
 
-        private void handleWakeRequest(Wire.RequestEnvelope envelope) throws IOException {
-            Wire.DoWakeRequest request = Wire.DoWakeRequest.parseFrom(envelope.getRequest());
+        private void handleWakeRequest(Wire.Envelope envelope) throws IOException {
+            Wire.DoWakeRequest request = Wire.DoWakeRequest.parseFrom(envelope.getMessage());
             wake();
         }
 
-        private void handleTypeRequest(Wire.RequestEnvelope envelope) throws IOException {
-            Wire.DoTypeRequest request = Wire.DoTypeRequest.parseFrom(envelope.getRequest());
+        private void handleTypeRequest(Wire.Envelope envelope) throws IOException {
+            Wire.DoTypeRequest request = Wire.DoTypeRequest.parseFrom(envelope.getMessage());
             type(request.getText());
         }
 
-        private void handleSetRotationRequest(Wire.RequestEnvelope envelope) throws IOException {
-            Wire.SetRotationRequest request = Wire.SetRotationRequest.parseFrom(envelope.getRequest());
+        private void handleSetRotationRequest(Wire.Envelope envelope) throws IOException {
+            Wire.SetRotationRequest request = Wire.SetRotationRequest.parseFrom(envelope.getMessage());
 
             switch (request.getRotation()) {
                 case 0:

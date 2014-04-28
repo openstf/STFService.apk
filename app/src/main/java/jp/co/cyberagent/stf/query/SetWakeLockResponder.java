@@ -19,9 +19,9 @@ public class SetWakeLockResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.SetWakeLockRequest request =
-                Wire.SetWakeLockRequest.parseFrom(envelope.getRequest());
+                Wire.SetWakeLockRequest.parseFrom(envelope.getMessage());
 
         if (request.getEnabled()) {
             acquireWakeLock();

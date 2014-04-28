@@ -9,18 +9,18 @@ import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.query.AbstractResponder;
 
 public class MessageRouter {
-    private Map<Wire.RequestType, AbstractResponder> responders = new HashMap<Wire.RequestType, AbstractResponder>();
+    private Map<Wire.MessageType, AbstractResponder> responders = new HashMap<Wire.MessageType, AbstractResponder>();
     private MessageWriter writer;
 
     public MessageRouter(MessageWriter writer) {
         this.writer = writer;
     }
 
-    public void register(Wire.RequestType type, AbstractResponder responder) {
+    public void register(Wire.MessageType type, AbstractResponder responder) {
         responders.put(type, responder);
     }
 
-    public boolean route(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public boolean route(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         AbstractResponder responder = responders.get(envelope.getType());
 
         if (responder != null) {

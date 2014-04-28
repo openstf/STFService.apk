@@ -15,9 +15,9 @@ public class DoIdentifyResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.DoIdentifyRequest request =
-                Wire.DoIdentifyRequest.parseFrom(envelope.getRequest());
+                Wire.DoIdentifyRequest.parseFrom(envelope.getMessage());
 
         showIdentity(request.getSerial());
 

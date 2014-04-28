@@ -20,9 +20,9 @@ public class GetBrowsersResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetBrowsersRequest request =
-                Wire.GetBrowsersRequest.parseFrom(envelope.getRequest());
+                Wire.GetBrowsersRequest.parseFrom(envelope.getMessage());
 
         PackageManager pm = context.getPackageManager();
 

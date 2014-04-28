@@ -17,9 +17,9 @@ public class GetPropertiesResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetPropertiesRequest request =
-                Wire.GetPropertiesRequest.parseFrom(envelope.getRequest());
+                Wire.GetPropertiesRequest.parseFrom(envelope.getMessage());
 
         ArrayList<Wire.Property> properties = new ArrayList<Wire.Property>();
 

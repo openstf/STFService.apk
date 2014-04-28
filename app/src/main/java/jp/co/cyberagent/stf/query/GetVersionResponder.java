@@ -14,7 +14,7 @@ public class GetVersionResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) {
+    public GeneratedMessage respond(Wire.Envelope envelope) {
         try {
             PackageManager manager = context.getPackageManager();
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);

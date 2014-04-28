@@ -19,9 +19,9 @@ public class SetKeyguardStateResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.SetKeyguardStateRequest request =
-                Wire.SetKeyguardStateRequest.parseFrom(envelope.getRequest());
+                Wire.SetKeyguardStateRequest.parseFrom(envelope.getMessage());
 
         if (request.getEnabled()) {
             enable();

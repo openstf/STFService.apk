@@ -2,7 +2,7 @@ package jp.co.cyberagent.stf.proto;
 
 option java_outer_classname = "Wire";
 
-enum RequestType {
+enum MessageType {
     DO_IDENTIFY = 1;
     DO_KEYEVENT = 2;
     DO_TYPE = 3;
@@ -17,9 +17,10 @@ enum RequestType {
     SET_ROTATION = 12;
 }
 
-message RequestEnvelope {
-    required RequestType type = 1;
-    required bytes request = 2;
+message Envelope {
+    optional uint32 id = 1;
+    required MessageType type = 2;
+    required bytes message = 3;
 }
 
 // Service

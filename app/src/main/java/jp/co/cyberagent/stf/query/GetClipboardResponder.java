@@ -15,9 +15,9 @@ public class GetClipboardResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetClipboardRequest request =
-                Wire.GetClipboardRequest.parseFrom(envelope.getRequest());
+                Wire.GetClipboardRequest.parseFrom(envelope.getMessage());
 
         switch (request.getType()) {
             case TEXT:

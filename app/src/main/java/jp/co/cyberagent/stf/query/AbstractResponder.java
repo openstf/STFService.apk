@@ -14,6 +14,6 @@ abstract public class AbstractResponder {
         this.context = context;
     }
 
-    abstract public GeneratedMessage respond(Wire.RequestEnvelope envelope) throws InvalidProtocolBufferException;
+    abstract public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException;
     abstract public void cleanup();
 }
