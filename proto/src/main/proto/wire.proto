@@ -20,6 +20,7 @@ enum MessageType {
     EVENT_CONNECTIVITY = 15;
     EVENT_PHONE_STATE = 16;
     EVENT_ROTATION = 17;
+    EVENT_BROWSER_PACKAGE = 18;
 }
 
 message Envelope {
@@ -42,6 +43,17 @@ message BatteryEvent {
     required uint32 scale = 5;
     required double temp = 6;
     required double voltage = 7;
+}
+
+message BrowserApp {
+    required string name = 1;
+    required string component = 2;
+    required bool selected = 3;
+}
+
+message BrowserPackageEvent {
+    required bool selected = 1;
+    repeated BrowserApp apps = 2;
 }
 
 message ConnectivityEvent {
@@ -109,13 +121,6 @@ message GetClipboardResponse {
     required bool success = 1;
     optional ClipboardType type = 2;
     optional string text = 3;
-}
-
-message BrowserApp {
-    required string name = 1;
-    required string component = 2;
-    required bool selected = 3;
-    required bytes icon = 4;
 }
 
 message GetBrowsersRequest {

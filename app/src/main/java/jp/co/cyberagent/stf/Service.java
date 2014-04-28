@@ -24,6 +24,7 @@ import jp.co.cyberagent.stf.io.MessageRouter;
 import jp.co.cyberagent.stf.io.MessageWriter;
 import jp.co.cyberagent.stf.monitor.AirplaneModeMonitor;
 import jp.co.cyberagent.stf.monitor.BatteryMonitor;
+import jp.co.cyberagent.stf.monitor.BrowserPackageMonitor;
 import jp.co.cyberagent.stf.monitor.ConnectivityMonitor;
 import jp.co.cyberagent.stf.monitor.PhoneStateMonitor;
 import jp.co.cyberagent.stf.monitor.RotationMonitor;
@@ -124,6 +125,7 @@ public class Service extends android.app.Service {
                     executor.submit(new PhoneStateMonitor(this, writers));
                     executor.submit(new RotationMonitor(this, writers));
                     executor.submit(new AirplaneModeMonitor(this, writers));
+                    executor.submit(new BrowserPackageMonitor(this, writers));
 
                     started = true;
                 }
