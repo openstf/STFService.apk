@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class AirplaneModeMonitor extends AbstractMonitor {
     private static final String TAG = "STFAirplaneModeMonitor";
@@ -62,7 +63,15 @@ public class AirplaneModeMonitor extends AbstractMonitor {
         }
     }
 
-    private void report(boolean state) {
-        Log.i(TAG, String.format("Airplane mode is %s", state ? "on" : "off"));
+    private void report(boolean enabled) {
+        Log.i(TAG, String.format("Airplane mode is %s", enabled ? "on" : "off"));
+
+        writer.write(Wire.Envelope.newBuilder()
+            .setType(Wire.MessageType.EVENT_AIRPLANE_MODE)
+            .setMessage(Wire.AirplaneModeEvent.newBuilder()
+                .setEnabled(enabled)
+                .build()
+                .toByteString())
+            .build());
     }
 }

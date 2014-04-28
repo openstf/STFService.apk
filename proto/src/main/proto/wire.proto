@@ -15,12 +15,51 @@ enum MessageType {
     SET_KEYGUARD_STATE = 10;
     SET_WAKE_LOCK = 11;
     SET_ROTATION = 12;
+    EVENT_AIRPLANE_MODE = 13;
+    EVENT_BATTERY = 14;
+    EVENT_CONNECTIVITY = 15;
+    EVENT_PHONE_STATE = 16;
+    EVENT_ROTATION = 17;
 }
 
 message Envelope {
     optional uint32 id = 1;
     required MessageType type = 2;
     required bytes message = 3;
+}
+
+// Events
+
+message AirplaneModeEvent {
+    required bool enabled = 1;
+}
+
+message BatteryEvent {
+    required string status = 1;
+    required string health = 2;
+    required string plugged = 3;
+    required uint32 level = 4;
+    required uint32 scale = 5;
+    required double temp = 6;
+    required double voltage = 7;
+}
+
+message ConnectivityEvent {
+    required bool connected = 1;
+    optional string type = 2;
+    optional string subtype = 3;
+    optional bool failover = 4;
+    optional bool roaming = 5;
+}
+
+message PhoneStateEvent {
+    required string state = 1;
+    required bool manual = 2;
+    optional string operator = 3;
+}
+
+message RotationEvent {
+    required int32 rotation = 1;
 }
 
 // Service

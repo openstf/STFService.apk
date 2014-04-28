@@ -8,6 +8,7 @@ import android.view.IRotationWatcher;
 import android.view.IWindowManager;
 
 import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class RotationMonitor extends AbstractMonitor {
     private static final String TAG = "STFRotationMonitor";
@@ -70,6 +71,13 @@ public class RotationMonitor extends AbstractMonitor {
 
     private void report(int rotation) {
         Log.i(TAG, String.format("Rotation is %d", rotation));
-        // writer.write(new Wire.RotationChangeEvent(rotation))
+
+        writer.write(Wire.Envelope.newBuilder()
+            .setType(Wire.MessageType.EVENT_ROTATION)
+            .setMessage(Wire.RotationEvent.newBuilder()
+                .setRotation(rotation)
+                .build()
+                .toByteString())
+            .build());
     }
 }

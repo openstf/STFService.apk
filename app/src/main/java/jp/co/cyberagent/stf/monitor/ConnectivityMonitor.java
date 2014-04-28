@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class ConnectivityMonitor extends AbstractMonitor {
     private static final String TAG = "STFConnectivityMonitor";
@@ -68,10 +69,29 @@ public class ConnectivityMonitor extends AbstractMonitor {
                     info.isFailover() ? "failover" : "not failover",
                     info.isRoaming() ? "roaming" : "not roaming"
             ));
-            // writer.write(new ConnectivityChangeEvent())
+
+            writer.write(Wire.Envelope.newBuilder()
+                    .setType(Wire.MessageType.EVENT_CONNECTIVITY)
+                    .setMessage(Wire.ConnectivityEvent.newBuilder()
+                            .setConnected(info.isConnected())
+                            .setType(info.getTypeName())
+                            .setSubtype(info.getSubtypeName())
+                            .setFailover(info.isFailover())
+                            .setRoaming(info.isRoaming())
+                            .build()
+                            .toByteString())
+                    .build());
         }
         else {
             Log.i(TAG, "No active network");
+
+            writer.write(Wire.Envelope.newBuilder()
+                .setType(Wire.MessageType.EVENT_CONNECTIVITY)
+                .setMessage(Wire.ConnectivityEvent.newBuilder()
+                    .setConnected(false)
+                    .build()
+                    .toByteString())
+                .build());
         }
     }
 }

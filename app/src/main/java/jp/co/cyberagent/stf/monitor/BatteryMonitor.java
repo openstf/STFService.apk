@@ -8,6 +8,7 @@ import android.os.BatteryManager;
 import android.util.Log;
 
 import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class BatteryMonitor extends AbstractMonitor {
     private static final String TAG  = "STFBatteryMonitor";
@@ -69,6 +70,20 @@ public class BatteryMonitor extends AbstractMonitor {
                 state.temp / 10.0,
                 state.voltage / 1000.0
         ));
+
+        writer.write(Wire.Envelope.newBuilder()
+                .setType(Wire.MessageType.EVENT_BATTERY)
+                .setMessage(Wire.BatteryEvent.newBuilder()
+                        .setStatus(statusLabel(state.status))
+                        .setHealth(healthLabel(state.health))
+                        .setPlugged(pluggedLabel(state.plugged))
+                        .setLevel(state.level)
+                        .setScale(state.scale)
+                        .setTemp(state.temp / 10.0)
+                        .setVoltage(state.voltage / 1000.0)
+                        .build()
+                        .toByteString())
+                .build());
     }
 
     private String healthLabel(int health) {

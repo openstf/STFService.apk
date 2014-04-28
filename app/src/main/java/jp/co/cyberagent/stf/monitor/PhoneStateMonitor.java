@@ -7,6 +7,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.proto.Wire;
 
 public class PhoneStateMonitor extends AbstractMonitor {
     private static final String TAG = "STFPhoneStateMonitor";
@@ -66,7 +67,16 @@ public class PhoneStateMonitor extends AbstractMonitor {
                 state.getIsManualSelection() ? "manual" : "automatic",
                 state.getOperatorAlphaLong() == null ? "no operator" : "operator " + state.getOperatorAlphaLong()
         ));
-        // writer.write(new ServiceStateChangeEvent())
+
+        writer.write(Wire.Envelope.newBuilder()
+                .setType(Wire.MessageType.EVENT_PHONE_STATE)
+                .setMessage(Wire.PhoneStateEvent.newBuilder()
+                        .setState(stateLabel(state.getState()))
+                        .setManual(state.getIsManualSelection())
+                        .setOperator(state.getOperatorAlphaLong())
+                        .build()
+                        .toByteString())
+                .build());
     }
 
     private String stateLabel(int state) {
