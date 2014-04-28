@@ -52,6 +52,7 @@ public class BrowserPackageMonitor extends AbstractMonitor {
         filter.addAction(Intent.ACTION_PACKAGE_ADDED);
         filter.addAction(Intent.ACTION_PACKAGE_CHANGED);
         filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        filter.addDataScheme("package");
 
         context.registerReceiver(receiver, filter);
 
