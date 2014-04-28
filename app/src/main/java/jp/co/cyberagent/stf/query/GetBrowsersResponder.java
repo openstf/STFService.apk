@@ -36,7 +36,6 @@ public class GetBrowsersResponder extends AbstractResponder {
                     .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
                     .setComponent(BrowserUtil.getComponent(info))
                     .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
-                    .setIcon(GraphicUtil.drawableToPNGByteString(pm.getApplicationIcon(info.activityInfo.applicationInfo)))
                     .build());
         }
 
