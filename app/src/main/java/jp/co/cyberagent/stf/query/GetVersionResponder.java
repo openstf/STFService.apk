@@ -24,8 +24,13 @@ public class GetVersionResponder extends AbstractResponder {
                     .build();
         }
         catch (PackageManager.NameNotFoundException e) {
-            return Wire.GetVersionResponse.newBuilder()
-                    .setSuccess(false)
+            return Wire.Envelope.newBuilder()
+                    .setId(envelope.getId())
+                    .setType(Wire.MessageType.GET_VERSION)
+                    .setMessage(Wire.GetVersionResponse.newBuilder()
+                        .setSuccess(false)
+                        .build()
+                        .toByteString())
                     .build();
         }
     }

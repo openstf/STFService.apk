@@ -21,9 +21,14 @@ public class DoIdentifyResponder extends AbstractResponder {
 
         showIdentity(request.getSerial());
 
-        return Wire.DoIdentifyResponse.newBuilder()
+        return Wire.Envelope.newBuilder()
+            .setId(envelope.getId())
+            .setType(Wire.MessageType.DO_IDENTIFY)
+            .setMessage(Wire.DoIdentifyResponse.newBuilder()
                 .setSuccess(true)
-                .build();
+                .build()
+                .toByteString())
+            .build();
     }
 
     @Override

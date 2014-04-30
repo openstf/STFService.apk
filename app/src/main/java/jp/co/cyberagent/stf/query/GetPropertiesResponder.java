@@ -80,9 +80,14 @@ public class GetPropertiesResponder extends AbstractResponder {
             }
         }
 
-        return Wire.GetPropertiesResponse.newBuilder()
-                .setSuccess(true)
-                .addAllProperties(properties)
+        return Wire.Envelope.newBuilder()
+                .setId(envelope.getId())
+                .setType(Wire.MessageType.GET_PROPERTIES)
+                .setMessage(Wire.GetPropertiesResponse.newBuilder()
+                    .setSuccess(true)
+                    .addAllProperties(properties)
+                    .build()
+                    .toByteString())
                 .build();
     }
 

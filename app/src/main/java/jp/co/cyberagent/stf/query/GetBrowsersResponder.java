@@ -39,11 +39,16 @@ public class GetBrowsersResponder extends AbstractResponder {
                     .build());
         }
 
-        return Wire.GetBrowsersResponse.newBuilder()
+        return Wire.Envelope.newBuilder()
+            .setId(envelope.getId())
+            .setType(Wire.MessageType.GET_BROWSERS)
+            .setMessage(Wire.GetBrowsersResponse.newBuilder()
                 .setSuccess(true)
                 .setSelected(defaultBrowser != null)
                 .addAllApps(apps)
-                .build();
+                .build()
+                .toByteString())
+            .build();
     }
 
     @Override

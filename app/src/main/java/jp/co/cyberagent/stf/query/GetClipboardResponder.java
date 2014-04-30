@@ -24,18 +24,33 @@ public class GetClipboardResponder extends AbstractResponder {
                 CharSequence text = getClipboardText();
 
                 if (text == null) {
-                    return Wire.GetClipboardResponse.newBuilder()
+                    return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.GET_CLIPBOARD)
+                        .setMessage(Wire.GetClipboardResponse.newBuilder()
                             .setSuccess(true)
-                            .build();
+                            .build()
+                            .toByteString())
+                        .build();
                 }
 
-                return Wire.GetClipboardResponse.newBuilder()
-                        .setSuccess(true)
-                        .setText(text.toString())
+                return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.GET_CLIPBOARD)
+                        .setMessage(Wire.GetClipboardResponse.newBuilder()
+                            .setSuccess(true)
+                            .setText(text.toString())
+                            .build()
+                            .toByteString())
                         .build();
             default:
-                return Wire.GetClipboardResponse.newBuilder()
-                        .setSuccess(false)
+                return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.GET_CLIPBOARD)
+                        .setMessage(Wire.GetClipboardResponse.newBuilder()
+                            .setSuccess(false)
+                            .build()
+                            .toByteString())
                         .build();
         }
     }

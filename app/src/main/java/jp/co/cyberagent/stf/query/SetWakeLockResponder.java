@@ -30,8 +30,13 @@ public class SetWakeLockResponder extends AbstractResponder {
             releaseWakeLock();
         }
 
-        return Wire.SetWakeLockResponse.newBuilder()
-                .setSuccess(true)
+        return Wire.Envelope.newBuilder()
+                .setId(envelope.getId())
+                .setType(Wire.MessageType.SET_WAKE_LOCK)
+                .setMessage(Wire.SetWakeLockResponse.newBuilder()
+                    .setSuccess(true)
+                    .build()
+                    .toByteString())
                 .build();
     }
 

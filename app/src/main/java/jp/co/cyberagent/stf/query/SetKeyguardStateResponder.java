@@ -30,8 +30,13 @@ public class SetKeyguardStateResponder extends AbstractResponder {
             dismiss();
         }
 
-        return Wire.SetKeyguardStateResponse.newBuilder()
-                .setSuccess(true)
+        return Wire.Envelope.newBuilder()
+                .setId(envelope.getId())
+                .setType(Wire.MessageType.SET_KEYGUARD_STATE)
+                .setMessage(Wire.SetKeyguardStateResponse.newBuilder()
+                    .setSuccess(true)
+                    .build()
+                    .toByteString())
                 .build();
     }
 

@@ -22,12 +22,22 @@ public class SetClipboardResponder extends AbstractResponder {
         switch (request.getType()) {
             case TEXT:
                 setClipboardText(request.getText());
-                return Wire.SetClipboardResponse.newBuilder()
-                        .setSuccess(true)
+                return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.SET_CLIPBOARD)
+                            .setMessage(Wire.SetClipboardResponse.newBuilder()
+                            .setSuccess(true)
+                            .build()
+                            .toByteString())
                         .build();
             default:
-                return Wire.SetClipboardResponse.newBuilder()
-                        .setSuccess(false)
+                return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.SET_CLIPBOARD)
+                        .setMessage(Wire.SetClipboardResponse.newBuilder()
+                            .setSuccess(false)
+                            .build()
+                            .toByteString())
                         .build();
         }
     }
