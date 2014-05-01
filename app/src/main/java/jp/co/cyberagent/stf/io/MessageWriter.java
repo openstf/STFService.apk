@@ -10,9 +10,13 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MessageWriter {
+public class MessageWriter implements MessageWritable {
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     private OutputStream out;
+
+    public static interface Writable {
+        public void write(final GeneratedMessage message);
+    }
 
     public MessageWriter(OutputStream out) {
         this.out = out;
@@ -33,7 +37,7 @@ public class MessageWriter {
         });
     }
 
-    public static class Pool {
+    public static class Pool implements MessageWritable {
         Set<MessageWriter> writers = Collections.synchronizedSet(new HashSet<MessageWriter>());
 
         public void add(MessageWriter writer) {

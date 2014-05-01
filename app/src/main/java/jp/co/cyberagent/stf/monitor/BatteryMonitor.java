@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 import android.util.Log;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class BatteryMonitor extends AbstractMonitor {
@@ -15,7 +15,7 @@ public class BatteryMonitor extends AbstractMonitor {
 
     private BatteryState state = null;
 
-    public BatteryMonitor(Context context, MessageWriter.Pool writer) {
+    public BatteryMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -27,7 +27,7 @@ public class BatteryMonitor extends AbstractMonitor {
             @Override
             public void onReceive(Context context, Intent intent) {
                 state = new BatteryState(intent);
-                report();
+                report(writer, state);
             }
         };
 
@@ -54,13 +54,13 @@ public class BatteryMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
+    public void peek(MessageWritable writer) {
         if (state != null) {
-            report();
+            report(writer, state);
         }
     }
 
-    private void report() {
+    private void report(MessageWritable writer, BatteryState state) {
         Log.i(TAG, String.format("Battery is %s (%s health); connected via %s; level at %d/%d; temp %.1fC@%.3fV",
                 statusLabel(state.status),
                 healthLabel(state.health),

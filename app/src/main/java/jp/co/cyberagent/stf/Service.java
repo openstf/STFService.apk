@@ -15,6 +15,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import jp.co.cyberagent.stf.io.MessageReader;
 import jp.co.cyberagent.stf.io.MessageRouter;
 import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.monitor.AbstractMonitor;
 import jp.co.cyberagent.stf.monitor.AirplaneModeMonitor;
 import jp.co.cyberagent.stf.monitor.BatteryMonitor;
 import jp.co.cyberagent.stf.monitor.BrowserPackageMonitor;
@@ -48,6 +51,7 @@ public class Service extends android.app.Service {
     private static final String TAG = "STFService";
     private static final int NOTIFICATION_ID = 0x1;
 
+    private List<AbstractMonitor> monitors = new ArrayList<AbstractMonitor>();
     private ExecutorService executor = Executors.newCachedThreadPool();
     private boolean started = false;
     private MessageWriter.Pool writers = new MessageWriter.Pool();
@@ -119,13 +123,14 @@ public class Service extends android.app.Service {
                 try {
                     ServerSocket acceptor = new ServerSocket(port, backlog, InetAddress.getByName(host));
 
+                    addMonitor(new BatteryMonitor(this, writers));
+                    addMonitor(new ConnectivityMonitor(this, writers));
+                    addMonitor(new PhoneStateMonitor(this, writers));
+                    addMonitor(new RotationMonitor(this, writers));
+                    addMonitor(new AirplaneModeMonitor(this, writers));
+                    addMonitor(new BrowserPackageMonitor(this, writers));
+
                     executor.submit(new Server(acceptor));
-                    executor.submit(new BatteryMonitor(this, writers));
-                    executor.submit(new ConnectivityMonitor(this, writers));
-                    executor.submit(new PhoneStateMonitor(this, writers));
-                    executor.submit(new RotationMonitor(this, writers));
-                    executor.submit(new AirplaneModeMonitor(this, writers));
-                    executor.submit(new BrowserPackageMonitor(this, writers));
 
                     started = true;
                 }
@@ -148,6 +153,11 @@ public class Service extends android.app.Service {
         }
 
         return START_NOT_STICKY;
+    }
+
+    private void addMonitor(AbstractMonitor monitor) {
+        monitors.add(monitor);
+        executor.submit(monitor);
     }
 
     class Server extends Thread {
@@ -255,6 +265,10 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.GET_VERSION,
                             new GetVersionResponder(getBaseContext()));
+
+                    for (AbstractMonitor monitor : monitors) {
+                        monitor.peek(writer);
+                    }
 
                     while (!isInterrupted()) {
                         Wire.Envelope envelope = reader.read();

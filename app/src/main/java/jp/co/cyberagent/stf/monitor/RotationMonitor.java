@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.IRotationWatcher;
 import android.view.IWindowManager;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class RotationMonitor extends AbstractMonitor {
@@ -15,7 +15,7 @@ public class RotationMonitor extends AbstractMonitor {
 
     private IWindowManager wm = IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
 
-    public RotationMonitor(Context context, MessageWriter.Pool writer) {
+    public RotationMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -26,7 +26,7 @@ public class RotationMonitor extends AbstractMonitor {
         IRotationWatcher watcher = new IRotationWatcher.Stub() {
             @Override
             public void onRotationChanged(int rotation) throws RemoteException {
-                report(rotation);
+                report(writer, rotation);
             }
         };
 
@@ -60,16 +60,16 @@ public class RotationMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
+    public void peek(MessageWritable writer) {
         try {
-            report(wm.getRotation());
+            report(writer, wm.getRotation());
         }
         catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
-    private void report(int rotation) {
+    private void report(MessageWritable writer, int rotation) {
         Log.i(TAG, String.format("Rotation is %d", rotation));
 
         writer.write(Wire.Envelope.newBuilder()

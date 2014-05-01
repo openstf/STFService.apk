@@ -6,7 +6,7 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class PhoneStateMonitor extends AbstractMonitor {
@@ -14,7 +14,7 @@ public class PhoneStateMonitor extends AbstractMonitor {
 
     private ServiceState state = null;
 
-    public PhoneStateMonitor(Context context, MessageWriter.Pool writer) {
+    public PhoneStateMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -28,7 +28,7 @@ public class PhoneStateMonitor extends AbstractMonitor {
             @Override
             public void onServiceStateChanged(ServiceState newState) {
                 state = newState;
-                report();
+                report(writer, state);
             }
         };
 
@@ -55,13 +55,13 @@ public class PhoneStateMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
+    public void peek(MessageWritable writer) {
         if (state != null) {
-            report();
+            report(writer, state);
         }
     }
 
-    private void report() {
+    private void report(MessageWritable writer, ServiceState state) {
         Log.i(TAG, String.format("Phone state is %s; %s; %s",
                 stateLabel(state.getState()),
                 state.getIsManualSelection() ? "manual" : "automatic",

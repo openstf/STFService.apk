@@ -2,16 +2,20 @@ package jp.co.cyberagent.stf.monitor;
 
 import android.content.Context;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 
 abstract public class AbstractMonitor extends Thread {
     Context context;
-    MessageWriter.Pool writer;
+    MessageWritable writer;
 
-    public AbstractMonitor(Context context, MessageWriter.Pool writer) {
+    public AbstractMonitor(Context context, MessageWritable writer) {
         this.context = context;
         this.writer = writer;
     }
 
-    abstract public void peek();
+    public void peek() {
+        peek(writer);
+    }
+
+    abstract public void peek(MessageWritable writer);
 }

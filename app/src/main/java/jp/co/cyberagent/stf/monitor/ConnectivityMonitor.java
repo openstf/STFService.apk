@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class ConnectivityMonitor extends AbstractMonitor {
@@ -16,7 +16,7 @@ public class ConnectivityMonitor extends AbstractMonitor {
 
     private ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-    public ConnectivityMonitor(Context context, MessageWriter.Pool writer) {
+    public ConnectivityMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -56,11 +56,9 @@ public class ConnectivityMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
-        report(cm.getActiveNetworkInfo());
-    }
+    public void peek(MessageWritable writer) {
+        NetworkInfo info = cm.getActiveNetworkInfo();
 
-    private void report(NetworkInfo info) {
         if (info != null) {
             Log.i(TAG, String.format("Network %s/%s is %s; %s; %s",
                     info.getTypeName(),

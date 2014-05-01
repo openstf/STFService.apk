@@ -8,13 +8,13 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class AirplaneModeMonitor extends AbstractMonitor {
     private static final String TAG = "STFAirplaneModeMonitor";
 
-    public AirplaneModeMonitor(Context context, MessageWriter.Pool writer) {
+    public AirplaneModeMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -25,7 +25,7 @@ public class AirplaneModeMonitor extends AbstractMonitor {
         BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                report(intent.getBooleanExtra("state", false));
+                report(writer, intent.getBooleanExtra("state", false));
             }
         };
 
@@ -54,16 +54,16 @@ public class AirplaneModeMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
+    public void peek(MessageWritable writer) {
         if (Build.VERSION.SDK_INT >= 17) {
-            report(Settings.Global.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) == 1);
+            report(writer, Settings.Global.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0) == 1);
         }
         else {
-            report(Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1);
+            report(writer, Settings.System.getInt(context.getContentResolver(), Settings.System.AIRPLANE_MODE_ON, 0) == 1);
         }
     }
 
-    private void report(boolean enabled) {
+    private void report(MessageWritable writer, boolean enabled) {
         Log.i(TAG, String.format("Airplane mode is %s", enabled ? "on" : "off"));
 
         writer.write(Wire.Envelope.newBuilder()

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import jp.co.cyberagent.stf.proto.Wire;
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.util.BrowserUtil;
 
 public class BrowserPackageMonitor extends AbstractMonitor {
@@ -22,7 +22,7 @@ public class BrowserPackageMonitor extends AbstractMonitor {
 
     private Set<Browser> browsers = null;
 
-    public BrowserPackageMonitor(Context context, MessageWriter.Pool writer) {
+    public BrowserPackageMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -74,7 +74,7 @@ public class BrowserPackageMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
+    public void peek(MessageWritable writer) {
         PackageManager pm = context.getPackageManager();
 
         Set<Browser> newBrowsers = new HashSet<Browser>();

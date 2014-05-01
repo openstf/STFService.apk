@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.RemoteException;
 import android.util.Log;
 
-import jp.co.cyberagent.stf.io.MessageWriter;
+import jp.co.cyberagent.stf.io.MessageWritable;
 
 public class ActivityMonitor extends AbstractMonitor {
     private static final String TAG = "STFActivityMonitor";
@@ -16,7 +16,7 @@ public class ActivityMonitor extends AbstractMonitor {
     private Intent currentIntent;
     private String currentPackage;
 
-    public ActivityMonitor(Context context, MessageWriter.Pool writer) {
+    public ActivityMonitor(Context context, MessageWritable writer) {
         super(context, writer);
     }
 
@@ -123,7 +123,7 @@ public class ActivityMonitor extends AbstractMonitor {
     }
 
     @Override
-    public void peek() {
-        // Report current activity
+    public void peek(MessageWritable writer) {
+        // Report current activity to the writer
     }
 }
