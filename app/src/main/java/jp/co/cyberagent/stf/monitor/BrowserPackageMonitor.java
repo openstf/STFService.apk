@@ -44,7 +44,7 @@ public class BrowserPackageMonitor extends AbstractMonitor {
                     Log.i(TAG, String.format("Package %s was removed", pkg));
                 }
 
-                peek();
+                report(writer, false);
             }
         };
 
@@ -73,6 +73,10 @@ public class BrowserPackageMonitor extends AbstractMonitor {
 
     @Override
     public void peek(MessageWritable writer) {
+        report(writer, true);
+    }
+
+    private void report(MessageWritable writer, boolean force) {
         PackageManager pm = context.getPackageManager();
 
         Set<Browser> newBrowsers = new HashSet<Browser>();
@@ -96,7 +100,7 @@ public class BrowserPackageMonitor extends AbstractMonitor {
                     .build());
         }
 
-        if (browsers != null && browsers.size() == newBrowsers.size()) {
+        if (!force && browsers != null && browsers.size() == newBrowsers.size()) {
             browsers.removeAll(newBrowsers);
             if (browsers.isEmpty()) {
                 return;
@@ -110,10 +114,10 @@ public class BrowserPackageMonitor extends AbstractMonitor {
         writer.write(Wire.Envelope.newBuilder()
                 .setType(Wire.MessageType.EVENT_BROWSER_PACKAGE)
                 .setMessage(Wire.BrowserPackageEvent.newBuilder()
-                    .setSelected(defaultBrowser != null)
-                    .addAllApps(apps)
-                    .build()
-                    .toByteString())
+                        .setSelected(defaultBrowser != null)
+                        .addAllApps(apps)
+                        .build()
+                        .toByteString())
                 .build());
     }
 
