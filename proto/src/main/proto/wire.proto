@@ -38,7 +38,7 @@ message AirplaneModeEvent {
 message BatteryEvent {
     required string status = 1;
     required string health = 2;
-    required string plugged = 3;
+    required string source = 3;
     required uint32 level = 4;
     required uint32 scale = 5;
     required double temp = 6;

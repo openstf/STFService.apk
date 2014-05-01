@@ -64,7 +64,7 @@ public class BatteryMonitor extends AbstractMonitor {
         Log.i(TAG, String.format("Battery is %s (%s health); connected via %s; level at %d/%d; temp %.1fC@%.3fV",
                 statusLabel(state.status),
                 healthLabel(state.health),
-                pluggedLabel(state.plugged),
+                sourceLabel(state.source),
                 state.level,
                 state.scale,
                 state.temp / 10.0,
@@ -76,7 +76,7 @@ public class BatteryMonitor extends AbstractMonitor {
                 .setMessage(Wire.BatteryEvent.newBuilder()
                         .setStatus(statusLabel(state.status))
                         .setHealth(healthLabel(state.health))
-                        .setPlugged(pluggedLabel(state.plugged))
+                        .setSource(sourceLabel(state.source))
                         .setLevel(state.level)
                         .setScale(state.scale)
                         .setTemp(state.temp / 10.0)
@@ -107,8 +107,8 @@ public class BatteryMonitor extends AbstractMonitor {
         }
     }
 
-    private String pluggedLabel(int plugged) {
-        switch (plugged) {
+    private String sourceLabel(int source) {
+        switch (source) {
             case BatteryManager.BATTERY_PLUGGED_AC:
                 return "ac";
             case BatteryManager.BATTERY_PLUGGED_USB:
@@ -116,7 +116,7 @@ public class BatteryMonitor extends AbstractMonitor {
             case BatteryManager.BATTERY_PLUGGED_WIRELESS:
                 return "wireless";
             default:
-                return "unknown_" + plugged;
+                return "unknown_" + source;
         }
     }
 
@@ -140,7 +140,7 @@ public class BatteryMonitor extends AbstractMonitor {
     private static class BatteryState {
         private int health;
         private int level;
-        private int plugged;
+        private int source;
         private int scale;
         private int status;
         private String tech;
@@ -150,7 +150,7 @@ public class BatteryMonitor extends AbstractMonitor {
         public BatteryState(Intent intent) {
             health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_UNKNOWN);
             level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
+            source = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
             scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
             status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
             tech = intent.getStringExtra(BatteryManager.EXTRA_TECHNOLOGY);
