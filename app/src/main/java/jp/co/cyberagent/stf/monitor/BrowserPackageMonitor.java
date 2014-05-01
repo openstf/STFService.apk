@@ -56,8 +56,6 @@ public class BrowserPackageMonitor extends AbstractMonitor {
 
         context.registerReceiver(receiver, filter);
 
-        peek();
-
         try {
             synchronized (this) {
                 while (!isInterrupted()) {

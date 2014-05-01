@@ -30,8 +30,6 @@ public class RotationMonitor extends AbstractMonitor {
             }
         };
 
-        peek();
-
         try {
             wm.watchRotation(watcher);
 

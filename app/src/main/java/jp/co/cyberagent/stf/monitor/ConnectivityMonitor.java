@@ -33,8 +33,6 @@ public class ConnectivityMonitor extends AbstractMonitor {
 
         context.registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-        peek();
-
         try {
             synchronized (this) {
                 while (!isInterrupted()) {

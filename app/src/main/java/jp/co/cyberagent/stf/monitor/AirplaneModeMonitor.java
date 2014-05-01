@@ -31,8 +31,6 @@ public class AirplaneModeMonitor extends AbstractMonitor {
 
         context.registerReceiver(receiver, new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED));
 
-        peek();
-
         try {
             synchronized (this) {
                 while (!isInterrupted()) {
