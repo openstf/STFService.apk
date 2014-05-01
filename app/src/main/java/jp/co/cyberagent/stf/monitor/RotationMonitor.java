@@ -6,6 +6,7 @@ import android.os.ServiceManager;
 import android.util.Log;
 import android.view.IRotationWatcher;
 import android.view.IWindowManager;
+import android.view.Surface;
 
 import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
@@ -73,9 +74,24 @@ public class RotationMonitor extends AbstractMonitor {
         writer.write(Wire.Envelope.newBuilder()
             .setType(Wire.MessageType.EVENT_ROTATION)
             .setMessage(Wire.RotationEvent.newBuilder()
-                .setRotation(rotation)
+                .setRotation(rotationToDegrees(rotation))
                 .build()
                 .toByteString())
             .build());
+    }
+
+    private int rotationToDegrees(int rotation) {
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
+            default:
+                return 0;
+        }
     }
 }
