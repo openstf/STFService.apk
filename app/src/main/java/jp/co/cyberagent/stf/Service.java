@@ -53,6 +53,7 @@ public class Service extends android.app.Service {
 
     private List<AbstractMonitor> monitors = new ArrayList<AbstractMonitor>();
     private ExecutorService executor = Executors.newCachedThreadPool();
+    private ServerSocket acceptor;
     private boolean started = false;
     private MessageWriter.Pool writers = new MessageWriter.Pool();
 
@@ -88,6 +89,13 @@ public class Service extends android.app.Service {
         stopForeground(true);
 
         try {
+            acceptor.close();
+        }
+        catch (IOException e) {
+            // We don't care
+        }
+
+        try {
             executor.shutdownNow();
             executor.awaitTermination(10, TimeUnit.SECONDS);
         }
@@ -121,7 +129,7 @@ public class Service extends android.app.Service {
                 }
 
                 try {
-                    ServerSocket acceptor = new ServerSocket(port, backlog, InetAddress.getByName(host));
+                    acceptor = new ServerSocket(port, backlog, InetAddress.getByName(host));
 
                     addMonitor(new BatteryMonitor(this, writers));
                     addMonitor(new ConnectivityMonitor(this, writers));
