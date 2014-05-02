@@ -47,12 +47,12 @@ public class IconActivity extends Activity {
             iconView.setImageDrawable(icon);
             layout.addView(iconView);
 
-            File file = new File(Environment.getExternalStorageDirectory(), pkg + ".png");
+            File file = new File(getExternalFilesDir(null), pkg + ".png");
             FileOutputStream out = new FileOutputStream(file);
             GraphicUtil.drawableToPNGByteString(icon).writeTo(out);
             out.close();
 
-            Log.i(TAG, String.format("Wrote icon to %s or maybe %s", file.getAbsolutePath(), file.getPath()));
+            Log.i(TAG, String.format("Wrote icon to %s", file.getAbsolutePath()));
         }
         catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "No such package");
