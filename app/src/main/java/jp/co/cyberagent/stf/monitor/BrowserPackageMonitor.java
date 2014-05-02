@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.util.Log;
@@ -87,16 +88,19 @@ public class BrowserPackageMonitor extends AbstractMonitor {
         ArrayList<Wire.BrowserApp> apps = new ArrayList<Wire.BrowserApp>();
 
         for (ResolveInfo info : browserInfoList) {
+            ApplicationInfo appInfo = info.activityInfo.applicationInfo;
             Browser browser = new Browser(
-                    pm.getApplicationLabel(info.activityInfo.applicationInfo).toString(),
+                    pm.getApplicationLabel(appInfo).toString(),
                     BrowserUtil.getComponent(info),
-                    BrowserUtil.isSameBrowser(info, defaultBrowser)
+                    BrowserUtil.isSameBrowser(info, defaultBrowser),
+                    (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 || (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
             );
             newBrowsers.add(browser);
             apps.add(Wire.BrowserApp.newBuilder()
                     .setName(browser.name)
                     .setComponent(browser.component)
                     .setSelected(browser.selected)
+                    .setSystem(browser.system)
                     .build());
         }
 
@@ -125,11 +129,13 @@ public class BrowserPackageMonitor extends AbstractMonitor {
         private String name;
         private String component;
         private boolean selected;
+        private boolean system;
 
-        public Browser(String name, String component, boolean selected) {
+        public Browser(String name, String component, boolean selected, boolean system) {
             this.name = name;
             this.component = component;
             this.selected = selected;
+            this.system = system;
         }
 
         @Override

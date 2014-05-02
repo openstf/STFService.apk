@@ -1,6 +1,7 @@
 package jp.co.cyberagent.stf.query;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
@@ -32,10 +33,12 @@ public class GetBrowsersResponder extends AbstractResponder {
         ArrayList<Wire.BrowserApp> apps = new ArrayList<Wire.BrowserApp>();
 
         for (ResolveInfo info : allBrowsers) {
+            ApplicationInfo appInfo = info.activityInfo.applicationInfo;
             apps.add(Wire.BrowserApp.newBuilder()
-                    .setName(pm.getApplicationLabel(info.activityInfo.applicationInfo).toString())
+                    .setName(pm.getApplicationLabel(appInfo).toString())
                     .setComponent(BrowserUtil.getComponent(info))
                     .setSelected(BrowserUtil.isSameBrowser(info, defaultBrowser))
+                    .setSystem((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 || (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0)
                     .build());
         }
 
