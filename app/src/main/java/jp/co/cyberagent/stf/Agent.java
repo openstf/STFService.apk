@@ -17,9 +17,10 @@ import jp.co.cyberagent.stf.compat.PowerManagerWrapper;
 import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
 import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.util.InternalApi;
+import jp.co.cyberagent.stf.util.ProcUtil;
 
 public class Agent {
-    public static final String VERSION = "0.6.5";
+    public static final String PROCESS_NAME = "jp.co.cyberagent.stf.agent";
     public static final int PORT = 1090;
 
     private InputManagerWrapper inputManager;
@@ -30,6 +31,8 @@ public class Agent {
     private KeyCharacterMap keyCharacterMap;
 
     public static void main(String[] args) {
+        ProcUtil.setArgV0(PROCESS_NAME);
+
         for (String arg : args) {
             if (arg.equals("--version")) {
                 System.out.println(VERSION);
