@@ -88,11 +88,13 @@ public class Service extends android.app.Service {
 
         stopForeground(true);
 
-        try {
-            acceptor.close();
-        }
-        catch (IOException e) {
-            // We don't care
+        if (acceptor != null) {
+            try {
+                acceptor.close();
+            }
+            catch (IOException e) {
+                // We don't care
+            }
         }
 
         try {
@@ -161,6 +163,11 @@ public class Service extends android.app.Service {
         }
 
         return START_NOT_STICKY;
+    }
+
+    @Override
+    public void onLowMemory() {
+        Log.w(TAG, "Low memory");
     }
 
     private void addMonitor(AbstractMonitor monitor) {
