@@ -20,7 +20,7 @@ import jp.co.cyberagent.stf.util.InternalApi;
 import jp.co.cyberagent.stf.util.ProcUtil;
 
 public class Agent {
-    public static final String PROCESS_NAME = "jp.co.cyberagent.stf.agent";
+    public static final String PROCESS_NAME = "stf.agent";
     public static final int PORT = 1090;
 
     private InputManagerWrapper inputManager;
