@@ -7,6 +7,7 @@ import android.os.Build;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import jp.co.cyberagent.stf.Service;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class GetClipboardResponder extends AbstractResponder {
@@ -63,7 +64,7 @@ public class GetClipboardResponder extends AbstractResponder {
     private CharSequence getClipboardText() {
         if (Build.VERSION.SDK_INT >= 11) {
             android.content.ClipboardManager clipboardManager =
-                    (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                    (android.content.ClipboardManager) Service.getClipboardManager();
             if (clipboardManager.hasPrimaryClip()) {
                 ClipData clipData = clipboardManager.getPrimaryClip();
                 if (clipData.getItemCount() > 0) {
@@ -79,9 +80,8 @@ public class GetClipboardResponder extends AbstractResponder {
             }
         }
         else {
-            android.text.ClipboardManager clipboardManager =
-                    (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            return clipboardManager.getText();
+            return ((android.text.ClipboardManager) Service.getClipboardManager())
+                    .getText();
         }
     }
 }

@@ -2,6 +2,7 @@ package jp.co.cyberagent.stf;
 
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.*;
 import android.os.Process;
@@ -57,6 +58,13 @@ public class Service extends android.app.Service {
     private boolean started = false;
     private MessageWriter.Pool writers = new MessageWriter.Pool();
 
+    // We can only access CLIPBOARD_SERVICE from the main thread
+    private static Object clipboardManager;
+
+    public static Object getClipboardManager() {
+        return clipboardManager;
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         // We don't support binding to this service
@@ -66,6 +74,8 @@ public class Service extends android.app.Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE);
 
         Intent notificationIntent = new Intent(this, IdentityActivity.class);
         Notification notification = new NotificationCompat.Builder(this)
@@ -300,6 +310,9 @@ public class Service extends android.app.Service {
                     e.printStackTrace();
                 }
                 catch (IOException e) {
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
                 }
                 finally {
                     Log.i(TAG, "Connection stopping");

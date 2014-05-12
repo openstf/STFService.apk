@@ -7,6 +7,7 @@ import android.os.Build;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import jp.co.cyberagent.stf.Service;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class SetClipboardResponder extends AbstractResponder {
@@ -49,14 +50,12 @@ public class SetClipboardResponder extends AbstractResponder {
 
     private void setClipboardText(String content) {
         if (Build.VERSION.SDK_INT >= 11) {
-            android.content.ClipboardManager clipboardManager =
-                    (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboardManager.setPrimaryClip(ClipData.newPlainText(null, content));
+            ((android.content.ClipboardManager) Service.getClipboardManager())
+                    .setPrimaryClip(ClipData.newPlainText(null, content));
         }
         else {
-            android.text.ClipboardManager clipboardManager =
-                    (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboardManager.setText(content);
+            ((android.text.ClipboardManager) Service.getClipboardManager())
+                    .setText(content);
         }
     }
 }
