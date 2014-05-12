@@ -29,9 +29,10 @@ public class GetClipboardResponder extends AbstractResponder {
                         .setId(envelope.getId())
                         .setType(Wire.MessageType.GET_CLIPBOARD)
                         .setMessage(Wire.GetClipboardResponse.newBuilder()
-                            .setSuccess(true)
-                            .build()
-                            .toByteString())
+                                .setSuccess(true)
+                                .setType(Wire.ClipboardType.TEXT)
+                                .build()
+                                .toByteString())
                         .build();
                 }
 
@@ -39,10 +40,11 @@ public class GetClipboardResponder extends AbstractResponder {
                         .setId(envelope.getId())
                         .setType(Wire.MessageType.GET_CLIPBOARD)
                         .setMessage(Wire.GetClipboardResponse.newBuilder()
-                            .setSuccess(true)
-                            .setText(text.toString())
-                            .build()
-                            .toByteString())
+                                .setSuccess(true)
+                                .setType(Wire.ClipboardType.TEXT)
+                                .setText(text.toString())
+                                .build()
+                                .toByteString())
                         .build();
             default:
                 return Wire.Envelope.newBuilder()
