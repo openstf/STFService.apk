@@ -21,7 +21,7 @@ import jp.co.cyberagent.stf.util.BrowserUtil;
 public class BrowserPackageMonitor extends AbstractMonitor {
     private static final String TAG = "STFBrowserPackageMonitor";
 
-    private Set<Browser> browsers = null;
+    private Set<Browser> browsers = new HashSet<Browser>();
 
     public BrowserPackageMonitor(Context context, MessageWritable writer) {
         super(context, writer);
@@ -77,9 +77,10 @@ public class BrowserPackageMonitor extends AbstractMonitor {
         report(writer, true);
     }
 
-    private void report(MessageWritable writer, boolean force) {
+    synchronized private void report(MessageWritable writer, boolean force) {
         PackageManager pm = context.getPackageManager();
 
+        Set<Browser> removeBrowsers = new HashSet<Browser>(browsers);
         Set<Browser> newBrowsers = new HashSet<Browser>();
 
         List<ResolveInfo> browserInfoList = BrowserUtil.getBrowsers(context);
@@ -95,7 +96,14 @@ public class BrowserPackageMonitor extends AbstractMonitor {
                     BrowserUtil.isSameBrowser(info, defaultBrowser),
                     (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 || (appInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
             );
-            newBrowsers.add(browser);
+
+            if (browsers.contains(browser)) {
+                removeBrowsers.remove(browser);
+            }
+            else {
+                newBrowsers.add(browser);
+            }
+
             apps.add(Wire.BrowserApp.newBuilder()
                     .setName(browser.name)
                     .setComponent(browser.component)
@@ -104,16 +112,13 @@ public class BrowserPackageMonitor extends AbstractMonitor {
                     .build());
         }
 
-        if (!force && browsers != null && browsers.size() == newBrowsers.size()) {
-            browsers.removeAll(newBrowsers);
-            if (browsers.isEmpty()) {
-                return;
-            }
+        if (!force && removeBrowsers.isEmpty() && newBrowsers.isEmpty()) {
+            return;
         }
 
         Log.i(TAG, "Browser list changed");
-
-        browsers = newBrowsers;
+        browsers.removeAll(removeBrowsers);
+        browsers.addAll(newBrowsers);
 
         writer.write(Wire.Envelope.newBuilder()
                 .setType(Wire.MessageType.EVENT_BROWSER_PACKAGE)
