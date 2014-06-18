@@ -140,14 +140,14 @@ message GetDisplayRequest {
 
 message GetDisplayResponse {
     required bool success = 1;
-    required int32 width = 2;
-    required int32 height = 3;
-    required float xdpi = 4;
-    required float ydpi = 5;
-    required float fps = 6;
-    required float density = 7;
-    required int32 rotation = 8;
-    required bool secure = 9;
+    optional int32 width = 2;
+    optional int32 height = 3;
+    optional float xdpi = 4;
+    optional float ydpi = 5;
+    optional float fps = 6;
+    optional float density = 7;
+    optional int32 rotation = 8;
+    optional bool secure = 9;
 }
 
 message Property {
