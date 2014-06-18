@@ -30,21 +30,31 @@ public class GetDisplayResponder extends AbstractResponder {
             DisplayMetrics real = new DisplayMetrics();
             display.getRealMetrics(real);
 
-            return Wire.GetDisplayResponse.newBuilder()
-                    .setSuccess(true)
-                    .setWidth(real.widthPixels)
-                    .setHeight(real.heightPixels)
-                    .setXdpi(real.xdpi)
-                    .setYdpi(real.ydpi)
-                    .setFps(display.getRefreshRate())
-                    .setDensity(real.density)
-                    .setRotation(rotationToDegrees(display.getRotation()))
-                    .setSecure((display.getFlags() & Display.FLAG_SECURE) == Display.FLAG_SECURE)
+            return Wire.Envelope.newBuilder()
+                    .setId(envelope.getId())
+                    .setType(Wire.MessageType.GET_DISPLAY)
+                    .setMessage(Wire.GetDisplayResponse.newBuilder()
+                        .setSuccess(true)
+                        .setWidth(real.widthPixels)
+                        .setHeight(real.heightPixels)
+                        .setXdpi(real.xdpi)
+                        .setYdpi(real.ydpi)
+                        .setFps(display.getRefreshRate())
+                        .setDensity(real.density)
+                        .setRotation(rotationToDegrees(display.getRotation()))
+                        .setSecure((display.getFlags() & Display.FLAG_SECURE) == Display.FLAG_SECURE)
+                        .build()
+                        .toByteString())
                     .build();
         }
         else {
-            return Wire.GetDisplayResponse.newBuilder()
-                    .setSuccess(false)
+            return Wire.Envelope.newBuilder()
+                    .setId(envelope.getId())
+                    .setType(Wire.MessageType.GET_DISPLAY)
+                    .setMessage(Wire.GetDisplayResponse.newBuilder()
+                            .setSuccess(false)
+                            .build()
+                            .toByteString())
                     .build();
         }
     }
