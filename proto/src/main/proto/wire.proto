@@ -147,6 +147,7 @@ message GetDisplayResponse {
     required float fps = 6;
     required float density = 7;
     required int32 rotation = 8;
+    required bool secure = 9;
 }
 
 message Property {

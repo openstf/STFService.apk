@@ -39,6 +39,7 @@ public class GetDisplayResponder extends AbstractResponder {
                     .setFps(display.getRefreshRate())
                     .setDensity(real.density)
                     .setRotation(rotationToDegrees(display.getRotation()))
+                    .setSecure((display.getFlags() & Display.FLAG_SECURE) == Display.FLAG_SECURE)
                     .build();
         }
         else {
