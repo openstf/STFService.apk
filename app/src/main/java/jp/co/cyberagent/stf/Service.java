@@ -36,6 +36,7 @@ import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.query.DoIdentifyResponder;
 import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;
+import jp.co.cyberagent.stf.query.GetDisplayResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
@@ -272,6 +273,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.GET_CLIPBOARD,
                             new GetClipboardResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_DISPLAY,
+                            new GetDisplayResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.GET_PROPERTIES,
                             new GetPropertiesResponder(getBaseContext()));
