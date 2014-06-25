@@ -11,7 +11,18 @@ android {
         versionName "1.0.0"
         applicationId "jp.co.cyberagent.stf"
     }
+    signingConfigs {
+        debug {
+            storeFile file('keys/debug.keystore')
+            storePassword 'insecure-store-password'
+            keyAlias 'STFDebugKey'
+            keyPassword 'insecure-key-password'
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
