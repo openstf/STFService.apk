@@ -174,7 +174,6 @@ message DoIdentifyResponse {
 }
 
 message RemoveAccountRequest {
-    required string type = 1;
 }
 
 message RemoveAccountResponse {
