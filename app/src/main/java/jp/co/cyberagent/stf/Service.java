@@ -39,6 +39,7 @@ import jp.co.cyberagent.stf.query.GetClipboardResponder;
 import jp.co.cyberagent.stf.query.GetDisplayResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
+import jp.co.cyberagent.stf.query.RemoveAccountResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
 import jp.co.cyberagent.stf.query.SetKeyguardStateResponder;
 import jp.co.cyberagent.stf.query.SetWakeLockResponder;
@@ -294,6 +295,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.GET_VERSION,
                             new GetVersionResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.REMOVE_ACCOUNT,
+                            new RemoveAccountResponder(getBaseContext()));
 
                     for (AbstractMonitor monitor : monitors) {
                         monitor.peek(writer);
