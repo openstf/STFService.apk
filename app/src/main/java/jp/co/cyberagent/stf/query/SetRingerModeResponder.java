@@ -22,7 +22,17 @@ public class SetRingerModeResponder extends AbstractResponder {
 
         AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 
-        am.setRingerMode(request.getMode());
+        switch (request.getMode()) {
+            case SILENT:
+                am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                break;
+            case VIBRATE:
+                am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                break;
+            case NORMAL:
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                break;
+        }
 
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())
