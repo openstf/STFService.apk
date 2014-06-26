@@ -20,8 +20,7 @@ public class SetRingerModeResponder extends AbstractResponder {
         Wire.SetRingerModeRequest request =
                 Wire.SetRingerModeRequest.parseFrom(envelope.getMessage());
 
-        AudioManager am;
-        am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 
         am.setRingerMode(request.getMode());
 
