@@ -23,6 +23,7 @@ enum MessageType {
     EVENT_ROTATION = 17;
     EVENT_BROWSER_PACKAGE = 18;
     REMOVE_ACCOUNT = 20;
+    SET_RINGER_MODE = 21;
 }
 
 message Envelope {
@@ -177,6 +178,14 @@ message RemoveAccountRequest {
 }
 
 message RemoveAccountResponse {
+    required bool success = 1;
+}
+
+message SetRingerModeRequest {
+    required int32 mode = 1;
+}
+
+message SetRingerModeResponse {
     required bool success = 1;
 }
 
