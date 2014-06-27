@@ -1,7 +1,5 @@
 package jp.co.cyberagent.stf.query;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.media.AudioManager;
 
@@ -37,7 +35,7 @@ public class SetRingerModeResponder extends AbstractResponder {
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())
                 .setType(Wire.MessageType.SET_RINGER_MODE)
-                .setMessage(Wire.RemoveAccountResponse.newBuilder()
+                .setMessage(Wire.SetRingerModeResponse.newBuilder()
                         .setSuccess(true)
                         .build()
                         .toByteString())
