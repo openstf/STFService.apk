@@ -45,6 +45,7 @@ import jp.co.cyberagent.stf.query.SetKeyguardStateResponder;
 import jp.co.cyberagent.stf.query.SetRingerModeResponder;
 import jp.co.cyberagent.stf.query.SetWakeLockResponder;
 import jp.co.cyberagent.stf.query.SetWifiEnabledResponder;
+import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
 
 public class Service extends android.app.Service {
     public static final String ACTION_START = "jp.co.cyberagent.stf.ACTION_START";
@@ -306,6 +307,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.SET_WIFI_ENABLED,
                             new SetWifiEnabledResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_WIFI_STATUS,
+                            new GetWifiStatusResponder(getBaseContext()));
 
                     for (AbstractMonitor monitor : monitors) {
                         monitor.peek(writer);
