@@ -33,6 +33,7 @@ import jp.co.cyberagent.stf.monitor.ConnectivityMonitor;
 import jp.co.cyberagent.stf.monitor.PhoneStateMonitor;
 import jp.co.cyberagent.stf.monitor.RotationMonitor;
 import jp.co.cyberagent.stf.proto.Wire;
+import jp.co.cyberagent.stf.query.DoAddAccountMenuResponder;
 import jp.co.cyberagent.stf.query.DoIdentifyResponder;
 import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;
@@ -272,6 +273,12 @@ public class Service extends android.app.Service {
 
                     router = new MessageRouter(writer);
 
+                    router.register(Wire.MessageType.DO_IDENTIFY,
+                            new DoIdentifyResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.DO_ADD_ACCOUNT_MENU,
+                            new DoAddAccountMenuResponder(getBaseContext()));
+
                     router.register(Wire.MessageType.GET_BROWSERS,
                             new GetBrowsersResponder(getBaseContext()));
 
@@ -284,8 +291,11 @@ public class Service extends android.app.Service {
                     router.register(Wire.MessageType.GET_PROPERTIES,
                             new GetPropertiesResponder(getBaseContext()));
 
-                    router.register(Wire.MessageType.DO_IDENTIFY,
-                            new DoIdentifyResponder(getBaseContext()));
+                    router.register(Wire.MessageType.GET_VERSION,
+                            new GetVersionResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_WIFI_STATUS,
+                            new GetWifiStatusResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.SET_CLIPBOARD,
                             new SetClipboardResponder(getBaseContext()));
@@ -293,24 +303,17 @@ public class Service extends android.app.Service {
                     router.register(Wire.MessageType.SET_KEYGUARD_STATE,
                             new SetKeyguardStateResponder(getBaseContext()));
 
-                    router.register(Wire.MessageType.SET_WAKE_LOCK,
-                            new SetWakeLockResponder(getBaseContext()));
-
-                    router.register(Wire.MessageType.GET_VERSION,
-                            new GetVersionResponder(getBaseContext()));
-
-                    router.register(Wire.MessageType.REMOVE_ACCOUNT,
-                            new RemoveAccountResponder(getBaseContext()));
-
                     router.register(Wire.MessageType.SET_RINGER_MODE,
                             new SetRingerModeResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.SET_WAKE_LOCK,
+                            new SetWakeLockResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.SET_WIFI_ENABLED,
                             new SetWifiEnabledResponder(getBaseContext()));
 
-                    router.register(Wire.MessageType.GET_WIFI_STATUS,
-                            new GetWifiStatusResponder(getBaseContext()));
-
+                    router.register(Wire.MessageType.REMOVE_ACCOUNT,
+                            new RemoveAccountResponder(getBaseContext()));
                     for (AbstractMonitor monitor : monitors) {
                         monitor.peek(writer);
                     }
