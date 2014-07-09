@@ -1,12 +1,18 @@
 package jp.co.cyberagent.stf.query;
 
+import android.accounts.AccountManager;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import jp.co.cyberagent.stf.AddAccountMenuActivity;
+import java.io.IOException;
+
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class DoAddAccountMenuResponder extends AbstractResponder {
@@ -19,7 +25,15 @@ public class DoAddAccountMenuResponder extends AbstractResponder {
         Wire.RemoveAccountRequest request =
                 Wire.RemoveAccountRequest.parseFrom(envelope.getMessage());
 
-        showAddAccountMenu();
+        try {
+            showAddAccountMenu();
+        } catch (AuthenticatorException e) {
+            e.printStackTrace();
+        } catch (OperationCanceledException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())
@@ -36,8 +50,11 @@ public class DoAddAccountMenuResponder extends AbstractResponder {
         // No-op
     }
 
-    private void showAddAccountMenu () {
-        Intent intent = new Intent(context, AddAccountMenuActivity.class);
+    private void showAddAccountMenu() throws AuthenticatorException, OperationCanceledException, IOException {
+        AccountManager account = AccountManager.get(context);
+        AccountManagerFuture<Bundle> accountFuture = account.addAccount("com.google", null, null, null, null, null, null);
+        Bundle bundle = accountFuture.getResult();
+        Intent intent = (Intent)bundle.get(AccountManager.KEY_INTENT);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
