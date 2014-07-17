@@ -30,22 +30,47 @@ public class GetDisplayResponder extends AbstractResponder {
             DisplayMetrics real = new DisplayMetrics();
             display.getRealMetrics(real);
 
-            return Wire.Envelope.newBuilder()
-                    .setId(envelope.getId())
-                    .setType(Wire.MessageType.GET_DISPLAY)
-                    .setMessage(Wire.GetDisplayResponse.newBuilder()
-                        .setSuccess(true)
-                        .setWidth(real.widthPixels)
-                        .setHeight(real.heightPixels)
-                        .setXdpi(real.xdpi)
-                        .setYdpi(real.ydpi)
-                        .setFps(display.getRefreshRate())
-                        .setDensity(real.density)
-                        .setRotation(rotationToDegrees(display.getRotation()))
-                        .setSecure((display.getFlags() & Display.FLAG_SECURE) == Display.FLAG_SECURE)
-                        .build()
-                        .toByteString())
-                    .build();
+            // DisplayMetrics is adjusted for rotation, so we have to swap it back if
+            // necessary.
+            int rotation = display.getRotation();
+
+            if (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270)
+            {
+                return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.GET_DISPLAY)
+                        .setMessage(Wire.GetDisplayResponse.newBuilder()
+                                .setSuccess(true)
+                                .setWidth(real.heightPixels)
+                                .setHeight(real.widthPixels)
+                                .setXdpi(real.ydpi)
+                                .setYdpi(real.xdpi)
+                                .setFps(display.getRefreshRate())
+                                .setDensity(real.density)
+                                .setRotation(rotationToDegrees(rotation))
+                                .setSecure((display.getFlags() & Display.FLAG_SECURE) == Display.FLAG_SECURE)
+                                .build()
+                                .toByteString())
+                        .build();
+            }
+            else {
+                return Wire.Envelope.newBuilder()
+                        .setId(envelope.getId())
+                        .setType(Wire.MessageType.GET_DISPLAY)
+                        .setMessage(Wire.GetDisplayResponse.newBuilder()
+                                .setSuccess(true)
+                                .setWidth(real.widthPixels)
+                                .setHeight(real.heightPixels)
+                                .setXdpi(real.xdpi)
+                                .setYdpi(real.ydpi)
+                                .setFps(display.getRefreshRate())
+                                .setDensity(real.density)
+                                .setRotation(rotationToDegrees(rotation))
+                                .setSecure((display.getFlags() & Display.FLAG_SECURE) == Display.FLAG_SECURE)
+                                .build()
+                                .toByteString())
+                        .build();
+            }
         }
         else {
             return Wire.Envelope.newBuilder()
