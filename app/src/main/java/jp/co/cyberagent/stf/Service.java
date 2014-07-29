@@ -35,13 +35,13 @@ import jp.co.cyberagent.stf.monitor.RotationMonitor;
 import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.query.DoAddAccountMenuResponder;
 import jp.co.cyberagent.stf.query.DoIdentifyResponder;
+import jp.co.cyberagent.stf.query.DoRemoveAccountResponder;
 import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;
 import jp.co.cyberagent.stf.query.GetDisplayResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
-import jp.co.cyberagent.stf.query.RemoveAccountResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
 import jp.co.cyberagent.stf.query.SetKeyguardStateResponder;
 import jp.co.cyberagent.stf.query.SetRingerModeResponder;
@@ -280,6 +280,9 @@ public class Service extends android.app.Service {
                     router.register(Wire.MessageType.DO_ADD_ACCOUNT_MENU,
                             new DoAddAccountMenuResponder(getBaseContext()));
 
+                    router.register(Wire.MessageType.DO_REMOVE_ACCOUNT,
+                            new DoRemoveAccountResponder(getBaseContext()));
+
                     router.register(Wire.MessageType.GET_BROWSERS,
                             new GetBrowsersResponder(getBaseContext()));
 
@@ -316,8 +319,6 @@ public class Service extends android.app.Service {
                     router.register(Wire.MessageType.SET_WIFI_ENABLED,
                             new SetWifiEnabledResponder(getBaseContext()));
 
-                    router.register(Wire.MessageType.REMOVE_ACCOUNT,
-                            new RemoveAccountResponder(getBaseContext()));
                     for (AbstractMonitor monitor : monitors) {
                         monitor.peek(writer);
                     }
