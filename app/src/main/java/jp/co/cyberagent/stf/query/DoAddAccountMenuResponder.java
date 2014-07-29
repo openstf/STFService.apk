@@ -22,8 +22,8 @@ public class DoAddAccountMenuResponder extends AbstractResponder {
 
     @Override
     public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
-        Wire.RemoveAccountRequest request =
-                Wire.RemoveAccountRequest.parseFrom(envelope.getMessage());
+        Wire.DoAddAccountMenuRequest request =
+                Wire.DoAddAccountMenuRequest.parseFrom(envelope.getMessage());
 
         try {
             showAddAccountMenu();
@@ -38,7 +38,7 @@ public class DoAddAccountMenuResponder extends AbstractResponder {
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())
                 .setType(Wire.MessageType.DO_ADD_ACCOUNT_MENU)
-                .setMessage(Wire.RemoveAccountResponse.newBuilder()
+                .setMessage(Wire.DoAddAccountMenuResponse.newBuilder()
                         .setSuccess(true)
                         .build()
                         .toByteString())
