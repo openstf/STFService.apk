@@ -36,6 +36,7 @@ import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.query.DoAddAccountMenuResponder;
 import jp.co.cyberagent.stf.query.DoIdentifyResponder;
 import jp.co.cyberagent.stf.query.DoRemoveAccountResponder;
+import jp.co.cyberagent.stf.query.GetAccountsResponder;
 import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;
 import jp.co.cyberagent.stf.query.GetDisplayResponder;
@@ -282,6 +283,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.DO_REMOVE_ACCOUNT,
                             new DoRemoveAccountResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_ACCOUNTS,
+                            new GetAccountsResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.GET_BROWSERS,
                             new GetBrowsersResponder(getBaseContext()));
