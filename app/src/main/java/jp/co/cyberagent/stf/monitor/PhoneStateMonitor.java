@@ -68,14 +68,17 @@ public class PhoneStateMonitor extends AbstractMonitor {
                 state.getOperatorAlphaLong() == null ? "no operator" : "operator " + state.getOperatorAlphaLong()
         ));
 
+        Wire.PhoneStateEvent.Builder message = Wire.PhoneStateEvent.newBuilder()
+                .setState(stateLabel(state.getState()))
+                .setManual(state.getIsManualSelection());
+
+        if (state.getOperatorAlphaLong() != null) {
+            message.setOperator(state.getOperatorAlphaLong());
+        }
+
         writer.write(Wire.Envelope.newBuilder()
                 .setType(Wire.MessageType.EVENT_PHONE_STATE)
-                .setMessage(Wire.PhoneStateEvent.newBuilder()
-                        .setState(stateLabel(state.getState()))
-                        .setManual(state.getIsManualSelection())
-                        .setOperator(state.getOperatorAlphaLong())
-                        .build()
-                        .toByteString())
+                .setMessage(message.build().toByteString())
                 .build());
     }
 
