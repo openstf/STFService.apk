@@ -3,6 +3,7 @@ package jp.co.cyberagent.stf.query;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -21,23 +22,24 @@ public class GetAccountsResponder extends AbstractResponder {
         Wire.GetAccountsRequest request =
                 Wire.GetAccountsRequest.parseFrom(envelope.getMessage());
 
-        AccountManager am = AccountManager.get(context);
-        Account[] accounts = am.getAccountsByType(request.getType());
-        boolean successResult = false;
+        String accountType = null;
         ArrayList<String> accountsName = new ArrayList<String>();
+        AccountManager am = AccountManager.get(context);
 
-        if (accounts.length > 0){
-            successResult = true;
-            for (Account account : accounts) {
-                accountsName.add(account.name);
-            }
+        if(request.hasType()) {
+            accountType = request.getType();
+        }
+        Account[] accounts = am.getAccountsByType(accountType);
+
+        for (Account account : accounts) {
+            accountsName.add(account.name);
         }
 
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())
                 .setType(Wire.MessageType.GET_ACCOUNTS)
                 .setMessage(Wire.GetAccountsResponse.newBuilder()
-                        .setSuccess(successResult)
+                        .setSuccess(true)
                         .addAllAccounts(accountsName)
                         .build()
                         .toByteString())
