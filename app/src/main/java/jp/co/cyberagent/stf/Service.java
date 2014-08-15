@@ -41,6 +41,7 @@ import jp.co.cyberagent.stf.query.GetBrowsersResponder;
 import jp.co.cyberagent.stf.query.GetClipboardResponder;
 import jp.co.cyberagent.stf.query.GetDisplayResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
+import jp.co.cyberagent.stf.query.GetRingerModeResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
@@ -298,6 +299,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.GET_PROPERTIES,
                             new GetPropertiesResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_RINGER_MODE,
+                            new GetRingerModeResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.GET_SD_STATUS,
                             new GetSdStatusResponder(getBaseContext()));
