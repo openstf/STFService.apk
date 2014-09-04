@@ -15,8 +15,7 @@
     <application android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
-        android:persistent="true"
-        android:testOnly="true">
+        android:persistent="true">
 
         <service android:name=".Service"
             android:exported="true">
