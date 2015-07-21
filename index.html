@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Stfservice.apk by openstf</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Stfservice.apk</h1>
+      <h2 class="project-tagline">Monitor and perform various actions on your Android device. Not meant for actual user devices.</h2>
+      <a href="https://github.com/openstf/STFService.apk" class="btn">View on GitHub</a>
+      <a href="https://github.com/openstf/STFService.apk/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/openstf/STFService.apk/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="stfserviceapk" class="anchor" href="#stfserviceapk" aria-hidden="true"><span class="octicon octicon-link"></span></a>STFService.apk</h1>
+
+<p><strong>STFService.apk</strong> is both an Android <a href="http://developer.android.com/guide/components/services.html">Service</a> and a CLI-runnable "agent" application providing various services and event streams for <a href="https://github.com/openstf/stf">STF</a>. While it would usually make sense to separate these various services into their own components, we're trying to keep resource usage lower by bundling our services into a single package.</p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>
+<a href="https://github.com/google/protobuf">Protocol Buffers</a> based socket interface</li>
+<li>Monitoring
+
+<ul>
+<li>Battery statistics</li>
+<li>Network connectivity</li>
+<li>Phone state</li>
+<li>Device rotation</li>
+<li>Airplane mode</li>
+<li>Installed browser packages</li>
+</ul>
+</li>
+<li>Actions
+
+<ul>
+<li>List user accounts</li>
+<li>Remove user accounts</li>
+<li>Get list of installed browsers</li>
+<li>Get/set clipboard contents</li>
+<li>Get display information</li>
+<li>Get device IMEI number</li>
+<li>Get device phone number</li>
+<li>Get device ICCID number</li>
+<li>Get device network operator</li>
+<li>Get device network type</li>
+<li>Get/set device ringer mode</li>
+<li>Check whether an SD card is installed</li>
+<li>Enable/disable WIFI and query its status</li>
+<li>Unlock/relock <a href="http://developer.android.com/reference/android/app/KeyguardManager.html">KeyGuard</a> (essentially unlocking a device)</li>
+<li>Acquire/release <a href="http://developer.android.com/reference/android/os/PowerManager.WakeLock.html">WakeLock</a> (i.e. prevent a device from or allow it to sleep)</li>
+<li>Invoke key events (with meta key support)</li>
+<li>Set device rotation (optionally locking it)</li>
+</ul>
+</li>
+<li>Misc tasks
+
+<ul>
+<li>Show a bright red screen with identifying information that wakes up and keeps the device on. Amazingly useful when you've got a whole bunch of devices you're connected to remotely, and you want to find the real, physical device.</li>
+</ul>
+</li>
+<li>More.</li>
+</ul>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li><a href="http://developer.android.com/tools/studio/index.html">Android Studio</a></li>
+<li>
+<a href="http://developer.android.com/tools/help/adb.html">ADB</a> properly set up</li>
+<li>
+<code>protoc</code> (<a href="https://github.com/google/protobuf">Protocol Buffers</a> compiler) available in <code>/usr/local/bin/protoc</code>
+</li>
+</ul>
+
+<p>On OS X, you can install <code>protoc</code> with:</p>
+
+<div class="highlight highlight-bash"><pre>brew install protobuf</pre></div>
+
+<h2>
+<a id="building" class="anchor" href="#building" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building</h2>
+
+<p>Build with Gradle:</p>
+
+<div class="highlight highlight-bash"><pre>./gradlew assembleDebug</pre></div>
+
+<h2>
+<a id="running" class="anchor" href="#running" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h2>
+
+<p>You'll need to <a href="#building">build</a> first.</p>
+
+<p>Like mentioned earlier, the service consists of two parts. The service is a normal Android Service, and is started with an activity. The agent part, however, requires permissions that are not available to 3rd party applications, but are available to ADB. So the agent is a "normal" Android CLI app. More on that later.</p>
+
+<p>Also note that currently the debug keystore is fixed due to both convenience and laziness. Generate your own key if you feel like it.</p>
+
+<h3>
+<a id="install-the-apk" class="anchor" href="#install-the-apk" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install the .apk</h3>
+
+<p>First you need to install the APK. It contains both the service and the agent. This is pretty easy with Gradle:</p>
+
+<div class="highlight highlight-bash"><pre>./gradlew installDebug</pre></div>
+
+<p>Now you just need to start the two services.</p>
+
+<h3>
+<a id="running-the-service" class="anchor" href="#running-the-service" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running the service</h3>
+
+<p>There is no launcher icon for the service as it is meant to interfere with the system and its UI as little as possible. You do get a foreground notification, though, as background services without it usually get killed quite often.</p>
+
+<p>Start the service via ADB as follows.</p>
+
+<div class="highlight highlight-bash"><pre>adb shell am startservice --user 0 \
+    -a jp.co.cyberagent.stf.ACTION_START \
+    -n jp.co.cyberagent.stf/.Service</pre></div>
+
+<p>If your device complains about the <code>--user</code> option, just remove it and try again. This happens on older devices.</p>
+
+<p>You should now have the service running on port 1100 on the device.</p>
+
+<p>Now we simply need to create a local forward so that we can eventually connect to the socket.</p>
+
+<div class="highlight highlight-bash"><pre>adb forward tcp:1100 tcp:1100</pre></div>
+
+<p>Now you can connect to the socket using the local port. You may have more than one connection open at once, but it usually doesn't make much sense as you will just unnecessarily consume the surprisingly scarce USB resources. With that in mind, let's connect.</p>
+
+<div class="highlight highlight-bash"><pre>nc localhost 1100</pre></div>
+
+<p>This will give you binary output that will be explained in the <a href="#usage">usage</a> section.</p>
+
+<h3>
+<a id="running-the-agent" class="anchor" href="#running-the-agent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running the agent</h3>
+
+<p>Running the agent is a bit more complicated.</p>
+
+<p>First, you must find out where the app got installed. We'll need the information very soon. Note that the path changed between every install, so you can't just use a static or cached value here.</p>
+
+<p>The following command gets you the path.</p>
+
+<div class="highlight highlight-bash"><pre>APK=<span class="pl-s"><span class="pl-pds">$(</span>adb shell pm path jp.co.cyberagent.stf <span class="pl-k">|</span> \</span>
+<span class="pl-s">    tr -d <span class="pl-s"><span class="pl-pds">'</span>\r<span class="pl-pds">'</span></span> <span class="pl-k">|</span> awk -F: <span class="pl-s"><span class="pl-pds">'</span>{print $2}<span class="pl-pds">'</span></span><span class="pl-pds">)</span></span></pre></div>
+
+<p>Now that you know the path, it's time to run the CLI app. Note that the app does not run in the background and will keep your shell occupied for as long as it runs.</p>
+
+<div class="highlight highlight-bash"><pre>adb shell <span class="pl-k">export</span> CLASSPATH=<span class="pl-s"><span class="pl-pds">"</span><span class="pl-smi">$APK</span><span class="pl-pds">"</span></span><span class="pl-cce">\;</span> \
+    <span class="pl-c1">exec</span> app_process /system/bin jp.co.cyberagent.stf.Agent</pre></div>
+
+<p>Be very careful to note that this is a single command. The semicolon in the middle that would usually separate commands has been escaped.</p>
+
+<p>If everything went well, the agent should have told you the port it started listening on. Currently it should be 1090.</p>
+
+<p>Just like before, now we simply need to create a local forward so that we can eventually connect to the socket.</p>
+
+<div class="highlight highlight-bash"><pre>adb forward tcp:1090 tcp:1090</pre></div>
+
+<p>Once again, you may have more than one connection open at once, but it usually doesn't make much sense as you will just unnecessarily consume your precious USB bandwidth. Anyway, let's connect.</p>
+
+<div class="highlight highlight-bash"><pre>nc localhost 1090</pre></div>
+
+<p>This, too, will give you binary output that will be explained in the <a href="#usage">usage</a> section.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>It is assumed that you now have an open connection to both the service and the agent. If not, follow the <a href="#running">instructions</a> above.</p>
+
+<p>Both sockets use <strong>delimited</strong> <a href="https://github.com/google/protobuf">Protocol Buffers</a> as their format. This means that you can send different types of requests over the same connection. Each request must include an ID that gets returned in the response. You can then map the response to the request on your side. Use timeouts to check for lost requests, although that doesn't really happen as long as you send valid messages to the right socket (more on that later).</p>
+
+<p>You will also receive monitoring events that simply get pushed as they occur without anyone requesting anything.</p>
+
+<p>At this point it would be useful if you checked out our <a href="proto/src/main/proto/wire.proto">wire.proto</a>.</p>
+
+<p>While both sockets use the same format, neither is able to respond to all requests. You must know which socket to send your request to. The agent is currently only able to respond to the following requests:</p>
+
+<ul>
+<li><code>DO_KEYEVENT</code></li>
+<li><code>DO_TYPE</code></li>
+<li><code>DO_WAKE</code></li>
+<li><code>SET_ROTATION</code></li>
+</ul>
+
+<p>All other requests must go to the service. Furthermore, while all requests to the service require an ID (which must be unique within a reasonable time interval) and then receive a response with that ID, the agent currently does not provide any responses, and the ID is therefore not required.</p>
+
+<p>The requests themselves are heavily wrapped. Quite honestly it's probably a bit over-engineered in that sense, and a bit of a pain to use. But it works, and you're able to receive replies and monitoring events at any time in any order, without having to care about waiting for the previous request to complete.</p>
+
+<p>Take a look at the source to see the messages are sent and what you should expect. You can also take a look at <a href="https://github.com/openstf/stf">STF</a> to see how the messages are being used in a <a href="https://nodejs.org/">Node.js</a> application (although there are some abstractions in place).</p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>See <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>See <a href="LICENSE">LICENSE</a>.</p>
+
+<p>Copyright © CyberAgent, Inc. All Rights Reserved.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/openstf/STFService.apk">Stfservice.apk</a> is maintained by <a href="https://github.com/openstf">openstf</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-64458786-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
+
