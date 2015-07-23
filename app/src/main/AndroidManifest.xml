@@ -38,19 +38,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".UnlockActivity"
-            android:exported="true"
-            android:finishOnTaskLaunch="true"
-            android:noHistory="true"
-            android:stateNotNeeded="true"
-            android:excludeFromRecents="true"
-            android:theme="@style/Theme.Transparent">
-            <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.ACTION_UNLOCK"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
         <activity android:name=".IconActivity"
             android:exported="true"
             android:finishOnTaskLaunch="true"
