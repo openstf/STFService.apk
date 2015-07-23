@@ -75,18 +75,6 @@
                 <data android:scheme="package" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".AddAccountMenuActivity"
-            android:exported="true"
-            android:finishOnTaskLaunch="true"
-            android:noHistory="true"
-            android:stateNotNeeded="true"
-            android:excludeFromRecents="true">
-            <intent-filter>
-                <action android:name="jp.co.cyberagent.stf.ACTION_ADD_ACCOUNT_MENU"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
