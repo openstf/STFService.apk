@@ -1,16 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
-    defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0.1"
-        applicationId "jp.co.cyberagent.stf"
-    }
     signingConfigs {
         debug {
             storeFile file('keys/debug.keystore')
@@ -19,6 +12,15 @@ android {
             keyPassword 'insecure-key-password'
         }
     }
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0.1"
+        applicationId "jp.co.cyberagent.stf"
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -32,7 +34,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
     compile group: 'com.google.protobuf', name: 'protobuf-java', version: '2.6.1'
     compile project(':proto')
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
