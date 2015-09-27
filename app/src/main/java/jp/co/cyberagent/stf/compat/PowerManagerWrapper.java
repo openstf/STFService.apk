@@ -15,11 +15,16 @@ public class PowerManagerWrapper {
         powerManager = InternalApi.getServiceAsInterface("power", "android.os.IPowerManager$Stub");
 
         try {
-            wakeInjector = new WakeUpWakeInjector();
+            wakeInjector = new NewUserActivityWakeInjector();
         }
         catch (UnsupportedOperationException e) {
-            // Let it bubble
-            wakeInjector = new UserActivityWakeInjector();
+            try {
+                wakeInjector = new WakeUpWakeInjector();
+            }
+            catch (UnsupportedOperationException e2) {
+                // Let it bubble
+                wakeInjector = new OldUserActivityWakeInjector();
+            }
         }
     }
 
@@ -64,13 +69,48 @@ public class PowerManagerWrapper {
         }
     }
 
+
+    /**
+     * WakeInjector for newer API using userActivity()
+     */
+    private class NewUserActivityWakeInjector implements WakeInjector {
+        private Method injector;
+
+        public NewUserActivityWakeInjector() {
+            try {
+                injector = powerManager.getClass()
+                        // public void userActivity(long when, int event, int flags) throws android.os.RemoteException
+                        .getMethod("userActivity", long.class, int.class, int.class);
+            }
+            catch (NoSuchMethodException e) {
+                throw new UnsupportedOperationException("UserActivityWakeInjector is not supported");
+            }
+        }
+
+        public boolean wakeUp() {
+            try {
+                // public static final int USER_ACTIVITY_EVENT_OTHER = 0
+                injector.invoke(powerManager, SystemClock.uptimeMillis(), 0, 0);
+                return true;
+            }
+            catch (IllegalAccessException e) {
+                e.printStackTrace();
+                return false;
+            }
+            catch (InvocationTargetException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+    }
+
     /**
      * WakeInjector for older API
      */
-    private class UserActivityWakeInjector implements WakeInjector {
+    private class OldUserActivityWakeInjector implements WakeInjector {
         private Method injector;
 
-        public UserActivityWakeInjector() {
+        public OldUserActivityWakeInjector() {
             try {
                 injector = powerManager.getClass()
                         // public void userActivityWithForce(long when, boolean noChangeLights,
