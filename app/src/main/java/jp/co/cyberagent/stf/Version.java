@@ -6,5 +6,5 @@ public class Version {
      * the same value from non-Context code as well, so to keep things easy, we'll just use
      * a plain string as our version number.
      */
-    public static final String name = "1.0.2";
+    public static final String name = "1.1.0";
 }
