@@ -1,5 +1,7 @@
 package jp.co.cyberagent.stf;
 
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
 import android.os.SystemClock;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
@@ -7,9 +9,6 @@ import android.view.KeyEvent;
 import android.view.Surface;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
 import jp.co.cyberagent.stf.compat.InputManagerWrapper;
@@ -21,12 +20,12 @@ import jp.co.cyberagent.stf.util.ProcUtil;
 
 public class Agent {
     public static final String PROCESS_NAME = "stf.agent";
-    public static final int PORT = 1090;
+    public static final String SOCKET = "stfagent";
 
     private InputManagerWrapper inputManager;
     private PowerManagerWrapper powerManager;
     private WindowManagerWrapper windowManager;
-    private ServerSocket serverSocket;
+    private LocalServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
     private KeyCharacterMap keyCharacterMap;
 
@@ -129,10 +128,8 @@ public class Agent {
 
     private void startServer() {
         try {
-            serverSocket = new ServerSocket(PORT, 1,
-                    InetAddress.getByAddress(new byte[]{127, 0, 0, 1}));
-
-            System.err.printf("Listening on port %d\n", PORT);
+            serverSocket = new LocalServerSocket(SOCKET);
+            System.err.printf("Listening on @%s\n", SOCKET);
         }
         catch (UnknownHostException e) {
             e.printStackTrace();
@@ -159,7 +156,7 @@ public class Agent {
     private void waitForClients() {
         while (true) {
             try {
-                Socket clientSocket = serverSocket.accept();
+                LocalSocket clientSocket = serverSocket.accept();
                 InputClient client = new InputClient(clientSocket);
                 client.start();
             }
@@ -171,9 +168,9 @@ public class Agent {
     }
 
     private class InputClient extends Thread {
-        private Socket clientSocket;
+        private LocalSocket clientSocket;
 
-        public InputClient(Socket clientSocket) {
+        public InputClient(LocalSocket clientSocket) {
             this.clientSocket = clientSocket;
         }
 

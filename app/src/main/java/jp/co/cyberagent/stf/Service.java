@@ -4,7 +4,9 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.*;
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
+import android.os.IBinder;
 import android.os.Process;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -12,9 +14,6 @@ import android.util.Log;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,27 +43,26 @@ import jp.co.cyberagent.stf.query.GetPropertiesResponder;
 import jp.co.cyberagent.stf.query.GetRingerModeResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
+import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
 import jp.co.cyberagent.stf.query.SetKeyguardStateResponder;
 import jp.co.cyberagent.stf.query.SetMasterMuteResponder;
 import jp.co.cyberagent.stf.query.SetRingerModeResponder;
 import jp.co.cyberagent.stf.query.SetWakeLockResponder;
 import jp.co.cyberagent.stf.query.SetWifiEnabledResponder;
-import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
 
 public class Service extends android.app.Service {
     public static final String ACTION_START = "jp.co.cyberagent.stf.ACTION_START";
     public static final String ACTION_STOP = "jp.co.cyberagent.stf.ACTION_STOP";
-    public static final String EXTRA_PORT = "jp.co.cyberagent.stf.EXTRA_PORT";
-    public static final String EXTRA_HOST = "jp.co.cyberagent.stf.EXTRA_HOST";
-    public static final String EXTRA_BACKLOG = "jp.co.cyberagent.stf.EXTRA_BACKLOG";
+    public static final String EXTRA_SOCKET = "jp.co.cyberagent.stf.EXTRA_SOCKET";
+    public static final String DEFAULT_SOCKET = "stfservice";
 
     private static final String TAG = "STFService";
     private static final int NOTIFICATION_ID = 0x1;
 
     private List<AbstractMonitor> monitors = new ArrayList<AbstractMonitor>();
     private ExecutorService executor = Executors.newCachedThreadPool();
-    private ServerSocket acceptor;
+    private LocalServerSocket acceptor;
     private boolean started = false;
     private MessageWriter.Pool writers = new MessageWriter.Pool();
 
@@ -142,16 +140,13 @@ public class Service extends android.app.Service {
             if (!started) {
                 Log.i(TAG, "Starting service");
 
-                int port = intent.getIntExtra(EXTRA_PORT, 1100);
-                int backlog = intent.getIntExtra(EXTRA_BACKLOG, 1);
-
-                String host = intent.getStringExtra(EXTRA_HOST);
-                if (host == null) {
-                    host = "127.0.0.1";
+                String socketName = intent.getStringExtra(EXTRA_SOCKET);
+                if (socketName == null) {
+                    socketName = DEFAULT_SOCKET;
                 }
 
                 try {
-                    acceptor = new ServerSocket(port, backlog, InetAddress.getByName(host));
+                    acceptor = new LocalServerSocket(socketName);
 
                     addMonitor(new BatteryMonitor(this, writers));
                     addMonitor(new ConnectivityMonitor(this, writers));
@@ -196,10 +191,10 @@ public class Service extends android.app.Service {
     }
 
     class Server extends Thread {
-        private ServerSocket acceptor;
+        private LocalServerSocket acceptor;
         private ExecutorService executor = Executors.newCachedThreadPool();
 
-        public Server(ServerSocket acceptor) {
+        public Server(LocalServerSocket acceptor) {
             this.acceptor = acceptor;
         }
 
@@ -217,10 +212,8 @@ public class Service extends android.app.Service {
 
         @Override
         public void run() {
-            Log.i(TAG, String.format("Server listening on %s:%d",
-                    acceptor.getInetAddress().toString(),
-                    acceptor.getLocalPort()
-            ));
+            String socketName = acceptor.getLocalSocketAddress().getName();
+            Log.i(TAG, String.format("Server listening on @%s", socketName));
 
             try {
                 while (!isInterrupted()) {
@@ -244,9 +237,9 @@ public class Service extends android.app.Service {
         }
 
         class Connection extends Thread {
-            private Socket socket;
+            private LocalSocket socket;
 
-            public Connection(Socket socket) {
+            public Connection(LocalSocket socket) {
                 this.socket = socket;
             }
 
