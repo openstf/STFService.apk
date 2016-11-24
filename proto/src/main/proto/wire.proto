@@ -9,6 +9,7 @@ enum MessageType {
     DO_WAKE = 4;
     DO_ADD_ACCOUNT_MENU = 24;
     DO_REMOVE_ACCOUNT = 20;
+    DO_SCREENSHOT = 30;
     GET_ACCOUNTS = 26;
     GET_BROWSERS = 5;
     GET_CLIPBOARD = 6;
@@ -292,4 +293,12 @@ message SetRotationRequest {
 }
 
 message DoWakeRequest {
+}
+
+message DoScreenshotRequest {
+}
+
+message GetScreenshotResponse {
+    required bool success = 1;
+    required bytes screenshot = 2;
 }

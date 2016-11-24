@@ -8,11 +8,15 @@ import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.Surface;
 
+import com.google.protobuf.ByteString;
+
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.UnknownHostException;
 
 import jp.co.cyberagent.stf.compat.InputManagerWrapper;
 import jp.co.cyberagent.stf.compat.PowerManagerWrapper;
+import jp.co.cyberagent.stf.compat.ScreenshotManagerWrapper;
 import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
 import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.util.InternalApi;
@@ -25,6 +29,7 @@ public class Agent {
     private InputManagerWrapper inputManager;
     private PowerManagerWrapper powerManager;
     private WindowManagerWrapper windowManager;
+    private ScreenshotManagerWrapper screenshotManager;
     private LocalServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
     private KeyCharacterMap keyCharacterMap;
@@ -100,6 +105,7 @@ public class Agent {
         powerManager = new PowerManagerWrapper();
         inputManager = new InputManagerWrapper();
         windowManager = new WindowManagerWrapper();
+        screenshotManager = new ScreenshotManagerWrapper();
 
         selectDevice();
         loadKeyCharacterMap();
@@ -189,7 +195,7 @@ public class Agent {
             System.err.println("InputClient started");
 
             try {
-                while (!isInterrupted()) {
+                while (!isInterrupted() && !clientSocket.isClosed()) {
                     Wire.Envelope envelope =
                             Wire.Envelope.parseDelimitedFrom(clientSocket.getInputStream());
 
@@ -209,6 +215,9 @@ public class Agent {
                             break;
                         case SET_ROTATION:
                             handleSetRotationRequest(envelope);
+                            break;
+                        case DO_SCREENSHOT:
+                            handleScreenshotRequest(envelope);
                             break;
                         default:
                             System.err.printf("Unknown request type %d; maybe it's a Service call?\n", envelope.getType());
@@ -309,6 +318,11 @@ public class Agent {
             }
         }
 
+        private void handleScreenshotRequest(Wire.Envelope envelope) throws IOException {
+            Wire.DoScreenshotRequest request = Wire.DoScreenshotRequest.parseFrom(envelope.getMessage());
+            screenshot();
+        }
+
         private void keyDown(int keyCode, int metaState) {
             long time = SystemClock.uptimeMillis();
             inputManager.injectKeyEvent(new KeyEvent(
@@ -366,6 +380,26 @@ public class Agent {
 
         private void thawRotation() {
             windowManager.thawRotation();
+        }
+
+        private void screenshot() {
+            try {
+                byte[] bmp = screenshotManager.screenshot();
+                if (bmp == null) {
+                    return;
+                }
+                OutputStream out = clientSocket.getOutputStream();
+                out.write(Wire.GetScreenshotResponse.newBuilder()
+                        .setSuccess(true)
+                        .setScreenshot(ByteString.copyFrom(bmp))
+                        .build().toByteArray());
+
+                out.flush();
+                out.close();
+                clientSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
