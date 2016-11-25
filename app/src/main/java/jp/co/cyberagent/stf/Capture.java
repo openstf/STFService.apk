@@ -125,6 +125,7 @@ public class Capture {
                     System.out.println("take screenshot");
                     byte[] bytes = screenshotManager.screenshot();
                     buf = ByteBuffer.allocate(4);
+                    buf.order(ByteOrder.LITTLE_ENDIAN);
                     buf.putInt(bytes.length);
                     buf.flip();
                     out.write(buf.array());

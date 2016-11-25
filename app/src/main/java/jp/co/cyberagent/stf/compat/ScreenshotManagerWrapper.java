@@ -56,7 +56,7 @@ public class ScreenshotManagerWrapper {
                 bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, false);
             }
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bout);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 75, bout);
             bmpArray = bout.toByteArray();
         } catch (RemoteException e) {
             e.printStackTrace();
