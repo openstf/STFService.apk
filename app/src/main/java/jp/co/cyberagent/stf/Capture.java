@@ -104,14 +104,16 @@ public class Capture {
             screenshotManager = new ScreenshotManagerWrapper();
 
             try {
+
                 OutputStream out = clientSocket.getOutputStream();
+                byte[] jpegData = screenshotManager.screenshot();
                 ByteBuffer buf = ByteBuffer.allocate(24);
                 buf.order(ByteOrder.LITTLE_ENDIAN);
-                buf.put((byte) 0x01);
-                buf.put((byte) 0x03);
+                buf.put((byte) 0x01); // version
+                buf.put((byte) 0x03); // length 3*8 bit
                 buf.putInt(0); // pid
-                buf.putInt(0); // real width
-                buf.putInt(0); // real height
+                buf.putInt(screenshotManager.getWidth()); // real width
+                buf.putInt(screenshotManager.getHeight()); // real height
                 buf.putInt(0); // virt width
                 buf.putInt(0); // virt height
                 buf.put((byte) 0x00); // display orientation
@@ -122,15 +124,16 @@ public class Capture {
                 out.flush();
 
                 while (true) {
-                    System.out.println("take screenshot");
-                    byte[] bytes = screenshotManager.screenshot();
+                    // jpeg data size
                     buf = ByteBuffer.allocate(4);
                     buf.order(ByteOrder.LITTLE_ENDIAN);
-                    buf.putInt(bytes.length);
+                    buf.putInt(jpegData.length);
                     buf.flip();
                     out.write(buf.array());
-                    out.write(bytes);
+                    // jpeg data
+                    out.write(jpegData);
                     out.flush();
+                    jpegData = screenshotManager.screenshot();
                 }
             } catch (IOException e) {
                 System.out.println("I/O exception: " + e);

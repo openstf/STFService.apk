@@ -18,12 +18,10 @@ import java.lang.reflect.Method;
 public class ScreenshotManagerWrapper {
 
     private static String SURFACE_CONTROL_CLASS = "android.view.SurfaceControl";
-
     private static String SURFACE_CLASS = "android.view.Surface";
-
     private Method injector;
-
     private final IWindowManager wm;
+    private Bitmap lastBitmap;
 
     public ScreenshotManagerWrapper() {
         IBinder wmbinder = ServiceManager.getService("window");
@@ -37,6 +35,14 @@ public class ScreenshotManagerWrapper {
 
     private interface ScreenshotInjector {
         public Method injectorMethod();
+    }
+
+    public int getWidth() {
+        return lastBitmap.getWidth();
+    }
+
+    public int getHeight() {
+        return lastBitmap.getHeight();
     }
 
     public byte[] screenshot() {
@@ -55,6 +61,7 @@ public class ScreenshotManagerWrapper {
             if (rotation != 0) {
                 bmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), m, false);
             }
+            lastBitmap = bmp;
             ByteArrayOutputStream bout = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.JPEG, 75, bout);
             bmpArray = bout.toByteArray();
