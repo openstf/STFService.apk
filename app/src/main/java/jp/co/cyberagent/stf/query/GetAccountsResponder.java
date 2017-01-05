@@ -5,7 +5,7 @@ import android.accounts.AccountManager;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class GetAccountsResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetAccountsRequest request =
                 Wire.GetAccountsRequest.parseFrom(envelope.getMessage());
 

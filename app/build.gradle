@@ -1,4 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+    }
+}
 
 android {
     compileSdkVersion 23
@@ -35,8 +45,25 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
-    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '2.6.1'
-    compile project(':proto')
+    compile 'com.google.protobuf:protobuf-lite:3.0.1'
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     provided fileTree(dir: 'provided', include: ['*.jar'])
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.1.0'
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite { }
+            }
+        }
+    }
 }

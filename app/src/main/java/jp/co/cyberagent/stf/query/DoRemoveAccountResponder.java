@@ -7,7 +7,7 @@ import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.content.Context;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class DoRemoveAccountResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.DoRemoveAccountRequest request =
                 Wire.DoRemoveAccountRequest.parseFrom(envelope.getMessage());
 

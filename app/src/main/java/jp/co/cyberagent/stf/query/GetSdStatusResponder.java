@@ -11,7 +11,7 @@ import android.view.Gravity;
 import android.view.Window;
 import android.widget.LinearLayout;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.io.File;
@@ -31,7 +31,7 @@ public class GetSdStatusResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
 
         boolean sd_card_mounted = false;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {

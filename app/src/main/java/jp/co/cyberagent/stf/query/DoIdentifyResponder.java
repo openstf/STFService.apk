@@ -3,7 +3,7 @@ package jp.co.cyberagent.stf.query;
 import android.content.Context;
 import android.content.Intent;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import jp.co.cyberagent.stf.IdentityActivity;
@@ -15,7 +15,7 @@ public class DoIdentifyResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.DoIdentifyRequest request =
                 Wire.DoIdentifyRequest.parseFrom(envelope.getMessage());
 

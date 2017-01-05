@@ -38,13 +38,6 @@
 
 * [Android Studio](http://developer.android.com/tools/studio/index.html)
 * [ADB](http://developer.android.com/tools/help/adb.html) properly set up
-* `protoc` ([Protocol Buffers](https://github.com/google/protobuf) compiler) available in `/usr/local/bin/protoc`
-
-On OS X, you can install `protoc` with:
-
-```bash
-brew install protobuf
-```
 
 ## Building
 
@@ -148,7 +141,7 @@ Both sockets use **delimited** [Protocol Buffers](https://github.com/google/prot
 
 You will also receive monitoring events that simply get pushed as they occur without anyone requesting anything.
 
-At this point it would be useful if you checked out our [wire.proto](proto/src/main/proto/wire.proto).
+At this point it would be useful if you checked out our [wire.proto](app/src/main/proto/wire.proto).
 
 While both sockets use the same format, neither is able to respond to all requests. You must know which socket to send your request to. The agent is currently only able to respond to the following requests:
 

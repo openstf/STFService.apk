@@ -3,7 +3,7 @@ package jp.co.cyberagent.stf.query;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import jp.co.cyberagent.stf.proto.Wire;
@@ -14,7 +14,7 @@ public class GetWifiStatusResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetWifiStatusRequest request =
                 Wire.GetWifiStatusRequest.parseFrom(envelope.getMessage());
 

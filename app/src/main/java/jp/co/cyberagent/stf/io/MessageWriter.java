@@ -1,6 +1,6 @@
 package jp.co.cyberagent.stf.io;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,14 +15,14 @@ public class MessageWriter implements MessageWritable {
     private OutputStream out;
 
     public static interface Writable {
-        public void write(final GeneratedMessage message);
+        public void write(final GeneratedMessageLite message);
     }
 
     public MessageWriter(OutputStream out) {
         this.out = out;
     }
 
-    public void write(final GeneratedMessage message) {
+    public void write(final GeneratedMessageLite message) {
         executor.submit(new Runnable() {
             @Override
             public void run() {
@@ -48,7 +48,7 @@ public class MessageWriter implements MessageWritable {
             writers.remove(writer);
         }
 
-        public void write(final GeneratedMessage message) {
+        public void write(final GeneratedMessageLite message) {
             for (MessageWriter writer : writers) {
                 writer.write(message);
             }

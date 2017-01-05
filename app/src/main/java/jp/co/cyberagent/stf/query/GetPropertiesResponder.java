@@ -3,7 +3,7 @@ package jp.co.cyberagent.stf.query;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 
-import com.google.protobuf.GeneratedMessage;
+import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class GetPropertiesResponder extends AbstractResponder {
     }
 
     @Override
-    public GeneratedMessage respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
+    public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetPropertiesRequest request =
                 Wire.GetPropertiesRequest.parseFrom(envelope.getMessage());
 
