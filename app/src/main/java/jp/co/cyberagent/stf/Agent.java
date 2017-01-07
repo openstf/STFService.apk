@@ -34,7 +34,7 @@ public class Agent {
 
         for (String arg : args) {
             if (arg.equals("--version")) {
-                System.out.println(Version.name);
+                System.out.println(BuildConfig.VERSION_NAME);
                 return;
             }
             else if (arg.equals("--debug-info")) {

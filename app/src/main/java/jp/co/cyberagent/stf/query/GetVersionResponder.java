@@ -1,12 +1,10 @@
 package jp.co.cyberagent.stf.query;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 
 import com.google.protobuf.GeneratedMessageLite;
 
-import jp.co.cyberagent.stf.Version;
+import jp.co.cyberagent.stf.BuildConfig;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class GetVersionResponder extends AbstractResponder {
@@ -18,7 +16,7 @@ public class GetVersionResponder extends AbstractResponder {
     public GeneratedMessageLite respond(Wire.Envelope envelope) {
         return Wire.GetVersionResponse.newBuilder()
                 .setSuccess(true)
-                .setVersion(Version.name)
+                .setVersion(BuildConfig.VERSION_NAME)
                 .build();
     }
 
