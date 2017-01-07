@@ -35,6 +35,15 @@ public class GetPropertiesResponder extends AbstractResponder {
                             .build());
                 }
             }
+            else if (name.equals("imsi")) {
+                String subscriberId = tm.getSubscriberId();
+                if (subscriberId != null && !subscriberId.isEmpty()) {
+                    properties.add(Wire.Property.newBuilder()
+                            .setName(name)
+                            .setValue(subscriberId)
+                            .build());
+                }
+            }
             else if (name.equals("phoneNumber")) {
                 String phoneNumber = tm.getLine1Number();
                 if (phoneNumber != null && !phoneNumber.isEmpty()) {
