@@ -79,12 +79,12 @@ adb shell am startservice --user 0 \
 
 If your device complains about the `--user` option, just remove it and try again. This happens on older devices.
 
-You should now have the service running on port 1100 on the device.
+You should now have the service running on the device.
 
 Now we simply need to create a local forward so that we can eventually connect to the socket.
 
 ```bash
-adb forward tcp:1100 tcp:1100
+adb forward tcp:1100 localabstract:stfservice
 ```
 
 Now you can connect to the socket using the local port. You may have more than one connection open at once, but it usually doesn't make much sense as you will just unnecessarily consume the surprisingly scarce USB resources. With that in mind, let's connect.
@@ -117,12 +117,10 @@ adb shell export CLASSPATH="$APK"\; \
 
 Be very careful to note that this is a single command. The semicolon in the middle that would usually separate commands has been escaped.
 
-If everything went well, the agent should have told you the port it started listening on. Currently it should be 1090.
-
 Just like before, now we simply need to create a local forward so that we can eventually connect to the socket.
 
 ```bash
-adb forward tcp:1090 tcp:1090
+adb forward tcp:1090 localabstract:stfagent
 ```
 
 Once again, you may have more than one connection open at once, but it usually doesn't make much sense as you will just unnecessarily consume your precious USB bandwidth. Anyway, let's connect.
