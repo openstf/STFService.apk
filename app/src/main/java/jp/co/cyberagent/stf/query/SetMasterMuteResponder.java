@@ -2,6 +2,7 @@ package jp.co.cyberagent.stf.query;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.os.Build;
 
 import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -37,12 +38,25 @@ public class SetMasterMuteResponder extends AbstractResponder {
 
     private void mute(boolean state) {
         AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        am.setStreamMute(AudioManager.STREAM_ALARM, state);
-        am.setStreamMute(AudioManager.STREAM_DTMF, state);
-        am.setStreamMute(AudioManager.STREAM_MUSIC, state);
-        am.setStreamMute(AudioManager.STREAM_NOTIFICATION, state);
-        am.setStreamMute(AudioManager.STREAM_RING, state);
-        am.setStreamMute(AudioManager.STREAM_SYSTEM, state);
-        am.setStreamMute(AudioManager.STREAM_VOICE_CALL, state);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            int direction = state ? AudioManager.ADJUST_MUTE : AudioManager.ADJUST_UNMUTE;
+            int flags = 0;
+            am.adjustStreamVolume(AudioManager.STREAM_ALARM, direction, flags);
+            am.adjustStreamVolume(AudioManager.STREAM_DTMF, direction, flags);
+            am.adjustStreamVolume(AudioManager.STREAM_MUSIC, direction, flags);
+            am.adjustStreamVolume(AudioManager.STREAM_NOTIFICATION, direction, flags);
+            am.adjustStreamVolume(AudioManager.STREAM_RING, direction, flags);
+            am.adjustStreamVolume(AudioManager.STREAM_SYSTEM, direction, flags);
+            am.adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, direction, flags);
+        } else {
+            am.setStreamMute(AudioManager.STREAM_ALARM, state);
+            am.setStreamMute(AudioManager.STREAM_DTMF, state);
+            am.setStreamMute(AudioManager.STREAM_MUSIC, state);
+            am.setStreamMute(AudioManager.STREAM_NOTIFICATION, state);
+            am.setStreamMute(AudioManager.STREAM_RING, state);
+            am.setStreamMute(AudioManager.STREAM_SYSTEM, state);
+            am.setStreamMute(AudioManager.STREAM_VOICE_CALL, state);
+        }
     }
 }
