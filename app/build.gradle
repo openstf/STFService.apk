@@ -48,6 +48,7 @@ dependencies {
     compile 'com.google.protobuf:protobuf-lite:3.0.1'
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     provided fileTree(dir: 'provided', include: ['*.jar'])
+    provided fileTree(dir: '../shim/libs', include: ['*.jar'])
 }
 
 protobuf {

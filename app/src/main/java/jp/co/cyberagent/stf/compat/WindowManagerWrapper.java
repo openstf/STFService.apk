@@ -5,6 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import android.os.RemoteException;
+import android.view.IRotationWatcher;
+
 import jp.co.cyberagent.stf.util.InternalApi;
 
 public class WindowManagerWrapper {
@@ -39,45 +42,78 @@ public class WindowManagerWrapper {
         rotationInjector.thawRotation();
     }
 
-    public void watchRotation(final RotationWatcher watcher) {
+    // It's not clear why we're relying on reflection instead of using
+    // Display.getRotation(). For now, reflection is used to ensure backwards
+    // compatibility just in case Display.getRotation() behaves differently
+    // in some cases. It's quite possible that IWindowManager.getRotation()
+    // was only used because it was convenient to access from where it was
+    // used, though.
+    public int getRotation() {
         try {
-            Class<?> IRotationWatcher = Class.forName("android.view.IRotationWatcher");
-
-            Object windowManager = getWindowManager();
-
-            Object proxy = Proxy.newProxyInstance(IRotationWatcher.getClassLoader(), new Class[]{IRotationWatcher}, new InvocationHandler() {
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                    System.out.println("Invoked " + method.getName());
-                    if (method.getName().equals("onRotationChanged")) {
-                        watcher.onRotationChanged((Integer) args[0]);
-                    }
-                    return null;
-                }
-            });
-
-            Method watchRotation = windowManager.getClass().getMethod("watchRotation", IRotationWatcher);
-
-            watchRotation.invoke(windowManager, proxy);
+            Method getter = windowManager.getClass().getMethod("getDefaultDisplayRotation");
+            return (Integer) getter.invoke(windowManager);
         }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
-        }
-        catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
-        }
+        catch (NoSuchMethodException e) {}
         catch (IllegalAccessException e) {
             e.printStackTrace();
-            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
         }
         catch (InvocationTargetException e) {
             e.printStackTrace();
+        }
+
+        try {
+            Method getter = windowManager.getClass().getMethod("getRotation");
+            return (Integer) getter.invoke(windowManager);
+        }
+        catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public Object watchRotation(final RotationWatcher watcher) {
+        IRotationWatcher realWatcher = new IRotationWatcher.Stub() {
+            @Override
+            public void onRotationChanged(int rotation) throws RemoteException {
+                watcher.onRotationChanged(rotation);
+            }
+        };
+
+        try {
+            Method getter = windowManager.getClass().getMethod("watchRotation", IRotationWatcher.class, int.class);
+            getter.invoke(windowManager, realWatcher, 0);
+            return realWatcher;
+        }
+        catch (NoSuchMethodException e) {
+            try {
+                Method getter = windowManager.getClass().getMethod("watchRotation", IRotationWatcher.class);
+                getter.invoke(windowManager, realWatcher);
+                return realWatcher;
+            }
+            catch (NoSuchMethodException e2) {
+                throw new UnsupportedOperationException("watchRotation is not supported: " + e2.getMessage());
+            }
+            catch (IllegalAccessException e2) {
+                throw new UnsupportedOperationException("watchRotation is not supported: " + e2.getMessage());
+            }
+            catch (InvocationTargetException e2) {
+                throw new UnsupportedOperationException("watchRotation is not supported: " + e2.getMessage());
+            }
+        }
+        catch (IllegalAccessException e) {
+            throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
+        }
+        catch (InvocationTargetException e) {
             throw new UnsupportedOperationException("watchRotation is not supported: " + e.getMessage());
         }
     }
-
 
     public static Object getWindowManager() {
         return InternalApi.getServiceAsInterface("window", "android.view.IWindowManager$Stub");

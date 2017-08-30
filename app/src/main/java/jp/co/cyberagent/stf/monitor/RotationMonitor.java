@@ -1,20 +1,17 @@
 package jp.co.cyberagent.stf.monitor;
 
 import android.content.Context;
-import android.os.RemoteException;
-import android.os.ServiceManager;
 import android.util.Log;
-import android.view.IRotationWatcher;
-import android.view.IWindowManager;
 import android.view.Surface;
 
 import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.proto.Wire;
+import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
 
 public class RotationMonitor extends AbstractMonitor {
     private static final String TAG = "STFRotationMonitor";
 
-    private IWindowManager wm = IWindowManager.Stub.asInterface(ServiceManager.getService(Context.WINDOW_SERVICE));
+    private WindowManagerWrapper wmw = new WindowManagerWrapper();
 
     public RotationMonitor(Context context, MessageWritable writer) {
         super(context, writer);
@@ -24,15 +21,15 @@ public class RotationMonitor extends AbstractMonitor {
     public void run() {
         Log.i(TAG, "Monitor starting");
 
-        IRotationWatcher watcher = new IRotationWatcher.Stub() {
+        WindowManagerWrapper.RotationWatcher watcher = new WindowManagerWrapper.RotationWatcher() {
             @Override
-            public void onRotationChanged(int rotation) throws RemoteException {
+            public void onRotationChanged(int rotation) {
                 report(writer, rotation);
             }
         };
 
         try {
-            wm.watchRotation(watcher);
+            Object nativeWatcher = wmw.watchRotation(watcher);
 
             synchronized (this) {
                 while (!isInterrupted()) {
@@ -40,19 +37,13 @@ public class RotationMonitor extends AbstractMonitor {
                 }
             }
         }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
         catch (InterruptedException e) {
             // Okay
-        }
-        catch (Exception e) {
-            e.printStackTrace();
         }
         finally {
             Log.i(TAG, "Monitor stopping");
 
-            // Sadly, wm.removeRotationWatcher is only available on API >= 18. Instead, we
+            // Sadly, removeRotationWatcher is only available on API >= 18. Instead, we
             // must make sure that whole process dies, causing DeathRecipient to reap the
             // watcher.
         }
@@ -60,12 +51,7 @@ public class RotationMonitor extends AbstractMonitor {
 
     @Override
     public void peek(MessageWritable writer) {
-        try {
-            report(writer, wm.getRotation());
-        }
-        catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        report(writer, wmw.getRotation());
     }
 
     private void report(MessageWritable writer, int rotation) {
