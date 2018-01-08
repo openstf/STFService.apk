@@ -48,7 +48,7 @@ public class IdentityActivity extends Activity {
         String serial = intent.getStringExtra(EXTRA_SERIAL);
 
         if (serial == null) {
-            serial = getProperty("ro.serialno", "unknown");
+            serial = Build.SERIAL;
         }
 
         layout.addView(createLabel("SERIAL"));
