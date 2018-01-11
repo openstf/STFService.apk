@@ -47,7 +47,7 @@ public class GetBluetoothStatusResponder extends AbstractResponder {
 
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())
-                .setType(Wire.MessageType.GET_WIFI_STATUS)
+                .setType(Wire.MessageType.GET_BLUETOOTH_STATUS)
                 .setMessage(builder
                         .build()
                         .toByteString())
