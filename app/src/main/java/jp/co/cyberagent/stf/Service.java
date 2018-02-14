@@ -1,19 +1,24 @@
 package jp.co.cyberagent.stf;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
 import android.os.IBinder;
 import android.os.Process;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,6 +161,17 @@ public class Service extends android.app.Service {
                     addMonitor(new BrowserPackageMonitor(this, writers));
 
                     executor.submit(new Server(acceptor));
+
+                    /**
+                     * In order for the monitor to work you need to grant DUMP permission for
+                     * the apk, e.g.
+                     *
+                     * adb -d shell pm grant jp.co.cyberagent.stf android.permission.DUMP
+                     */
+                    int dumpPermission = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.DUMP);
+                    if(dumpPermission == PackageManager.PERMISSION_GRANTED) {
+                        executor.submit(new AdbMonitor());
+                    }
 
                     started = true;
                 }
@@ -364,6 +380,50 @@ public class Service extends android.app.Service {
                     }
                 }
 
+            }
+        }
+    }
+
+    /**
+     * Monitors the adb state by checking /sys/class/android_usb/android0/state
+     *
+     * If state is DISCONNECTED then IdentityActivity will be shown to allow easier identification
+     * of malfunctioning devices
+     */
+    private class AdbMonitor extends Thread {
+        // If something goes wrong you have 30 seconds to kill the STFService
+        // Using smaller numbers will basically lock the devices until usb connection is established
+        private static final int INTERVAL_MS = 30000;
+
+        @Override
+        public void run() {
+            Log.d(TAG, "Starting adb monitor thread");
+            java.lang.Process process;
+            try {
+                while(!isInterrupted()) {
+                    String[] cmd = {
+                        "/system/bin/sh",
+                        "-c",
+                        "dumpsys usb -a | grep \"Kernel state:\""
+                    };
+
+                    process = Runtime.getRuntime().exec(cmd);
+                    BufferedReader adbdStateReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    String line = adbdStateReader.readLine();
+                    Log.d(TAG, line);
+                    boolean disconnected = line.contains("DISCONNECTED");
+
+                    if (disconnected) {
+                        startActivity(new Intent(getApplication(), IdentityActivity.class));
+                    }
+
+                    adbdStateReader.close();
+                    Thread.sleep(INTERVAL_MS);
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "IO error during exec of adb monitor", e);
+            } catch (InterruptedException e) {
+                Log.i(TAG, "Adb monitor thread interrupted");
             }
         }
     }
