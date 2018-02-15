@@ -376,21 +376,21 @@ public class Service extends android.app.Service {
 
     /**
      * Monitors the adb state by checking /sys/class/android_usb/android0/state
-     *
+     * <p>
      * If state is DISCONNECTED then IdentityActivity will be shown to allow easier identification
      * of malfunctioning devices
      */
     private class AdbMonitor extends Thread {
         // If something goes wrong you have 30 seconds to kill the STFService
         // Using smaller numbers will basically lock the devices until usb connection is established
-        private static final int INTERVAL_MS = 5000;
+        private static final int INTERVAL_MS = 30000;
 
         @Override
         public void run() {
             Log.d(TAG, "Starting adb monitor thread");
             java.lang.Process process;
             try {
-                while(!isInterrupted()) {
+                while (!isInterrupted()) {
                     /**
                      * In order for the monitor to work you need to grant DUMP permission for
                      * the apk, e.g.
@@ -398,7 +398,7 @@ public class Service extends android.app.Service {
                      * adb -d shell pm grant jp.co.cyberagent.stf android.permission.DUMP
                      */
                     int dumpPermission = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.DUMP);
-                    if(dumpPermission == PackageManager.PERMISSION_GRANTED) {
+                    if (dumpPermission == PackageManager.PERMISSION_GRANTED) {
                         String[] cmd = {
                             "/system/bin/dumpsys",
                             "usb"
