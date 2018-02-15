@@ -389,6 +389,7 @@ public class Service extends android.app.Service {
         public void run() {
             Log.d(TAG, "Starting adb monitor thread");
             java.lang.Process process;
+            String state = "";
             try {
                 while (!isInterrupted()) {
                     /**
@@ -410,17 +411,20 @@ public class Service extends android.app.Service {
                          * If the output of the command will change then by default device will be
                          * considered connected
                          */
-                        String kernelStateLine = "";
+                        String currentState = "";
                         BufferedReader adbdStateReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                         for (String line = adbdStateReader.readLine(); line != null; line = adbdStateReader.readLine()) {
                             if (line.contains("Kernel state:")) {
-                                kernelStateLine = line;
+                                currentState = line.split(":").length == 2 ? line.split(":")[1] : "";
                                 break;
                             }
                         }
 
-                        Log.d(TAG, kernelStateLine);
-                        boolean disconnected = kernelStateLine.contains("DISCONNECTED");
+                        if (!currentState.equals(state)) {
+                            Log.d(TAG, "Kernel state changed to" + currentState);
+                            state = currentState;
+                        }
+                        boolean disconnected = state.contains("DISCONNECTED");
 
                         if (disconnected) {
                             startActivity(new Intent(getApplication(), IdentityActivity.class));
