@@ -161,17 +161,7 @@ public class Service extends android.app.Service {
                     addMonitor(new BrowserPackageMonitor(this, writers));
 
                     executor.submit(new Server(acceptor));
-
-                    /**
-                     * In order for the monitor to work you need to grant DUMP permission for
-                     * the apk, e.g.
-                     *
-                     * adb -d shell pm grant jp.co.cyberagent.stf android.permission.DUMP
-                     */
-                    int dumpPermission = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.DUMP);
-                    if(dumpPermission == PackageManager.PERMISSION_GRANTED) {
-                        executor.submit(new AdbMonitor());
-                    }
+                    executor.submit(new AdbMonitor());
 
                     started = true;
                 }
@@ -393,7 +383,7 @@ public class Service extends android.app.Service {
     private class AdbMonitor extends Thread {
         // If something goes wrong you have 30 seconds to kill the STFService
         // Using smaller numbers will basically lock the devices until usb connection is established
-        private static final int INTERVAL_MS = 30000;
+        private static final int INTERVAL_MS = 5000;
 
         @Override
         public void run() {
@@ -401,23 +391,44 @@ public class Service extends android.app.Service {
             java.lang.Process process;
             try {
                 while(!isInterrupted()) {
-                    String[] cmd = {
-                        "/system/bin/sh",
-                        "-c",
-                        "dumpsys usb -a | grep \"Kernel state:\""
-                    };
+                    /**
+                     * In order for the monitor to work you need to grant DUMP permission for
+                     * the apk, e.g.
+                     *
+                     * adb -d shell pm grant jp.co.cyberagent.stf android.permission.DUMP
+                     */
+                    int dumpPermission = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.DUMP);
+                    if(dumpPermission == PackageManager.PERMISSION_GRANTED) {
+                        String[] cmd = {
+                            "/system/bin/dumpsys",
+                            "usb"
+                        };
 
-                    process = Runtime.getRuntime().exec(cmd);
-                    BufferedReader adbdStateReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                    String line = adbdStateReader.readLine();
-                    Log.d(TAG, line);
-                    boolean disconnected = line.contains("DISCONNECTED");
+                        process = Runtime.getRuntime().exec(cmd);
 
-                    if (disconnected) {
-                        startActivity(new Intent(getApplication(), IdentityActivity.class));
+                        /**
+                         * If the output of the command will change then by default device will be
+                         * considered connected
+                         */
+                        String kernelStateLine = "";
+                        BufferedReader adbdStateReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                        for (String line = adbdStateReader.readLine(); line != null; line = adbdStateReader.readLine()) {
+                            if (line.contains("Kernel state:")) {
+                                kernelStateLine = line;
+                                break;
+                            }
+                        }
+
+                        Log.d(TAG, kernelStateLine);
+                        boolean disconnected = kernelStateLine.contains("DISCONNECTED");
+
+                        if (disconnected) {
+                            startActivity(new Intent(getApplication(), IdentityActivity.class));
+                        }
+
+                        adbdStateReader.close();
                     }
 
-                    adbdStateReader.close();
                     Thread.sleep(INTERVAL_MS);
                 }
             } catch (IOException e) {
