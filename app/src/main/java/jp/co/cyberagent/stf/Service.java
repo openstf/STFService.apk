@@ -388,7 +388,6 @@ public class Service extends android.app.Service {
         @Override
         public void run() {
             Log.d(TAG, "Starting adb monitor thread");
-            java.lang.Process process;
             String state = "";
             try {
                 while (!isInterrupted()) {
@@ -405,7 +404,7 @@ public class Service extends android.app.Service {
                             "usb"
                         };
 
-                        process = Runtime.getRuntime().exec(cmd);
+                        java.lang.Process process = Runtime.getRuntime().exec(cmd);
 
                         /**
                          * If the output of the command will change then by default device will be
@@ -424,13 +423,14 @@ public class Service extends android.app.Service {
                             Log.d(TAG, "Kernel state changed to" + currentState);
                             state = currentState;
                         }
-                        boolean disconnected = state.contains("DISCONNECTED");
 
+                        boolean disconnected = state.contains("DISCONNECTED");
                         if (disconnected) {
                             startActivity(new Intent(getApplication(), IdentityActivity.class));
                         }
 
                         adbdStateReader.close();
+                        process.waitFor();
                     }
 
                     Thread.sleep(INTERVAL_MS);
