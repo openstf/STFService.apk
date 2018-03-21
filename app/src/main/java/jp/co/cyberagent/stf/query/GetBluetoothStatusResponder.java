@@ -22,11 +22,11 @@ public class GetBluetoothStatusResponder extends AbstractResponder {
 
         Wire.GetBluetoothStatusResponse.Builder builder = Wire.GetBluetoothStatusResponse.newBuilder();
 
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             BluetoothManager bm = (BluetoothManager)context.getSystemService(Context.BLUETOOTH_SERVICE);
             if (bm != null) {
                 BluetoothAdapter ba = bm.getAdapter();
-                if(ba != null) {
+                if (ba != null) {
                     builder.setStatus(ba.isEnabled());
                     builder.setSuccess(true);
                 }

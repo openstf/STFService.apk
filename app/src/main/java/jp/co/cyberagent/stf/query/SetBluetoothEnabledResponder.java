@@ -21,12 +21,12 @@ public class SetBluetoothEnabledResponder extends AbstractResponder {
                 Wire.SetBluetoothEnabledRequest.parseFrom(envelope.getMessage());
 
         boolean successful;
-        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             BluetoothManager bm = (BluetoothManager)context.getSystemService(Context.BLUETOOTH_SERVICE);
             if (bm != null) {
                 BluetoothAdapter ba = bm.getAdapter();
-                if(ba != null) {
-                    if(request.getEnabled()) {
+                if (ba != null) {
+                    if (request.getEnabled()) {
                         ba.enable();
                     }
                     else {
