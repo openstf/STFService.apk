@@ -17,6 +17,9 @@
         android:icon="@drawable/ic_launcher"
         android:persistent="true">
 
+        <meta-data android:name="android.max_aspect"
+            android:value="3.0"/>
+
         <service android:name=".Service"
             android:exported="true">
             <intent-filter>
