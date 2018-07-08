@@ -1,7 +1,6 @@
 package jp.co.cyberagent.stf.query;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -37,9 +36,8 @@ public class DoIdentifyResponder extends AbstractResponder {
     }
 
     private void showIdentity(String serial) {
-        Intent intent = new Intent(context, IdentityActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(IdentityActivity.EXTRA_SERIAL, serial);
-        context.startActivity(intent);
+        context.startActivity(new IdentityActivity.IntentBuilder()
+            .serial(serial)
+            .build(context));
     }
 }

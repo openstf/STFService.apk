@@ -426,7 +426,7 @@ public class Service extends android.app.Service {
 
                         boolean disconnected = state.contains("DISCONNECTED");
                         if (disconnected) {
-                            startActivity(new Intent(getApplication(), IdentityActivity.class));
+                            getApplication().startActivity(new IdentityActivity.IntentBuilder().build(getApplication()));
                         }
 
                         adbdStateReader.close();
