@@ -415,7 +415,7 @@ public class Service extends android.app.Service {
                         String currentAdbState = "";
                         BufferedReader adbdStateReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                         for (String line = adbdStateReader.readLine(); line != null; line = adbdStateReader.readLine()) {
-                            if (line.contains("Current Functions:")) {
+                            if (line.contains("Current Functions:") || line.contains("mCurrentFunctions:")) {
                                 currentAdbState = line.split(":").length == 2 ? line.split(":")[1] : "";
                             } else if (line.contains("Kernel state:")) {
                                 currentUsbState = line.split(":").length == 2 ? line.split(":")[1] : "";
