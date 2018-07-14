@@ -2,10 +2,13 @@ package jp.co.cyberagent.stf;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -94,6 +97,7 @@ public class IdentityActivity extends Activity {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 
         unlock();
 
@@ -130,5 +134,26 @@ public class IdentityActivity extends Activity {
     private void unlock() {
         KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         keyguardManager.newKeyguardLock("InputService/Unlock").disableKeyguard();
+    }
+
+    public static class IntentBuilder {
+        @Nullable private String serial;
+
+        public IntentBuilder() {
+        }
+
+        public IntentBuilder serial(@NonNull String serial) {
+            this.serial = serial;
+            return this;
+        }
+
+        public Intent build(Context context) {
+            Intent intent = new Intent(context.getApplicationContext(), IdentityActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (serial != null) {
+                intent.putExtra(IdentityActivity.EXTRA_SERIAL, serial);
+            }
+            return intent;
+        }
     }
 }
