@@ -179,7 +179,7 @@ public class Agent {
             try {
                 clientSocket.close();
             }
-            catch (IOException e){
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }

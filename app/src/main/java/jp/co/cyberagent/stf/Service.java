@@ -49,12 +49,14 @@ import jp.co.cyberagent.stf.query.GetRingerModeResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
 import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
+import jp.co.cyberagent.stf.query.GetBluetoothStatusResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
 import jp.co.cyberagent.stf.query.SetKeyguardStateResponder;
 import jp.co.cyberagent.stf.query.SetMasterMuteResponder;
 import jp.co.cyberagent.stf.query.SetRingerModeResponder;
 import jp.co.cyberagent.stf.query.SetWakeLockResponder;
 import jp.co.cyberagent.stf.query.SetWifiEnabledResponder;
+import jp.co.cyberagent.stf.query.SetBluetoothEnabledResponder;
 
 public class Service extends android.app.Service {
     public static final String ACTION_START = "jp.co.cyberagent.stf.ACTION_START";
@@ -312,6 +314,9 @@ public class Service extends android.app.Service {
                     router.register(Wire.MessageType.GET_WIFI_STATUS,
                             new GetWifiStatusResponder(getBaseContext()));
 
+                    router.register(Wire.MessageType.GET_BLUETOOTH_STATUS,
+                        new GetBluetoothStatusResponder(getBaseContext()));
+
                     router.register(Wire.MessageType.SET_CLIPBOARD,
                             new SetClipboardResponder(getBaseContext()));
 
@@ -326,6 +331,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.SET_WIFI_ENABLED,
                             new SetWifiEnabledResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.SET_BLUETOOTH_ENABLED,
+                        new SetBluetoothEnabledResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.SET_MASTER_MUTE,
                             new SetMasterMuteResponder(getBaseContext()));
