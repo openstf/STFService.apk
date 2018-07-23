@@ -25,7 +25,7 @@
     - Get device network type
     - Get/set device ringer mode
     - Check whether an SD card is installed
-    - Enable/disable WIFI and query its status
+    - Enable/disable WIFI, Bluetooth and query its status
     - Unlock/relock [KeyGuard](http://developer.android.com/reference/android/app/KeyguardManager.html) (essentially unlocking a device)
     - Acquire/release [WakeLock](http://developer.android.com/reference/android/os/PowerManager.WakeLock.html) (i.e. prevent a device from or allow it to sleep)
     - Invoke key events (with meta key support)
