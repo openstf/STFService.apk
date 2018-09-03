@@ -407,7 +407,7 @@ public class Service extends android.app.Service {
                      * adb -d shell pm grant jp.co.cyberagent.stf android.permission.DUMP
                      */
                     int dumpPermission = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.DUMP);
-                    if (dumpPermission == PackageManager.PERMISSION_GRANTED) {
+                    if (dumpPermission == PackageManager.PERMISSION_GRANTED && !isEmulator()) {
                         String[] cmd = {
                             "/system/bin/dumpsys",
                             "usb"
@@ -457,6 +457,17 @@ public class Service extends android.app.Service {
                 Log.e(TAG, "IO error during exec of adb monitor", e);
             } catch (InterruptedException e) {
                 Log.i(TAG, "Adb monitor thread interrupted");
+            }
+        }
+
+        private boolean isEmulator() {
+            String hardware = System.getProperty("ro.hardware");
+            switch (hardware) {
+                case "goldfish":
+                case "ranchu":
+                    return true;
+                default:
+                    return false;
             }
         }
     }
