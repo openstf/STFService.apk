@@ -55,7 +55,7 @@ public class GetRootStatusResponder extends AbstractResponder {
 
     private static boolean checkRootMethod3() {
         Process process = null;
-        BufferedReader in;
+        BufferedReader in = null;
         try {
             process = Runtime.getRuntime().exec(new String[] { "/system/xbin/which", "su" });
             in = new BufferedReader(new InputStreamReader(process.getInputStream()));
