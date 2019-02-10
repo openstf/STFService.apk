@@ -55,14 +55,22 @@ public class GetRootStatusResponder extends AbstractResponder {
 
     private static boolean checkRootMethod3() {
         Process process = null;
+        BufferedReader in;
         try {
             process = Runtime.getRuntime().exec(new String[] { "/system/xbin/which", "su" });
-            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(process.getInputStream()));
             if (in.readLine() != null) return true;
             return false;
         } catch (Throwable t) {
             return false;
         } finally {
+            if (in != null) {
+                try  {
+                    in.close();
+                } catch (Exception ignore) {
+                    // Nothing to do
+                }
+            }
             if (process != null) process.destroy();
         }
     }
