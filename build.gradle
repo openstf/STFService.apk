@@ -4,19 +4,21 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.4.2'
     }
 }
 
 allprojects {
     repositories {
         mavenCentral()
+        google()
     }
 
     tasks.withType(JavaCompile) {
-        sourceCompatibility = "1.6"
-        targetCompatibility = "1.6"
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
     }
 }

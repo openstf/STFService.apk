@@ -1,7 +1,11 @@
 package jp.co.cyberagent.stf;
 
+import android.graphics.Point;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
@@ -18,20 +22,22 @@ import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.util.InternalApi;
 import jp.co.cyberagent.stf.util.ProcUtil;
 
-public class Agent {
+public class Agent extends Thread {
     public static final String PROCESS_NAME = "stf.agent";
     public static final String SOCKET = "stfagent";
 
     private InputManagerWrapper inputManager;
     private PowerManagerWrapper powerManager;
     private WindowManagerWrapper windowManager;
+    private Handler handler;
     private LocalServerSocket serverSocket;
     private int deviceId = -1; // KeyCharacterMap.VIRTUAL_KEYBOARD
     private KeyCharacterMap keyCharacterMap;
 
     public static void main(String[] args) {
         ProcUtil.setArgV0(PROCESS_NAME);
-
+        Looper.prepare();
+        Handler handler = new Handler();
         for (String arg : args) {
             if (arg.equals("--version")) {
                 System.out.println(BuildConfig.VERSION_NAME);
@@ -46,8 +52,19 @@ public class Agent {
                 System.exit(1);
             }
         }
-
-        new Agent().run();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            /*
+             * Android Q doesn't let minitouch manage inputs.
+             * As a workaround, minitouch will forward events to this
+             * agent which will be able to use the Android InputManager
+             */
+            System.out.println("Starting minitouch agent");
+            Point size = MinitouchAgent.getScreenSize();
+            MinitouchAgent m = new MinitouchAgent(size.x, size.y, handler);
+            m.start();
+        }
+        new Agent(handler).start();
+        Looper.loop();
     }
 
     private static void printServiceDebugInfo() {
@@ -96,7 +113,12 @@ public class Agent {
         }
     }
 
-    private void run() {
+    public Agent(Handler handler) {
+        this.handler = handler;
+    }
+
+    @Override
+    public void run() {
         powerManager = new PowerManagerWrapper();
         inputManager = new InputManagerWrapper();
         windowManager = new WindowManagerWrapper();
@@ -311,7 +333,7 @@ public class Agent {
 
         private void keyDown(int keyCode, int metaState) {
             long time = SystemClock.uptimeMillis();
-            inputManager.injectKeyEvent(new KeyEvent(
+            handler.post( () -> inputManager.injectKeyEvent(new KeyEvent(
                     time,
                     time,
                     KeyEvent.ACTION_DOWN,
@@ -322,12 +344,12 @@ public class Agent {
                     0,
                     KeyEvent.FLAG_FROM_SYSTEM,
                     InputDevice.SOURCE_KEYBOARD
-            ));
+            )));
         }
 
         private void keyUp(int keyCode, int metaState) {
             long time = SystemClock.uptimeMillis();
-            inputManager.injectKeyEvent(new KeyEvent(
+            handler.post( ()-> inputManager.injectKeyEvent(new KeyEvent(
                     time,
                     time,
                     KeyEvent.ACTION_UP,
@@ -338,7 +360,7 @@ public class Agent {
                     0,
                     KeyEvent.FLAG_FROM_SYSTEM,
                     InputDevice.SOURCE_KEYBOARD
-            ));
+            )));
         }
 
         private void keyPress(int keyCode, int metaState) {
@@ -351,7 +373,7 @@ public class Agent {
 
             if (events != null) {
                 for (KeyEvent event : events) {
-                    inputManager.injectKeyEvent(event);
+                    handler.post( () -> inputManager.injectKeyEvent(event));
                 }
             }
         }
