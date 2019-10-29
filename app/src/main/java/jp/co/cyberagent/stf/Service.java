@@ -112,7 +112,7 @@ public class Service extends android.app.Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             channelId = createNotificationChannel("stf_channel", "STF Channel");
         } else {
-           channelId="";
+            channelId = "";
         }
 
         Intent notificationIntent = new Intent(this, IdentityActivity.class);
