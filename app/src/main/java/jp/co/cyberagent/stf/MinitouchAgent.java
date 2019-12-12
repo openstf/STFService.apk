@@ -52,6 +52,7 @@ public class MinitouchAgent extends Thread {
     private final int height;
     private LocalServerSocket serverSocket;
     private long lastMouseDown;
+    private int lastX = 0, lastY = 0;
     private final MotionEvent.PointerProperties[] pointerProperties = {new MotionEvent.PointerProperties()};
     private final MotionEvent.PointerCoords[] pointerCoords = {new MotionEvent.PointerCoords()};
     private final InputManagerWrapper inputManager;
@@ -194,28 +195,27 @@ public class MinitouchAgent extends Thread {
         Scanner scanner = new Scanner(cmd);
         scanner.useDelimiter(" ");
         String type = scanner.next();
-        int x = 0, y = 0;
         try {
             switch (type) {
                 case "c":
                     break;
                 case "u":
                     scanner.nextInt(); //contact is currently not supported, walk through
-                    injectEvent(getMotionEvent(MotionEvent.ACTION_UP, MotionEvent.BUTTON_PRIMARY, x, y));
+                    injectEvent(getMotionEvent(MotionEvent.ACTION_UP, MotionEvent.BUTTON_PRIMARY, lastX, lastY));
                     break;
                 case "d":
                     scanner.nextInt(); //contact is currently not supported, walk through
-                    x = scanner.nextInt();
-                    y = scanner.nextInt();
+                    lastX = scanner.nextInt();
+                    lastY = scanner.nextInt();
                     //scanner.nextInt(); //pressure is currently not supported
-                    injectEvent(getMotionEvent(MotionEvent.ACTION_DOWN, MotionEvent.BUTTON_PRIMARY, x, y));
+                    injectEvent(getMotionEvent(MotionEvent.ACTION_DOWN, MotionEvent.BUTTON_PRIMARY, lastX, lastY));
                     break;
                 case "m":
                     scanner.nextInt(); //contact is currently not supported, walk through
-                    x = scanner.nextInt();
-                    y = scanner.nextInt();
+                    lastX = scanner.nextInt();
+                    lastY = scanner.nextInt();
                     //scanner.nextInt(); //pressure is currently not supported
-                    injectEvent(getMotionEvent(MotionEvent.ACTION_MOVE, MotionEvent.BUTTON_PRIMARY, x, y));
+                    injectEvent(getMotionEvent(MotionEvent.ACTION_MOVE, MotionEvent.BUTTON_PRIMARY, lastX, lastY));
                     break;
                 case "w":
                     int delayMs = scanner.nextInt();
