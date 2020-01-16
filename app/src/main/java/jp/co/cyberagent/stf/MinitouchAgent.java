@@ -40,6 +40,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import jp.co.cyberagent.stf.compat.InputManagerWrapper;
+import jp.co.cyberagent.stf.compat.WindowManagerWrapper;
 import jp.co.cyberagent.stf.util.InternalApi;
 
 @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -56,6 +57,7 @@ public class MinitouchAgent extends Thread {
     private final MotionEvent.PointerProperties[] pointerProperties = {new MotionEvent.PointerProperties()};
     private final MotionEvent.PointerCoords[] pointerCoords = {new MotionEvent.PointerCoords()};
     private final InputManagerWrapper inputManager;
+    private final WindowManagerWrapper windowManager;
     private final Handler handler;
 
     /**
@@ -110,8 +112,10 @@ public class MinitouchAgent extends Thread {
         }
 
         MotionEvent.PointerCoords coords = pointerCoords[0];
-        coords.x = x;
-        coords.y = y;
+        int rotation = windowManager.getRotation();
+        double rad = Math.toRadians(rotation * 90);
+        coords.x = (float)(x * Math.cos(-rad) - y * Math.sin(-rad));
+        coords.y = (rotation * width)+(float)(x * Math.sin(-rad) + y * Math.cos(-rad));
         MotionEvent event = MotionEvent.obtain(lastMouseDown, now, action, 1, pointerProperties,
             pointerCoords, 0, buttonState, 1f, 1f, 0, 0,
             InputDevice.SOURCE_TOUCHSCREEN, 0);
@@ -123,6 +127,7 @@ public class MinitouchAgent extends Thread {
         this.height = height;
         this.handler = handler;
         inputManager = new InputManagerWrapper();
+        windowManager = new WindowManagerWrapper();
     }
 
     @Override
