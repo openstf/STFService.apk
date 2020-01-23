@@ -2,14 +2,19 @@ package jp.co.cyberagent.stf;
 
 import android.Manifest;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.LocalServerSocket;
 import android.net.LocalSocket;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Process;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -76,6 +81,17 @@ public class Service extends android.app.Service {
     // We can only access CLIPBOARD_SERVICE from the main thread
     private static Object clipboardManager;
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private String createNotificationChannel(String channelId, String channelName) {
+        NotificationChannel chan = new NotificationChannel(channelId,
+            channelName, NotificationManager.IMPORTANCE_NONE);
+        chan.setLightColor(Color.BLUE);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationManager service = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        service.createNotificationChannel(chan);
+        return channelId;
+    }
+
     public static Object getClipboardManager() {
         return clipboardManager;
     }
@@ -92,8 +108,15 @@ public class Service extends android.app.Service {
 
         clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE);
 
+        String channelId;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            channelId = createNotificationChannel("stf_channel", "STF Channel");
+        } else {
+            channelId = "";
+        }
+
         Intent notificationIntent = new Intent(this, IdentityActivity.class);
-        Notification notification = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(android.R.drawable.ic_menu_info_details)
                 .setTicker(getString(R.string.service_ticker))
                 .setContentTitle(getString(R.string.service_title))

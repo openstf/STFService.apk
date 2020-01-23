@@ -2,6 +2,8 @@ package jp.co.cyberagent.stf.query;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.protobuf.GeneratedMessageLite;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -12,6 +14,8 @@ import jp.co.cyberagent.stf.proto.Wire;
 import jp.co.cyberagent.stf.util.NetworkUtil;
 
 public class GetPropertiesResponder extends AbstractResponder {
+    private static final String TAG = GetPropertiesResponder.class.getSimpleName();
+
     public GetPropertiesResponder(Context context) {
         super(context);
     }
@@ -19,73 +23,52 @@ public class GetPropertiesResponder extends AbstractResponder {
     @Override
     public GeneratedMessageLite respond(Wire.Envelope envelope) throws InvalidProtocolBufferException {
         Wire.GetPropertiesRequest request =
-                Wire.GetPropertiesRequest.parseFrom(envelope.getMessage());
+            Wire.GetPropertiesRequest.parseFrom(envelope.getMessage());
 
         ArrayList<Wire.Property> properties = new ArrayList<Wire.Property>();
-
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
         for (String name : request.getPropertiesList()) {
-            if (name.equals("imei")) {
-                String deviceId = tm.getDeviceId();
-                if (deviceId != null && !deviceId.isEmpty()) {
-                    properties.add(Wire.Property.newBuilder()
-                            .setName(name)
-                            .setValue(deviceId)
-                            .build());
-                }
-            }
-            else if (name.equals("imsi")) {
-                String subscriberId = tm.getSubscriberId();
-                if (subscriberId != null && !subscriberId.isEmpty()) {
-                    properties.add(Wire.Property.newBuilder()
-                            .setName(name)
-                            .setValue(subscriberId)
-                            .build());
-                }
-            }
-            else if (name.equals("phoneNumber")) {
-                String phoneNumber = tm.getLine1Number();
-                if (phoneNumber != null && !phoneNumber.isEmpty()) {
-                    properties.add(Wire.Property.newBuilder()
-                            .setName(name)
-                            .setValue(phoneNumber)
-                            .build());
-                }
-            }
-            else if (name.equals("iccid")) {
-                String iccid = tm.getSimSerialNumber();
-                if (iccid != null && !iccid.isEmpty()) {
-                    properties.add(Wire.Property.newBuilder()
-                            .setName(name)
-                            .setValue(iccid)
-                            .build());
-                }
-            }
-            else if (name.equals("operator")) {
-                String operator;
-                switch (tm.getPhoneType()) {
-                    case TelephonyManager.PHONE_TYPE_CDMA:
-                        operator = tm.getSimOperatorName();
+            String value=null;
+            try {
+                switch(name) {
+                    case "imei":
+                        value = tm.getDeviceId();
+                        break;
+                    case "imsi":
+                        value = tm.getSubscriberId();
+                        break;
+                    case "phonenumber":
+                        value = tm.getLine1Number();
+                        break;
+                    case "iccid":
+                        value = tm.getSimSerialNumber();
+                        break;
+                    case "operator":
+                        if(tm.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
+                            value = tm.getSimOperatorName();
+                        }else {
+                            value = tm.getNetworkOperatorName();
+                            if (TextUtils.isEmpty(value)) {
+                                value = tm.getSimOperatorName();
+                            }
+                        }
+                        break;
+                    case "network":
+                        value = NetworkUtil.getNetworkType(tm.getNetworkType());
                         break;
                     default:
-                        operator = tm.getNetworkOperatorName();
-                        if (operator == null || operator.isEmpty()) {
-                            operator = tm.getSimOperatorName();
-                        }
+                        Log.d(TAG, "unknown property request");
+
                 }
-                if (operator != null && !operator.isEmpty()) {
+                if (!TextUtils.isEmpty(value)) {
                     properties.add(Wire.Property.newBuilder()
-                            .setName(name)
-                            .setValue(operator)
-                            .build());
-                }
-            }
-            else if (name.equals("network")) {
-                properties.add(Wire.Property.newBuilder()
                         .setName(name)
-                        .setValue(NetworkUtil.getNetworkType(tm.getNetworkType()))
+                        .setValue(value)
                         .build());
+                }
+            } catch(SecurityException e ) {
+                Log.d(TAG,"Security exception trying to retrieve "+name);
             }
         }
 

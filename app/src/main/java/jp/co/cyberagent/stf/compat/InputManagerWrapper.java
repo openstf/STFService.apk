@@ -24,14 +24,20 @@ public class InputManagerWrapper {
         return eventInjector.injectKeyEvent(event);
     }
 
+    public boolean injectInputEvent(InputEvent event) {
+        return eventInjector.injectInputEvent(event);
+    }
+
     private interface EventInjector {
-        public boolean injectKeyEvent(KeyEvent event);
+        boolean injectKeyEvent(KeyEvent event);
+        boolean injectInputEvent(InputEvent event);
     }
 
     /**
      * EventInjector for SDK >=16
      */
     private class InputManagerEventInjector implements EventInjector {
+        public static final int INJECT_INPUT_EVENT_MODE_ASYNC = 0;
         private Object inputManager;
         private Method injector;
 
@@ -50,8 +56,13 @@ public class InputManagerWrapper {
         }
 
         public boolean injectKeyEvent(KeyEvent event) {
+            return injectInputEvent(event);
+        }
+
+        @Override
+        public boolean injectInputEvent(InputEvent event) {
             try {
-                injector.invoke(inputManager, event, 0);
+                injector.invoke(inputManager, event, INJECT_INPUT_EVENT_MODE_ASYNC);
                 return true;
             }
             catch (IllegalAccessException e) {
@@ -100,6 +111,11 @@ public class InputManagerWrapper {
                 e.printStackTrace();
                 return false;
             }
+        }
+
+        @Override
+        public boolean injectInputEvent(InputEvent event) {
+            return false;
         }
     }
 }

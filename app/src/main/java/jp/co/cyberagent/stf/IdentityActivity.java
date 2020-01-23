@@ -28,6 +28,18 @@ public class IdentityActivity extends Activity {
 
     public static final String EXTRA_SERIAL = "serial";
 
+    private interface SecuredGetter<T> {
+        T get();
+    }
+
+    private String getSecuredId( SecuredGetter<String> supplier ) {
+        try {
+            return supplier.get();
+        } catch(SecurityException e) {
+            return "secured";
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +75,12 @@ public class IdentityActivity extends Activity {
         layout.addView(createLabel("OPERATOR"));
         layout.addView(createData(tm.getSimOperatorName()));
         layout.addView(createLabel("PHONE"));
-        layout.addView(createData(tm.getLine1Number()));
+        layout.addView(createData(getSecuredId(tm::getLine1Number)));
         layout.addView(createLabel("IMEI"));
-        layout.addView(createData(tm.getDeviceId()));
+        layout.addView(createData(getSecuredId(tm::getLine1Number)));
         layout.addView(createLabel("ICCID"));
-        layout.addView(createData(tm.getSimSerialNumber()));
+        layout.addView(createData(getSecuredId(tm::getLine1Number)));
+
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         ensureVisibility();
