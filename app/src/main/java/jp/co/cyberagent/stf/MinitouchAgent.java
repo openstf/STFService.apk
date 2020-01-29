@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -52,13 +54,21 @@ public class MinitouchAgent extends Thread {
     private final int width;
     private final int height;
     private LocalServerSocket serverSocket;
-    private long lastMouseDown;
-    private int lastX = 0, lastY = 0;
-    private final MotionEvent.PointerProperties[] pointerProperties = {new MotionEvent.PointerProperties()};
-    private final MotionEvent.PointerCoords[] pointerCoords = {new MotionEvent.PointerCoords()};
+
+    private MotionEvent.PointerProperties[] pointerProperties = new MotionEvent.PointerProperties[2];
+    private MotionEvent.PointerCoords[] pointerCoords = new MotionEvent.PointerCoords[2];
+    private PointerEvent[] events = new PointerEvent[2];
+
     private final InputManagerWrapper inputManager;
     private final WindowManagerWrapper windowManager;
     private final Handler handler;
+
+    private class PointerEvent {
+        long lastMouseDown;
+        int lastX;
+        int lastY;
+        int action;
+    }
 
     /**
      * Get the width and height of the display by getting the DisplayInfo through reflection
@@ -66,15 +76,17 @@ public class MinitouchAgent extends Thread {
      *
      * @return a Point whose x is the width and y the height of the screen
      */
-    public static Point getScreenSize() {
+    static Point getScreenSize() {
         Object displayManager = InternalApi.getSingleton("android.hardware.display.DisplayManagerGlobal");
         try {
             Object displayInfo = displayManager.getClass().getMethod("getDisplayInfo", int.class)
                 .invoke(displayManager, Display.DEFAULT_DISPLAY);
-            Class<?> cls = displayInfo.getClass();
-            int width = cls.getDeclaredField("logicalWidth").getInt(displayInfo);
-            int height = cls.getDeclaredField("logicalHeight").getInt(displayInfo);
-            return new Point(width, height);
+            if (displayInfo != null) {
+                Class<?> cls = displayInfo.getClass();
+                int width = cls.getDeclaredField("logicalWidth").getInt(displayInfo);
+                int height = cls.getDeclaredField("logicalHeight").getInt(displayInfo);
+                return new Point(width, height);
+            }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -96,30 +108,161 @@ public class MinitouchAgent extends Thread {
         Looper.prepare();
         Handler handler = new Handler();
         Point size = getScreenSize();
-        MinitouchAgent m = new MinitouchAgent(size.x, size.y, handler);
-        m.run();
-        Looper.loop();
+        if(size != null) {
+            MinitouchAgent m = new MinitouchAgent(size.x, size.y, handler);
+            m.run();
+            Looper.loop();
+        } else {
+            System.err.println("Couldn't get screen resolution");
+            System.exit(1);
+        }
     }
 
     private void injectEvent(InputEvent event) {
         handler.post(() -> inputManager.injectInputEvent(event));
     }
 
-    private MotionEvent getMotionEvent(int action, int buttonState, int x, int y) {
-        long now = SystemClock.uptimeMillis();
-        if (action == MotionEvent.ACTION_DOWN) {
-            lastMouseDown = now;
-        }
+    private MotionEvent getMotionEvent(PointerEvent p) {
+        return getMotionEvent(p,0);
+    }
 
-        MotionEvent.PointerCoords coords = pointerCoords[0];
+    private MotionEvent getMotionEvent(PointerEvent p, int idx) {
+        long now = SystemClock.uptimeMillis();
+        if (p.action == MotionEvent.ACTION_DOWN) {
+            p.lastMouseDown = now;
+        }
+        MotionEvent.PointerCoords coords = pointerCoords[idx];
         int rotation = windowManager.getRotation();
-        double rad = Math.toRadians(rotation * 90);
-        coords.x = (float)(x * Math.cos(-rad) - y * Math.sin(-rad));
-        coords.y = (rotation * width)+(float)(x * Math.sin(-rad) + y * Math.cos(-rad));
-        MotionEvent event = MotionEvent.obtain(lastMouseDown, now, action, 1, pointerProperties,
-            pointerCoords, 0, buttonState, 1f, 1f, 0, 0,
+        double rad = Math.toRadians(rotation * 90.0);
+        coords.x = (float)(p.lastX * Math.cos(-rad) - p.lastY * Math.sin(-rad));
+        coords.y = (rotation * width)+(float)(p.lastX * Math.sin(-rad) + p.lastY * Math.cos(-rad));
+        return MotionEvent.obtain(p.lastMouseDown, now, p.action, idx+1, pointerProperties,
+            pointerCoords, 0, 0, 1f, 1f, 0, 0,
             InputDevice.SOURCE_TOUCHSCREEN, 0);
-        return event;
+    }
+
+    private List<MotionEvent> getMotionEvent(PointerEvent p1, PointerEvent p2) {
+        List<MotionEvent> combinedEvents = new ArrayList<>(2);
+        long now = SystemClock.uptimeMillis();
+        if (p1.action != MotionEvent.ACTION_MOVE) {
+            combinedEvents.add(getMotionEvent(p1));
+            combinedEvents.add(getMotionEvent(p2,1));
+        } else {
+            MotionEvent.PointerCoords coords1 = pointerCoords[0];
+            MotionEvent.PointerCoords coords2 = pointerCoords[1];
+            int rotation = windowManager.getRotation();
+            double rad = Math.toRadians(rotation * 90.0);
+
+            coords1.x = (float) (p1.lastX * Math.cos(-rad) - p1.lastY * Math.sin(-rad));
+            coords1.y = (rotation * width) + (float) (p1.lastX * Math.sin(-rad) + p1.lastY * Math.cos(-rad));
+
+            coords2.x = (float) (p2.lastX * Math.cos(-rad) - p2.lastY * Math.sin(-rad));
+            coords2.y = (rotation * width) + (float) (p2.lastX * Math.sin(-rad) + p2.lastY * Math.cos(-rad));
+
+            MotionEvent event = MotionEvent.obtain(p1.lastMouseDown, now, p1.action, 2, pointerProperties,
+                pointerCoords, 0, 0, 1f, 1f, 0, 0,
+                InputDevice.SOURCE_TOUCHSCREEN, 0);
+            combinedEvents.add(event);
+        }
+        return combinedEvents;
+    }
+
+    private void sendBanner(LocalSocket clientSocket) {
+        try{
+            OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
+            out.write("v 1\n");
+            String resolution = String.format(Locale.getDefault(), "^ %d %d %d %d%n",
+                DEFAULT_MAX_CONTACTS, width, height, DEFAULT_MAX_PRESSURE);
+            out.write(resolution);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Manages the client connection. The client is supposed to be minitouch.
+     */
+    private void manageClientConnection() {
+        while (true) {
+            Log.i(TAG, String.format("Listening on %s", SOCKET));
+            LocalSocket clientSocket;
+            try {
+                clientSocket = serverSocket.accept();
+                Log.d(TAG, "client connected");
+                sendBanner(clientSocket);
+                processCommandLoop(clientSocket);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * processCommandLoop parses touch related commands sent by stf
+     * and inject them in Android InputManager.
+     * Commmands can be of type down, up, move, commit
+     * Note that it currently doesn't support multitouch
+     *
+     * @param clientSocket the socket to read on
+     */
+    private void processCommandLoop(LocalSocket clientSocket) throws IOException{
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
+            String cmd;
+            int count = 0;
+            while ((cmd = in.readLine()) != null) {
+                try (Scanner scanner = new Scanner(cmd)) {
+                    scanner.useDelimiter(" ");
+                    String type = scanner.next();
+                    int contact;
+                    switch (type) {
+                        case "c":
+                            if (count == 1) {
+                                injectEvent(getMotionEvent(events[0]));
+                            } else if (count == 2) {
+                                for (MotionEvent event : getMotionEvent(events[0], events[1])) {
+                                    injectEvent(event);
+                                }
+                            } else {
+                                System.out.println("count not manage events #" + count);
+                            }
+                            count = 0;
+                            break;
+                        case "u":
+                            count++;
+                            contact = scanner.nextInt();
+                            events[contact].action = (contact == 0) ? MotionEvent.ACTION_UP : MotionEvent.ACTION_POINTER_2_UP;
+                            break;
+                        case "d":
+                            count++;
+                            contact = scanner.nextInt();
+                            events[contact].lastX = scanner.nextInt();
+                            events[contact].lastY = scanner.nextInt();
+                            //scanner.nextInt(); //pressure is currently not supported
+                            events[contact].action = (contact == 0) ? MotionEvent.ACTION_DOWN : MotionEvent.ACTION_POINTER_2_DOWN;
+                            break;
+                        case "m":
+                            count++;
+                            contact = scanner.nextInt();
+                            events[contact].lastX = scanner.nextInt();
+                            events[contact].lastY = scanner.nextInt();
+                            //scanner.nextInt(); //pressure is currently not supported
+                            events[contact].action = MotionEvent.ACTION_MOVE;
+                            break;
+                        case "w":
+                            int delayMs = scanner.nextInt();
+                            Thread.sleep(delayMs);
+                            break;
+                        default:
+                            System.out.println("could not parse: " + cmd);
+                    }
+                } catch (NoSuchElementException e) {
+                    System.out.println("could not parse: " + cmd);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public MinitouchAgent(int width, int height, Handler handler) {
@@ -128,6 +271,28 @@ public class MinitouchAgent extends Thread {
         this.handler = handler;
         inputManager = new InputManagerWrapper();
         windowManager = new WindowManagerWrapper();
+        MotionEvent.PointerProperties pointerProps0 = new MotionEvent.PointerProperties();
+        pointerProps0.id = 0;
+        pointerProps0.toolType = MotionEvent.TOOL_TYPE_FINGER;
+        MotionEvent.PointerProperties pointerProps1 = new MotionEvent.PointerProperties();
+        pointerProps1.id = 1;
+        pointerProps1.toolType = MotionEvent.TOOL_TYPE_FINGER;
+        pointerProperties[0] = pointerProps0;
+        pointerProperties[1] = pointerProps1;
+
+        MotionEvent.PointerCoords pointerCoords0 = new MotionEvent.PointerCoords();
+        MotionEvent.PointerCoords pointerCoords1 = new MotionEvent.PointerCoords();
+        pointerCoords0.orientation = 0;
+        pointerCoords0.pressure = 1; // pressure and size have to be set
+        pointerCoords0.size = 1;
+        pointerCoords1.orientation = 0;
+        pointerCoords1.pressure = 1;
+        pointerCoords1.size = 1;
+        pointerCoords[0] = pointerCoords0;
+        pointerCoords[1] = pointerCoords1;
+
+        events[0] = new PointerEvent();
+        events[1] = new PointerEvent();
     }
 
     @Override
@@ -143,95 +308,6 @@ public class MinitouchAgent extends Thread {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Manages the client connection. The client is supposed to be minitouch.
-     */
-    private void manageClientConnection() {
-        while (true) {
-            try {
-                Log.i(TAG, String.format("Listening on %s", SOCKET));
-                LocalSocket clientSocket = serverSocket.accept();
-                Log.d(TAG, "client connected");
-                try {
-
-                    MotionEvent.PointerProperties props = pointerProperties[0];
-                    props.id = 0;
-                    props.toolType = MotionEvent.TOOL_TYPE_FINGER;
-
-                    MotionEvent.PointerCoords coords = pointerCoords[0];
-                    coords.orientation = 0;
-                    coords.pressure = 1;
-                    coords.size = 1;
-
-                    BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                    OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
-                    out.write("v 1\n");
-                    String resolution = String.format(Locale.getDefault(), "^ %d %d %d %d\n",
-                        DEFAULT_MAX_CONTACTS, width, height, DEFAULT_MAX_PRESSURE);
-                    out.write(resolution);
-                    out.flush();
-                    String cmd;
-                    while ((cmd = in.readLine()) != null) {
-                        processCommand(cmd);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
-        }
-    }
-
-    /**
-     * processCommand parses touch related commands sent by stf
-     * and inject them in Android InputManager.
-     * Commmands can be of type down, up, move, commit
-     * Note that it currently doesn't support multitouch
-     *
-     * @param cmd a String describing a touch event
-     */
-    private void processCommand(String cmd) {
-        Scanner scanner = new Scanner(cmd);
-        scanner.useDelimiter(" ");
-        String type = scanner.next();
-        try {
-            switch (type) {
-                case "c":
-                    break;
-                case "u":
-                    scanner.nextInt(); //contact is currently not supported, walk through
-                    injectEvent(getMotionEvent(MotionEvent.ACTION_UP, MotionEvent.BUTTON_PRIMARY, lastX, lastY));
-                    break;
-                case "d":
-                    scanner.nextInt(); //contact is currently not supported, walk through
-                    lastX = scanner.nextInt();
-                    lastY = scanner.nextInt();
-                    //scanner.nextInt(); //pressure is currently not supported
-                    injectEvent(getMotionEvent(MotionEvent.ACTION_DOWN, MotionEvent.BUTTON_PRIMARY, lastX, lastY));
-                    break;
-                case "m":
-                    scanner.nextInt(); //contact is currently not supported, walk through
-                    lastX = scanner.nextInt();
-                    lastY = scanner.nextInt();
-                    //scanner.nextInt(); //pressure is currently not supported
-                    injectEvent(getMotionEvent(MotionEvent.ACTION_MOVE, MotionEvent.BUTTON_PRIMARY, lastX, lastY));
-                    break;
-                case "w":
-                    int delayMs = scanner.nextInt();
-                    Thread.sleep(delayMs);
-                    break;
-                default:
-                    System.out.println("could not parse: " + cmd);
-            }
-        } catch (NoSuchElementException e) {
-            System.out.println("could not parse: " + cmd);
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
