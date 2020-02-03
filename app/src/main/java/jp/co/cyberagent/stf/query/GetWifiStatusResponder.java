@@ -18,7 +18,7 @@ public class GetWifiStatusResponder extends AbstractResponder {
         Wire.GetWifiStatusRequest request =
                 Wire.GetWifiStatusRequest.parseFrom(envelope.getMessage());
 
-        WifiManager wm = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wm = (WifiManager)context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         return Wire.Envelope.newBuilder()
                 .setId(envelope.getId())

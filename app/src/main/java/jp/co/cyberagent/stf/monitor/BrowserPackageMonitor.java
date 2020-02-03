@@ -19,7 +19,7 @@ import jp.co.cyberagent.stf.io.MessageWritable;
 import jp.co.cyberagent.stf.util.BrowserUtil;
 
 public class BrowserPackageMonitor extends AbstractMonitor {
-    private static final String TAG = "STFBrowserPackageMonitor";
+    private static final String TAG = "STFBrowserPkgMonitor";
 
     private Set<Browser> browsers = new HashSet<Browser>();
 

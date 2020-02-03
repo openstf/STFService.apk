@@ -10,7 +10,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import jp.co.cyberagent.stf.proto.Wire;
 
 public class SetKeyguardStateResponder extends AbstractResponder {
-    private static final String TAG = "STFKeyguardStateResponder";
+    private static final String TAG = "STFKeyguardStateResp";
 
     private KeyguardManager.KeyguardLock lock;
 

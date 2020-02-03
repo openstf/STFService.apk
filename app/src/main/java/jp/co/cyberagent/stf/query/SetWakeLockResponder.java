@@ -52,7 +52,7 @@ public class SetWakeLockResponder extends AbstractResponder {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         wakeLock = pm.newWakeLock(
                 PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,
-                "STFService"
+                "STF:STFService"
         );
         wakeLock.acquire();
     }
