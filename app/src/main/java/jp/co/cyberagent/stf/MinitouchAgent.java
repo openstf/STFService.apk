@@ -171,7 +171,7 @@ public class MinitouchAgent extends Thread {
         try{
             OutputStreamWriter out = new OutputStreamWriter(clientSocket.getOutputStream());
             out.write("v 1\n");
-            String resolution = String.format(Locale.getDefault(), "^ %d %d %d %d%n",
+            String resolution = String.format(Locale.US, "^ %d %d %d %d%n",
                 DEFAULT_MAX_CONTACTS, width, height, DEFAULT_MAX_PRESSURE);
             out.write(resolution);
             out.flush();
