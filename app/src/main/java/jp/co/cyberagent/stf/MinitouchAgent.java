@@ -110,7 +110,7 @@ public class MinitouchAgent extends Thread {
         Point size = getScreenSize();
         if(size != null) {
             MinitouchAgent m = new MinitouchAgent(size.x, size.y, handler);
-            m.run();
+            m.start();
             Looper.loop();
         } else {
             System.err.println("Couldn't get screen resolution");
