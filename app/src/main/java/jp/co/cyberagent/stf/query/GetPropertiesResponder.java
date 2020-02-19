@@ -39,7 +39,7 @@ public class GetPropertiesResponder extends AbstractResponder {
                     case "imsi":
                         value = getValueOrNull(tm::getSubscriberId);
                         break;
-                    case "phonenumber":
+                    case "phoneNumber":
                         value = tm.getLine1Number();
                         break;
                     case "iccid":
