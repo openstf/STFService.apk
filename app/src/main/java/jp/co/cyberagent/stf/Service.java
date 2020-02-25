@@ -51,6 +51,7 @@ import jp.co.cyberagent.stf.query.GetClipboardResponder;
 import jp.co.cyberagent.stf.query.GetDisplayResponder;
 import jp.co.cyberagent.stf.query.GetPropertiesResponder;
 import jp.co.cyberagent.stf.query.GetRingerModeResponder;
+import jp.co.cyberagent.stf.query.GetRootStatusResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
 import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
@@ -339,6 +340,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.GET_BLUETOOTH_STATUS,
                         new GetBluetoothStatusResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_ROOT_STATUS,
+                        new GetRootStatusResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.SET_CLIPBOARD,
                             new SetClipboardResponder(getBaseContext()));
