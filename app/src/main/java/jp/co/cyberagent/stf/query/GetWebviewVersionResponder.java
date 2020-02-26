@@ -21,12 +21,8 @@ import static android.content.ContentValues.TAG;
 public class GetWebviewVersionResponder extends AbstractResponder {
 
     public GetWebviewVersionResponder(Context context) {
-
         super(context);
-
-
     }
-
 
     @Override
     public GeneratedMessageLite respond(Wire.Envelope envelope) {
@@ -37,12 +33,10 @@ public class GetWebviewVersionResponder extends AbstractResponder {
         for (int i = 0; i < packageInfoList.size(); i++) {
             PackageInfo pak = packageInfoList.get(i);
             String applicationname = pak.applicationInfo.loadLabel(packageManager).toString();
-            //判断是否为webview
-            if(applicationname.equals("Android System WebView")){
+            if(applicationname.equals("Android System WebView")) {
                 webViewVersion = pak.versionName;
                 break;
             }
-
         }
 
         return Wire.Envelope.newBuilder()
@@ -59,5 +53,4 @@ public class GetWebviewVersionResponder extends AbstractResponder {
     public void cleanup() {
         // No-op
     }
-
 }
