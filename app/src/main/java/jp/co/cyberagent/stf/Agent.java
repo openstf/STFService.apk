@@ -52,17 +52,19 @@ public class Agent extends Thread {
                 System.exit(1);
             }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            /*
-             * Android Q doesn't let minitouch manage inputs.
-             * As a workaround, minitouch will forward events to this
-             * agent which will be able to use the Android InputManager
-             */
-            System.out.println("Starting minitouch agent");
-            Point size = MinitouchAgent.getScreenSize();
-            MinitouchAgent m = new MinitouchAgent(size.x, size.y, handler);
-            m.start();
-        }
+
+        /*
+         * Android Q doesn't let minitouch manage inputs. Also minitouch cannot handle devices
+         * without a multi touch libevdev input device, such as devices without a multi touch
+         * screen.
+         * As a workaround, minitouch will forward events to this
+         * agent which will be able to use the Android InputManager
+         */
+        System.out.println("Starting minitouch agent");
+        Point size = MinitouchAgent.getScreenSize();
+        MinitouchAgent m = new MinitouchAgent(size.x, size.y, handler);
+        m.start();
+
         new Agent(handler).start();
         Looper.loop();
     }
