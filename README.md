@@ -1,5 +1,9 @@
 # STFService.apk
 
+# Warning
+
+This repository was superseded by https://github.com/DeviceFarmer/STFService.apk
+
 **STFService.apk** is both an Android [Service](http://developer.android.com/guide/components/services.html) and a CLI-runnable "agent" application providing various services and event streams for [STF](https://github.com/openstf/stf). While it would usually make sense to separate these various services into their own components, we're trying to keep resource usage lower by bundling our services into a single package.
 
 ## Features
