@@ -30,6 +30,7 @@ enum MessageType {
     SET_WIFI_ENABLED = 22;
     SET_BLUETOOTH_ENABLED = 30;
     SET_MASTER_MUTE = 28;
+    GET_WEBVIEW_VERSION = 29;
     EVENT_AIRPLANE_MODE = 13;
     EVENT_BATTERY = 14;
     EVENT_CONNECTIVITY = 15;
@@ -287,6 +288,15 @@ message SetMasterMuteRequest {
 
 message SetMasterMuteResponse {
     required bool success = 1;
+}
+
+//get system webview
+message GetWebviewVersionRequest {
+}
+
+message GetWebviewVersionResponse {
+    required bool success = 1;
+    optional string version = 2;
 }
 
 // Agent

@@ -54,6 +54,7 @@ import jp.co.cyberagent.stf.query.GetRingerModeResponder;
 import jp.co.cyberagent.stf.query.GetRootStatusResponder;
 import jp.co.cyberagent.stf.query.GetSdStatusResponder;
 import jp.co.cyberagent.stf.query.GetVersionResponder;
+import jp.co.cyberagent.stf.query.GetWebviewVersionResponder;
 import jp.co.cyberagent.stf.query.GetWifiStatusResponder;
 import jp.co.cyberagent.stf.query.GetBluetoothStatusResponder;
 import jp.co.cyberagent.stf.query.SetClipboardResponder;
@@ -334,6 +335,9 @@ public class Service extends android.app.Service {
 
                     router.register(Wire.MessageType.GET_VERSION,
                             new GetVersionResponder(getBaseContext()));
+
+                    router.register(Wire.MessageType.GET_WEBVIEW_VERSION,
+                            new GetWebviewVersionResponder(getBaseContext()));
 
                     router.register(Wire.MessageType.GET_WIFI_STATUS,
                             new GetWifiStatusResponder(getBaseContext()));
